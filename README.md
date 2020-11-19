@@ -1,6 +1,6 @@
 # Seize-The-Cheese
 
-##Game Description: 
+## Game Description: 
 
 Seize the Cheese is a 2.5D puzzle-platformer game following Mousy, a field mouse. Mousy has wandered into Mrs. Butternut’s house in search of cheese but now needs to escape before he is caught by Smudge the house cat.
 
