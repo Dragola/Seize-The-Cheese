@@ -9,6 +9,11 @@ TagManager:
   - Gate3
   - Gate4
   - Gate5
+  - Dust
+  - HealthCheese
+  - StrongCheese
+  - Spider
+  - CubeCheese
   layers:
   - Default
   - TransparentFX
