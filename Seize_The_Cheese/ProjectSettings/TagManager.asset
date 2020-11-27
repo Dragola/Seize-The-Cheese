@@ -9,6 +9,7 @@ TagManager:
   - StrongCheese
   - Spider
   - CubeCheese
+  - Ground
   layers:
   - Default
   - TransparentFX

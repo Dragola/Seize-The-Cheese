@@ -69,8 +69,10 @@ public class Character_Movement : MonoBehaviour
 
                 }
             }
+            Destroy(collision.gameObject);
+
         }
-        
+
 
         if (collision.tag == "HealthCheese")
         {
@@ -90,6 +92,7 @@ public class Character_Movement : MonoBehaviour
             if (!touchedSpider)
             {
                 touchedSpider = true;
+                Debug.Log("Touched Spider");
                 introPanel.SetActive(true);
                 PauseGame();
             }
