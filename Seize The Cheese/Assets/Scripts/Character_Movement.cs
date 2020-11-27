@@ -5,13 +5,7 @@ using UnityEngine.UI;
 
 public class Character_Movement : MonoBehaviour
 {
-    public float speed = 6.0F;
-    public float jumpSpeed = 8.0F;
-    public float gravity = 20.0F;
-    private Vector2 moveDirection = Vector2.zero;
-    private float turner;
-    private float looker;
-    public float sensitivity;
+
 
     public float health;
     public Slider healthBar;
@@ -27,6 +21,11 @@ public class Character_Movement : MonoBehaviour
 
     public Text txt;
 
+    public GameObject pickUpPosition;
+
+    public bool outOfPlace = false;
+
+
     public bool touchedStrongCheese = false;
     public bool touchedHealthCheese = false;
     public bool touchedDust = false;
@@ -36,6 +35,8 @@ public class Character_Movement : MonoBehaviour
     public bool onStrongCheese = false;
     public bool dead = false;
     public float timeRemaining = 11;
+
+    private BoxCollider boxCollider;
 
     void OnTriggerEnter(Collider other)
     {
@@ -112,56 +113,55 @@ public class Character_Movement : MonoBehaviour
             }
                        
         }
-
-        if (other.tag == "Gate1")
-        {
-            Debug.Log("Hit1");
-            GameObject camera = GameObject.Find("Main Camera");
-            CameraLerp cameraLerp = camera.GetComponent<CameraLerp>();
-            cameraLerp.cameraPositionIndex = 1;
-        }
-        if (other.tag == "Gate2")
-        {
-            Debug.Log("Hit2");
-            GameObject camera = GameObject.Find("Main Camera");
-            CameraLerp cameraLerp = camera.GetComponent<CameraLerp>();
-            cameraLerp.cameraPositionIndex = 2;
-        }
-        if (other.tag == "Gate3")
-        {
-            Debug.Log("Hit3");
-            GameObject camera = GameObject.Find("Main Camera");
-            CameraLerp cameraLerp = camera.GetComponent<CameraLerp>();
-            cameraLerp.cameraPositionIndex = 3;
-        }
-        if (other.tag == "Gate4")
-        {
-            Debug.Log("Hit4");
-            GameObject camera = GameObject.Find("Main Camera");
-            CameraLerp cameraLerp = camera.GetComponent<CameraLerp>();
-            cameraLerp.cameraPositionIndex = 4;
-        }
-
-
-
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if (other.tag == "CubeCheese" && Input.GetKey(KeyCode.X))
+        {
+            //other.GetComponent<Rigidbody>().isKinematic = true;
+            other.transform.parent = this.transform;
+            other.transform.position = pickUpPosition.transform.position;
+            other.GetComponent<Rigidbody>().useGravity = false;
+
+
+            //boxCollider = GetComponent<BoxCollider>();
+            //boxCollider.size = new Vector3(2.551425f, 0.866585f, 1);
+            //boxCollider.center = new Vector3(0.7757122f, -0.07391864f, 0);
+            didPickUp = true;
+
+            Debug.Log("Scooped");
+
+        }
+
+        if (other.tag == "CubeCheese" && Input.GetKey(KeyCode.K))
+        {
+            other.transform.parent = null;
+            //other.GetComponent<Rigidbody>().isKinematic = false;
+            other.GetComponent<Rigidbody>().useGravity = true;
+
+            //boxCollider = GetComponent<BoxCollider>();
+            //boxCollider.size = new Vector3(1, 0.866585f, 1);
+            //boxCollider.center = new Vector3(0,-0.07391864f, 0);
+            didPickUp = false;
+
+            Debug.Log("Dropped");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
         if (other.tag == "CubeCheese")
         {
-            if (didPickUp)
-            {
-                other.GetComponent<Rigidbody>().isKinematic = true;
-                other.transform.parent = this.transform;
-                Debug.Log("Scooped");
-            }
-            else
-            {
-                other.transform.parent = null;
-                other.GetComponent<Rigidbody>().isKinematic = false;
-                Debug.Log("Dropped");
-            }
+            other.transform.parent = null;
+            //other.GetComponent<Rigidbody>().isKinematic = false;
+            other.GetComponent<Rigidbody>().useGravity = true;
+            didPickUp = false;
+
+            //boxCollider = GetComponent<BoxCollider>();
+            //boxCollider.size = new Vector3(1, 0.866585f, 1);
+            //boxCollider.center = new Vector3(0,-0.07391864f, 0);
+            Debug.Log("Dropped");
         }
     }
 
@@ -195,6 +195,12 @@ public class Character_Movement : MonoBehaviour
         }
     }
 
+    void OnTouchedChild(GameObject childObject)
+    {
+        Debug.Log("touched child " + childObject.name, childObject);
+        // do whatever
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -213,35 +219,6 @@ public class Character_Movement : MonoBehaviour
             Debug.Log("Return key was pressed.");
             ResumeGame();
         }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            didPickUp = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            didPickUp = false;
-
-        }
-
-        if (controller.isGrounded)
-        {
-            //Feed moveDirection with input.
-            moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
-            moveDirection = transform.TransformDirection(moveDirection);
-            //Multiply it by speed.
-            moveDirection *= speed;
-            //Jumping
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
-
-        }
-        
-        //Applying gravity to the controller
-        moveDirection.y -= gravity * Time.deltaTime;
-        //Making the character move
-        controller.Move(moveDirection * Time.deltaTime);
 
         if (onStrongCheese) { 
             if (timeRemaining > 0)
