@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(BoxCollider2D))]
+
 public class Character_Movement : MonoBehaviour
 {
     
@@ -19,6 +21,8 @@ public class Character_Movement : MonoBehaviour
     public GameObject holder;
     public GameObject emptySlot;
 
+    private BoxCollider2D boxCollider;
+
     public Text txt;
 
     public bool touchedStrongCheese = false;
@@ -31,11 +35,12 @@ public class Character_Movement : MonoBehaviour
     public bool dead = false;
     public float timeRemaining = 11;
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.tag == "Dust")
+
+        if (collision.tag == "Dust")
         {
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
 
             if (!onStrongCheese) {
                 healthBar.value -= 0.5f;
@@ -67,10 +72,10 @@ public class Character_Movement : MonoBehaviour
         }
         
 
-        if (other.tag == "HealthCheese")
+        if (collision.tag == "HealthCheese")
         {
             healthBar.value += 0.5f;
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
 
             if (!touchedHealthCheese)
             {
@@ -80,7 +85,7 @@ public class Character_Movement : MonoBehaviour
             }
         }
 
-        if (other.tag == "Spider")
+        if (collision.tag == "Spider")
         {
             if (!touchedSpider)
             {
@@ -92,11 +97,11 @@ public class Character_Movement : MonoBehaviour
 
         }
 
-        if (other.tag == "StrongCheese")
+        if (collision.tag == "StrongCheese")
         {
 
             onStrongCheese = true;
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
 
             if (!touchedStrongCheese)
             {
@@ -111,23 +116,22 @@ public class Character_Movement : MonoBehaviour
 
     }
 
-    private void OnTriggerStay(Collider other)
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (other.tag == "CubeCheese")
+
+        if (Input.GetKey(KeyCode.X) && collision.tag == "CubeCheese")
         {
-            if (didPickUp)
-            {
-                other.GetComponent<Rigidbody>().isKinematic = true;
-                other.transform.parent = this.transform;
-                Debug.Log("Scooped");
-            }
-            else
-            {
-                other.transform.parent = null;
-                other.GetComponent<Rigidbody>().isKinematic = false;
-                Debug.Log("Dropped");
-            }
+            collision.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            collision.GetComponent<Rigidbody2D>().simulated = false;
+            boxCollider = GetComponent<BoxCollider2D>();
+            boxCollider.size = new Vector2(7.18204f, 5.82f);
+            boxCollider.offset = new Vector2(1.552225f, 0);
+            collision.transform.parent = this.transform;
+            didPickUp = true;
+            Debug.Log("Scooped");
         }
+
     }
 
     /*
@@ -178,17 +182,6 @@ public class Character_Movement : MonoBehaviour
             ResumeGame();
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            didPickUp = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            didPickUp = false;
-
-        }
-
         if (onStrongCheese) { 
             if (timeRemaining > 0)
             {
@@ -212,6 +205,6 @@ public class Character_Movement : MonoBehaviour
     {
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
-        txt.text = string.Format("{00:0}", seconds);
+        txt.text = string.Format("Power Up Time: {00:0}", seconds);
     }
 }

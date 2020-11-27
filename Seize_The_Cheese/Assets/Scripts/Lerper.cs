@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class lerper : MonoBehaviour
+public class Lerper : MonoBehaviour
 {
     public Vector3 startPoint;
     public Vector3 endPoint;

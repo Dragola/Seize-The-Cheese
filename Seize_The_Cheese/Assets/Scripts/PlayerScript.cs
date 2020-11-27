@@ -32,6 +32,13 @@ public class PlayerScript : MonoBehaviour
     /// </summary>
     private bool grounded;
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.isTrigger) return; //<--- new line of code to avoid considering collisions with triggers
+                                     //otherwise consider it a collision and find out if it was with the ground
+
+    }
+
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -76,8 +83,11 @@ public class PlayerScript : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            // Ignore our own collider.
-            if (hit == boxCollider)
+            if (hit.tag == "CubeCheese")
+                return;
+
+                // Ignore our own collider.
+             if (hit == boxCollider)
                 continue;
 
             ColliderDistance2D colliderDistance = hit.Distance(boxCollider);
