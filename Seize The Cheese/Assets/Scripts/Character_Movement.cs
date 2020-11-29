@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Character_Movement : MonoBehaviour
 {
 
-
     public float health;
     public Slider healthBar;
     public bool didPickUp = false;
@@ -25,6 +24,7 @@ public class Character_Movement : MonoBehaviour
 
     public bool outOfPlace = false;
 
+    public float amount;
 
     public bool touchedStrongCheese = false;
     public bool touchedHealthCheese = false;
@@ -119,18 +119,22 @@ public class Character_Movement : MonoBehaviour
     {
         if (other.tag == "CubeCheese" && Input.GetKey(KeyCode.X))
         {
-            //other.GetComponent<Rigidbody>().isKinematic = true;
-            other.transform.parent = this.transform;
-            other.transform.position = pickUpPosition.transform.position;
-            other.GetComponent<Rigidbody>().useGravity = false;
+
+            if (!didPickUp)
+            {
+                //other.GetComponent<Rigidbody>().isKinematic = true;
+                other.transform.parent = this.transform;
+                other.transform.position = pickUpPosition.transform.position;
+                other.GetComponent<Rigidbody>().useGravity = false;
 
 
-            //boxCollider = GetComponent<BoxCollider>();
-            //boxCollider.size = new Vector3(2.551425f, 0.866585f, 1);
-            //boxCollider.center = new Vector3(0.7757122f, -0.07391864f, 0);
-            didPickUp = true;
+                //boxCollider = GetComponent<BoxCollider>();
+                //boxCollider.size = new Vector3(2.551425f, 0.866585f, 1);
+                //boxCollider.center = new Vector3(0.7757122f, -0.07391864f, 0);
+                didPickUp = true;
 
-            Debug.Log("Scooped");
+                Debug.Log("Scooped");
+            }
 
         }
 
@@ -149,21 +153,21 @@ public class Character_Movement : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "CubeCheese")
-        {
-            other.transform.parent = null;
-            //other.GetComponent<Rigidbody>().isKinematic = false;
-            other.GetComponent<Rigidbody>().useGravity = true;
-            didPickUp = false;
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.tag == "CubeCheese")
+    //    {
+    //        other.transform.parent = null;
+    //        other.GetComponent<Rigidbody>().useGravity = true;
 
-            //boxCollider = GetComponent<BoxCollider>();
-            //boxCollider.size = new Vector3(1, 0.866585f, 1);
-            //boxCollider.center = new Vector3(0,-0.07391864f, 0);
-            Debug.Log("Dropped");
-        }
-    }
+    //        didPickUp = false;
+
+    //        //boxCollider = GetComponent<BoxCollider>();
+    //        //boxCollider.size = new Vector3(1, 0.866585f, 1);
+    //        //boxCollider.center = new Vector3(0,-0.07391864f, 0);
+    //        Debug.Log("Dropped");
+    //    }
+    //}
 
     /*
     private void OnTriggerExit(Collider other)
@@ -218,6 +222,25 @@ public class Character_Movement : MonoBehaviour
         {
             Debug.Log("Return key was pressed.");
             ResumeGame();
+        }
+
+
+        if (didPickUp)
+        {
+            Transform[] ts = GetComponentsInChildren<Transform>();
+            foreach (Transform t in ts)
+            {
+
+                if (t.tag == "CubeCheese" && Vector3.Distance(t.transform.position, transform.position) > amount)
+                {
+                    t.transform.parent = null;
+                    t.GetComponent<Rigidbody>().useGravity = true;
+                    t.transform.position = pickUpPosition.transform.position;
+                    didPickUp = false;
+                    Debug.Log("Dropped");
+
+                }
+            }
         }
 
         if (onStrongCheese) { 
