@@ -7,7 +7,7 @@ public class ObjectDestory : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player" || collision.gameObject.tag == "CubeCheese")
+        if(collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
         }
@@ -16,7 +16,7 @@ public class ObjectDestory : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "CubeCheese")
+        if (other.gameObject.tag == "Player")
         {
             Destroy(gameObject);
         }

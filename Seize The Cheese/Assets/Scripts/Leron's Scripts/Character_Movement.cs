@@ -20,7 +20,10 @@ public class Character_Movement : MonoBehaviour
 
     public Text txt;
 
-    public GameObject pickUpPosition;
+    public GameObject pickUpPosition_Left;
+    public GameObject pickUpPosition_Right;
+    public bool pickedUpOnLeftSide = false;
+    public bool pickedUpOnRightSide = false;
 
     public bool outOfPlace = false;
 
@@ -34,7 +37,7 @@ public class Character_Movement : MonoBehaviour
 
     public bool onStrongCheese = false;
     public bool dead = false;
-    public float timeRemaining = 11;
+    public float timeRemaining = 6;
 
     private BoxCollider boxCollider;
 
@@ -47,12 +50,11 @@ public class Character_Movement : MonoBehaviour
             if (!onStrongCheese) {
                 healthBar.value -= 0.5f;
 
-                /* if (health <= 0)
-                {
+                 if (health <= 0) { 
+               
                     Cursor.visible = true;
                 }
-                */
-
+                
                 if (!touchedDust)
                 {
                     Debug.Log("Touched");
@@ -117,69 +119,39 @@ public class Character_Movement : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "CubeCheese" && Input.GetKey(KeyCode.X))
+        if (other.tag == "touchPointLeft" && Input.GetKey(KeyCode.X))
         {
 
             if (!didPickUp)
             {
-                //other.GetComponent<Rigidbody>().isKinematic = true;
-                other.transform.parent = this.transform;
-                other.transform.position = pickUpPosition.transform.position;
-                other.GetComponent<Rigidbody>().useGravity = false;
+                other.transform.parent.parent = this.transform;
+                other.transform.parent.position = pickUpPosition_Right.transform.position;
+                other.GetComponentInParent<Rigidbody>().useGravity = false;
 
-
-                //boxCollider = GetComponent<BoxCollider>();
-                //boxCollider.size = new Vector3(2.551425f, 0.866585f, 1);
-                //boxCollider.center = new Vector3(0.7757122f, -0.07391864f, 0);
                 didPickUp = true;
+                pickedUpOnLeftSide = true;
 
-                Debug.Log("Scooped");
+                Debug.Log("1");
             }
 
         }
 
-        if (other.tag == "CubeCheese" && Input.GetKey(KeyCode.K))
+        if (other.tag == "touchPointRight" && Input.GetKey(KeyCode.X))
         {
-            other.transform.parent = null;
-            //other.GetComponent<Rigidbody>().isKinematic = false;
-            other.GetComponent<Rigidbody>().useGravity = true;
 
-            //boxCollider = GetComponent<BoxCollider>();
-            //boxCollider.size = new Vector3(1, 0.866585f, 1);
-            //boxCollider.center = new Vector3(0,-0.07391864f, 0);
-            didPickUp = false;
+            if (!didPickUp)
+            {
+                other.transform.parent.parent = this.transform;
+                other.transform.parent.position = pickUpPosition_Left.transform.position;
+                other.GetComponentInParent<Rigidbody>().useGravity = false;
+                didPickUp = true;
+                pickedUpOnRightSide = true;
 
-            Debug.Log("Dropped");
+                Debug.Log("2");
+            }
+
         }
     }
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.tag == "CubeCheese")
-    //    {
-    //        other.transform.parent = null;
-    //        other.GetComponent<Rigidbody>().useGravity = true;
-
-    //        didPickUp = false;
-
-    //        //boxCollider = GetComponent<BoxCollider>();
-    //        //boxCollider.size = new Vector3(1, 0.866585f, 1);
-    //        //boxCollider.center = new Vector3(0,-0.07391864f, 0);
-    //        Debug.Log("Dropped");
-    //    }
-    //}
-
-    /*
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "CubeCheese")
-        {
-            other.transform.parent = null;
-            other.GetComponent<Rigidbody>().isKinematic = false;
-            Debug.Log("Dropped");
-        }
-    }
-    */
 
     void PauseGame()
     {
@@ -224,6 +196,23 @@ public class Character_Movement : MonoBehaviour
             ResumeGame();
         }
 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Transform[] ks = GetComponentsInChildren<Transform>();
+            foreach (Transform t in ks)
+            {
+                if (t.tag == "CubeCheese")
+                {
+                    t.transform.parent = null;
+                    t.GetComponent<Rigidbody>().useGravity = true;
+                    //t.transform.position = pickUpPosition_Right.transform.position;
+                    didPickUp = false;
+                    pickedUpOnLeftSide = false;
+                    pickedUpOnRightSide = false;
+                    Debug.Log("Dropped");
+                }
+            }
+        }
 
         if (didPickUp)
         {
@@ -233,15 +222,18 @@ public class Character_Movement : MonoBehaviour
 
                 if (t.tag == "CubeCheese" && Vector3.Distance(t.transform.position, transform.position) > amount)
                 {
+                    //t.transform.FindChild("CubeCheese").parent = null;
                     t.transform.parent = null;
                     t.GetComponent<Rigidbody>().useGravity = true;
-                    t.transform.position = pickUpPosition.transform.position;
+                    //t.transform.position = pickUpPosition_Right.transform.position;
                     didPickUp = false;
                     Debug.Log("Dropped");
 
                 }
+
             }
         }
+
 
         if (onStrongCheese) { 
             if (timeRemaining > 0)
@@ -266,6 +258,6 @@ public class Character_Movement : MonoBehaviour
     {
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
-        txt.text = string.Format("{00:0}", seconds);
+        txt.text = string.Format("Power Timer: {00:0}", seconds);
     }
 }

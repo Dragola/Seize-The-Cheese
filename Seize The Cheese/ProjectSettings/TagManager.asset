@@ -14,6 +14,9 @@ TagManager:
   - StrongCheese
   - Spider
   - CubeCheese
+  - touchPointLeft
+  - touchPointRight
+  - ChildCube
   layers:
   - Default
   - TransparentFX
