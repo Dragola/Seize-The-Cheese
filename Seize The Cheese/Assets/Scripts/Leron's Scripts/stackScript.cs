@@ -6,18 +6,19 @@ public class stackScript : MonoBehaviour
 {
     public GameObject player;
     public int aamount = 1;
-    public bool didLeave = false;
+    public bool isAnotherBoxStacked = false;
 
+    //once cube is stacked ontop of another cube it detaches from the player and becomes child of bottom cube.
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "CubeCheese" && !other.isTrigger && !didLeave)
+        if (other.tag == "CubeCheese" && !other.isTrigger && !isAnotherBoxStacked) 
         {
-            other.transform.parent = transform.parent;
-            player.GetComponent<Character_Movement>().didPickUp = false;
-            player.GetComponent<Character_Movement>().pickedUpOnRightSide = false;
-            player.GetComponent<Character_Movement>().pickedUpOnLeftSide = false;
-            other.GetComponent<Rigidbody>().useGravity = false;
-            didLeave = true;
+            other.transform.parent = transform.parent; // stacked cube becomes child of this cube and gets detached from player.
+            player.GetComponent<Character_Movement>().didPickUp = false; //didPickUp gets set to false as player doesnt have a cube in hand.
+            player.GetComponent<Character_Movement>().pickedUpOnRightSide = false;//pickedUpOnRightSide gets set to false as player doesnt have a cube in hand.
+            player.GetComponent<Character_Movement>().pickedUpOnLeftSide = false;//pickedUpOnLeftSide gets set to false as player doesnt have a cube in hand.
+            other.GetComponent<Rigidbody>().useGravity = false; // gravity gets set to false because the cube is now ontop of this cube and thus wont move when jumping.
+            isAnotherBoxStacked = true; //sets isAnotherBoxStacked true
             Debug.Log("3");
 
         }
@@ -25,20 +26,20 @@ public class stackScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        //when cube gets hit off by obstacle while on top of another cube.
+        //when top cube gets hit off by obstacle while on top of another cube.
         if (other.tag == "CubeCheese" && !other.isTrigger && player.GetComponent<Character_Movement>().didPickUp == false) 
         {
-           other.transform.parent = null; // parent become null thus detaching from the cube current cube is stacked on
+           other.transform.parent = null; // stacked cube's parent (which is this object) become null thus detaching the stacked cube from the current cube (which is its parent).
            other.GetComponent<Rigidbody>().useGravity = true; // enables gravity so that cube may fall.
-           didLeave = false; 
+           isAnotherBoxStacked = false; 
            Debug.Log("4");
         }
 
         // allows player to pick up stacked cube
         if (other.tag == "CubeCheese" && !other.isTrigger && player.GetComponent<Character_Movement>().didPickUp == true) 
         {
-            other.GetComponent<Rigidbody>().useGravity = false; 
-            didLeave = false;
+            other.GetComponent<Rigidbody>().useGravity = false;
+            isAnotherBoxStacked = false;
 
             Debug.Log("5");
         }

@@ -214,25 +214,25 @@ public class Character_Movement : MonoBehaviour
             }
         }
 
-        if (didPickUp)
-        {
-            Transform[] ts = GetComponentsInChildren<Transform>();
-            foreach (Transform t in ts)
-            {
+        //if (didPickUp)
+        //{
+        //    Transform[] ts = GetComponentsInChildren<Transform>();
+        //    foreach (Transform t in ts)
+        //    {
 
-                if (t.tag == "CubeCheese" && Vector3.Distance(t.transform.position, transform.position) > amount)
-                {
-                    //t.transform.FindChild("CubeCheese").parent = null;
-                    t.transform.parent = null;
-                    t.GetComponent<Rigidbody>().useGravity = true;
-                    //t.transform.position = pickUpPosition_Right.transform.position;
-                    didPickUp = false;
-                    Debug.Log("Dropped");
+        //        if (t.tag == "CubeCheese" && Vector3.Distance(t.transform.position, transform.position) > amount)
+        //        {
+        //            //t.transform.FindChild("CubeCheese").parent = null;
+        //            t.transform.parent = null;
+        //            t.GetComponent<Rigidbody>().useGravity = true;
+        //            //t.transform.position = pickUpPosition_Right.transform.position;
+        //            didPickUp = false;
+        //            Debug.Log("Dropped");
 
-                }
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
 
         if (onStrongCheese) { 
