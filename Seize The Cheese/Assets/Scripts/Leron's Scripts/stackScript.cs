@@ -25,7 +25,7 @@ public class stackScript : MonoBehaviour
             other.GetComponent<Rigidbody>().useGravity = false; // gravity gets set to false because the cube is now ontop of this cube and thus wont move when jumping.
             stackedCube = other.gameObject;
             isAnotherBoxStacked = true; //sets isAnotherBoxStacked true
-            Debug.Log("3");
+            Debug.Log("5");
 
         }
     }
@@ -35,25 +35,27 @@ public class stackScript : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //when top cube gets hit off by obstacle while on top of another cube and the player IS NOT holding a cube(s).
-        if (other.tag == "ChildCube" && !other.isTrigger && player.GetComponent<Character_Movement>().didPickUpChildCube == false && player.GetComponent<Character_Movement>().didPickUpParentCube == false)
+        if (other.tag == "ChildCube" && !other.isTrigger && player.GetComponent<Character_Movement>().didPickUpParentCube == false)
         {
             other.transform.parent = null; // stacked cube's parent (which is this object) become null thus detaching the stacked cube from the current cube (which is its parent).
             other.tag = "CubeCheese";
             other.GetComponent<Rigidbody>().useGravity = true; // enables gravity so that cube may fall.
             isAnotherBoxStacked = false;
-            Debug.Log("4");
+            Debug.Log("6");
         }
 
         //when any stacked cube gets hit off by obstacle while the player IS holding onto the most bottom cube.
-        if (other.tag == "ChildCube" && !other.isTrigger && player.GetComponent<Character_Movement>().didPickUpChildCube == false && player.GetComponent<Character_Movement>().didPickUpParentCube == true)
+        if (other.tag == "ChildCube" && !other.isTrigger && player.GetComponent<Character_Movement>().didPickUpParentCube == true)
         {
-            other.transform.parent = null; // stacked cube's parent (which is this object) become null thus detaching the stacked cube from the current cube (which is its parent).
+            other.transform.parent = null; 
             other.tag = "CubeCheese";
             other.GetComponent<Rigidbody>().useGravity = true; // enables gravity so that cube may fall.
             isAnotherBoxStacked = false; ;
 
-            Debug.Log("5");
+            Debug.Log("7");
         }
+       
+ 
     }
 
     //private void Update()
