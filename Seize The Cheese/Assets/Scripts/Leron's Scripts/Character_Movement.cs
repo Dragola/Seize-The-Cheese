@@ -8,7 +8,9 @@ public class Character_Movement : MonoBehaviour
 
     public float health;
     public Slider healthBar;
-    public bool didPickUp = false;
+
+    public bool didPickUpParentCube = false;
+    public bool didPickUpChildCube = false;
 
     public GameObject introPanel;
     public GameObject DustPanel;
@@ -27,7 +29,7 @@ public class Character_Movement : MonoBehaviour
 
     public bool outOfPlace = false;
 
-    public float amount;
+    public GameObject pickedUpMainCube;
 
     public bool touchedStrongCheese = false;
     public bool touchedHealthCheese = false;
@@ -122,16 +124,35 @@ public class Character_Movement : MonoBehaviour
         if (other.tag == "touchPointLeft" && Input.GetKey(KeyCode.X))
         {
 
-            if (!didPickUp)
+            if (!didPickUpParentCube && other.transform.parent.tag == "CubeCheese")
             {
                 other.transform.parent.parent = this.transform;
+                other.transform.parent.parent = pickUpPosition_Right.transform;
                 other.transform.parent.position = pickUpPosition_Right.transform.position;
+                pickedUpMainCube = other.transform.parent.gameObject;
                 other.GetComponentInParent<Rigidbody>().useGravity = false;
 
-                didPickUp = true;
+                didPickUpParentCube = true;
                 pickedUpOnLeftSide = true;
 
                 Debug.Log("1");
+            }
+
+            if (!didPickUpChildCube && other.transform.parent.tag == "ChildCube")
+            {
+                other.transform.parent.parent = this.transform;
+                other.transform.parent.parent.GetComponent<stackScript>().isAnotherBoxStacked = false;
+                other.transform.parent.tag = "CubeCheese";
+                other.transform.parent.parent = pickUpPosition_Right.transform;
+                pickedUpMainCube = other.transform.parent.gameObject;
+                other.transform.parent.position = pickUpPosition_Right.transform.position;
+
+                other.GetComponentInParent<Rigidbody>().useGravity = false;
+
+                didPickUpChildCube = true;
+                pickedUpOnLeftSide = true;
+
+                Debug.Log("1.5");
             }
 
         }
@@ -139,15 +160,35 @@ public class Character_Movement : MonoBehaviour
         if (other.tag == "touchPointRight" && Input.GetKey(KeyCode.X))
         {
 
-            if (!didPickUp)
+
+            if (!didPickUpParentCube && other.transform.parent.tag == "CubeCheese")
             {
                 other.transform.parent.parent = this.transform;
+                other.transform.parent.parent = pickUpPosition_Left.transform;
                 other.transform.parent.position = pickUpPosition_Left.transform.position;
+                pickedUpMainCube = other.transform.parent.gameObject;
                 other.GetComponentInParent<Rigidbody>().useGravity = false;
-                didPickUp = true;
+
+                didPickUpParentCube = true;
                 pickedUpOnRightSide = true;
 
                 Debug.Log("2");
+            }
+
+            if (!didPickUpChildCube && other.transform.parent.tag == "ChildCube")
+            {
+                other.transform.parent.parent = this.transform;
+                other.transform.parent.parent.GetComponent<stackScript>().isAnotherBoxStacked = false;
+                other.transform.parent.tag = "CubeCheese";
+                other.transform.parent.parent = pickUpPosition_Left.transform;
+                other.transform.parent.position = pickUpPosition_Left.transform.position;
+                pickedUpMainCube = other.transform.parent.gameObject;
+                other.GetComponentInParent<Rigidbody>().useGravity = false;
+
+                didPickUpChildCube = true;
+                pickedUpOnRightSide = true;
+
+                Debug.Log("2.5");
             }
 
         }
@@ -206,12 +247,58 @@ public class Character_Movement : MonoBehaviour
                     t.transform.parent = null;
                     t.GetComponent<Rigidbody>().useGravity = true;
                     //t.transform.position = pickUpPosition_Right.transform.position;
-                    didPickUp = false;
+                    didPickUpChildCube = false;
+                    didPickUpParentCube = false;
+                    pickedUpOnLeftSide = false;
+                    pickedUpOnRightSide = false;
+                    Debug.Log("Dropped");
+                }
+
+                if (t.tag == "ChildCube")
+                {
+                    t.transform.parent = null;
+                    t.GetComponent<Rigidbody>().useGravity = true;
+                    //t.transform.position = pickUpPosition_Right.transform.position;
+                    didPickUpChildCube = false;
+                    didPickUpParentCube = false;
                     pickedUpOnLeftSide = false;
                     pickedUpOnRightSide = false;
                     Debug.Log("Dropped");
                 }
             }
+        }
+
+        if (didPickUpChildCube || didPickUpParentCube)
+        {
+
+            if (pickedUpOnRightSide)
+            {
+                if (Vector3.Distance(pickedUpMainCube.transform.position, pickUpPosition_Right.transform.position) > 1.7f)
+                {
+                    pickedUpMainCube.GetComponent<Rigidbody>().useGravity = true;
+                    pickedUpMainCube.transform.parent = null;
+                    didPickUpChildCube = false;
+                    didPickUpParentCube = false;
+                    pickedUpOnLeftSide = false;
+                    pickedUpOnRightSide = false;
+                }
+
+            }
+
+            if (pickedUpOnLeftSide)
+            {
+                if (Vector3.Distance(pickedUpMainCube.transform.position, pickUpPosition_Left.transform.position) > 1.17f)
+                {
+                    pickedUpMainCube.GetComponent<Rigidbody>().useGravity = true;
+                    pickedUpMainCube.transform.parent = null;
+                    didPickUpChildCube = false;
+                    didPickUpParentCube = false;
+                    pickedUpOnLeftSide = false;
+                    pickedUpOnRightSide = false;
+                }
+
+            }
+
         }
 
         //if (didPickUp)
