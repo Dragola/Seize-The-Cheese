@@ -11,12 +11,25 @@ public class stackScript : MonoBehaviour
     public bool isAnotherBoxStacked = false;
     public bool didHitSomething = false;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "CubeCheese" && !other.isTrigger || other.tag == "ChildCube" && !other.isTrigger)
+        {
+
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+
+        }
+
+    }
     //once cube is stacked ontop of another cube it detaches from the player and becomes child of bottom cube.
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "CubeCheese" && !other.isTrigger && !isAnotherBoxStacked)
+        if (other.tag == "CubeCheese" && !other.isTrigger || other.tag == "ChildCube" && !other.isTrigger)
         {
             other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             other.transform.parent = transform.parent; // stacked cube becomes child of this cube and gets detached from player.
             other.tag = "ChildCube";
             player.GetComponent<Character_Movement>().didPickUpChildCube = false; //didPickUpChildCube gets set to false as player doesnt have a cube in hand.

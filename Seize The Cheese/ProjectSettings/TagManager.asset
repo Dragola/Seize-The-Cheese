@@ -17,6 +17,7 @@ TagManager:
   - touchPointLeft
   - touchPointRight
   - ChildCube
+  - Wall
   layers:
   - Default
   - TransparentFX

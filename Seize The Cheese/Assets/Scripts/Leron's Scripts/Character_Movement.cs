@@ -249,6 +249,7 @@ public class Character_Movement : MonoBehaviour
 
                 if (t.tag == "ChildCube")
                 {
+                    //t.GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
                     t.transform.parent = null;
                     t.GetComponent<Rigidbody>().useGravity = true;
                     //t.transform.position = pickUpPosition_Right.transform.position;
