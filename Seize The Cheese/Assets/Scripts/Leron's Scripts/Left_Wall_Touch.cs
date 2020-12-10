@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Left_Wall_Touch : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Wall")
         {

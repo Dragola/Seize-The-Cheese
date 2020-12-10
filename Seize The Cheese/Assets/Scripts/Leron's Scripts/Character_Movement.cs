@@ -266,40 +266,67 @@ public class Character_Movement : MonoBehaviour
 
         if (pickedUpOnRightSide)
         {
-            if (Vector3.Distance(pickedUpMainCube.transform.position, transform.position) > amount)
+            Debug.Log("entered");
+            Transform[] ks = GetComponentsInChildren<Transform>();
+            foreach (Transform t in ks)
             {
-                pickedUpMainCube.transform.parent = null; // detaches from the pickUpPosition_Right gameobject
-                pickedUpMainCube.transform.parent = null; // detaches from the player gameobject
+                Debug.Log(t.tag);
+                if (t.tag == "CubeCheese")
+                {
+                    if (Vector3.Distance(t.transform.position, pickUpPosition_Left.transform.position) > amount)
+                    {
+                        t.transform.parent = null; // detaches from the pickUpPosition_Right gameobject
+                        t.transform.parent = null; // detaches from the player gameobject
 
-                pickedUpMainCube.GetComponent<Rigidbody>().useGravity = true;
-                didPickUpChildCube = false;
-                didPickUpParentCube = false;
-                pickedUpOnLeftSide = false;
-                pickedUpOnRightSide = false;
+                        t.GetComponent<Rigidbody>().useGravity = true;
+                        didPickUpChildCube = false;
+                        didPickUpParentCube = false;
+                        pickedUpOnLeftSide = false;
+                        pickedUpOnRightSide = false;
+                        PlayerController playercontroller = GetComponent<PlayerController>();
+                        playercontroller.canMoveLeft = true;
+                        playercontroller.canMoveRight = true;
 
-                Debug.Log("oof");
+                        Debug.Log("oof");
+
+                    }
+                }
 
             }
-
         }
 
         if (pickedUpOnLeftSide)
         {
-            if (Vector3.Distance(pickedUpMainCube.transform.position, transform.position) > amount)
-            {
-                pickedUpMainCube.transform.parent = null; // detaches from the pickUpPosition_Right gameobject
-                pickedUpMainCube.transform.parent = null; // detaches from the player gameobject
+                Debug.Log("entered2");
 
-                pickedUpMainCube.GetComponent<Rigidbody>().useGravity = true;
-                didPickUpChildCube = false;
-                didPickUpParentCube = false;
-                pickedUpOnLeftSide = false;
-                pickedUpOnRightSide = false;
+                Transform[] ks = GetComponentsInChildren<Transform>();
+                foreach (Transform t in ks)
+                {
+                    Debug.Log(t.tag);
 
-                Debug.Log("oof2");
+                    if (t.tag == "CubeCheese")
+                    {
 
-            }
+                        if (Vector3.Distance(t.transform.position, pickUpPosition_Right.transform.position) > amount)
+                        {
+                            t.transform.parent = null; // detaches from the pickUpPosition_Right gameobject
+                            t.transform.parent = null; // detaches from the player gameobject
 
+                            t.GetComponent<Rigidbody>().useGravity = true;
+                            didPickUpChildCube = false;
+                            didPickUpParentCube = false;
+                            pickedUpOnLeftSide = false;
+                            pickedUpOnRightSide = false;
+                            PlayerController playercontroller = GetComponent<PlayerController>();
+                            playercontroller.canMoveLeft = true;
+                            playercontroller.canMoveRight = true;
+
+                            Debug.Log("oof2");
+
+                        }
+
+                    }
+                }
         }
 
         if (onStrongCheese)

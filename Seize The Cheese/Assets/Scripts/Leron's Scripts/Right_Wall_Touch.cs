@@ -7,7 +7,7 @@ public class Right_Wall_Touch : MonoBehaviour
 
     //public GameObject player;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Wall")
         {
