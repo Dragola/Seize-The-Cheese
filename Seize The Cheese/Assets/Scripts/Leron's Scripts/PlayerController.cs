@@ -13,10 +13,25 @@ public class PlayerController : MonoBehaviour
     public bool canMoveLeft = true;
     public bool canMoveRight = true;
     public bool didJump = false;
+    
+    //UI
+    public bool mainMenuActive = false; //used to prevent other controls + for colsing/opening main menu
+    private Canvas mainMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
 
     private Vector2 moveDirection = Vector2.zero;
 
     private Vector2 jumpVelocity = Vector2.zero;
+
+
+    private void Start()
+    {
+        //locate main menu
+        mainMenu = GameObject.Find("Main Menu").GetComponent<Canvas>();
+
+        //make main menu invisible
+        mainMenu.gameObject.SetActive(false);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.K)) // iterates through all CubeCheese and ChildCube and drops them whe K is pressed
@@ -73,6 +88,38 @@ public class PlayerController : MonoBehaviour
             if (Input.GetAxis("Horizontal") > 0 && canMoveRight)
                 controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
         }
+        //main menu key
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //if main menu isn't currently active
+            if (mainMenuActive == false) {
+                mainMenuActive = true;
+
+                //make main menu visible
+                mainMenu.gameObject.SetActive(true);
+
+                //pauses game
+                mainMenu.GetComponent<MainMenu>().PauseGame();
+            }
+            //if main menu is currently active
+            else
+            {
+                mainMenuActive = false;
+
+                //make main menu invisible
+                mainMenu.gameObject.SetActive(false);
+
+                //resumes game
+                mainMenu.GetComponent<MainMenu>().ResumeGame();
+            }
+        }
+    }
+    public void ResumePlayer() //called if player uses resume in main menu (closes menu for player)
+    {
+        mainMenuActive = false;
+
+        //make main menu invisible
+        mainMenu.gameObject.SetActive(false);
     }
 }
 
