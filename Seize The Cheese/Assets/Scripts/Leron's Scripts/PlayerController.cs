@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         //locate main menu
-        mainMenu = GameObject.Find("Main Menu").GetComponent<Canvas>();
+        mainMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
 
         //make main menu invisible
         mainMenu.gameObject.SetActive(false);
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
                 mainMenu.gameObject.SetActive(true);
 
                 //pauses game
-                mainMenu.GetComponent<MainMenu>().PauseGame();
+                mainMenu.GetComponent<PauseMenu>().PauseGame();
             }
             //if main menu is currently active
             else
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
                 mainMenu.gameObject.SetActive(false);
 
                 //resumes game
-                mainMenu.GetComponent<MainMenu>().ResumeGame();
+                mainMenu.GetComponent<PauseMenu>().ResumeGame();
             }
         }
     }
@@ -122,4 +122,3 @@ public class PlayerController : MonoBehaviour
         mainMenu.gameObject.SetActive(false);
     }
 }
-
