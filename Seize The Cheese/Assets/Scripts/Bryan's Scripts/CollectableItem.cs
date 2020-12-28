@@ -10,7 +10,7 @@ public class CollectableItem : MonoBehaviour
         if (other.gameObject.name.CompareTo("Player") == 0)
         {
             //signal to parent script that collectable was grabbed
-            this.transform.parent.GetComponent<CollectableItems>().addCollectable();
+            this.transform.parent.GetComponent<CollectableCounter>().addCollectable();
             
             //destroy collectable object
             Destroy(this.gameObject);

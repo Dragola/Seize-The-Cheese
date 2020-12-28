@@ -15,8 +15,9 @@ public class PlayerController : MonoBehaviour
     public bool didJump = false;
     
     //UI
-    public bool mainMenuActive = false; //used to prevent other controls + for colsing/opening main menu
-    private Canvas mainMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
+    public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
+    private Canvas pauseMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
+    private Canvas dialog = null;
 
     private Vector2 moveDirection = Vector2.zero;
 
@@ -25,13 +26,14 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        //locate main menu
-        mainMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
+        //locate pause menu and make invisible
+        pauseMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
+        pauseMenu.gameObject.SetActive(false);
 
-        //make main menu invisible
-        mainMenu.gameObject.SetActive(false);
+        //locate and make dialog invisible
+        dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
+        dialog.gameObject.SetActive(false);
     }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.K)) // iterates through all CubeCheese and ChildCube and drops them whe K is pressed
@@ -92,33 +94,37 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             //if main menu isn't currently active
-            if (mainMenuActive == false) {
-                mainMenuActive = true;
-
-                //make main menu visible
-                mainMenu.gameObject.SetActive(true);
+            if (pauseMenuActive == false) {
+                pauseMenuActive = true;
+                //makes main menu visible
+                pauseMenu.gameObject.SetActive(true);
 
                 //pauses game
-                mainMenu.GetComponent<PauseMenu>().PauseGame();
+                pauseMenu.GetComponent<PauseMenu>().PauseGame();
             }
             //if main menu is currently active
             else
             {
-                mainMenuActive = false;
-
-                //make main menu invisible
-                mainMenu.gameObject.SetActive(false);
+                pauseMenuActive = false;
+                //makes main menu invisible
+                pauseMenu.gameObject.SetActive(false);
 
                 //resumes game
-                mainMenu.GetComponent<PauseMenu>().ResumeGame();
+                pauseMenu.GetComponent<PauseMenu>().ResumeGame();
             }
+        }
+        //dialog test
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            //enable dialog gameobject and call function in DialogSystem's script to write text
+            dialog.gameObject.SetActive(true);
+            GameObject.Find("Dialog").GetComponent<DialogSystem>().WriteText(this.gameObject);
         }
     }
     public void ResumePlayer() //called if player uses resume in main menu (closes menu for player)
     {
-        mainMenuActive = false;
-
-        //make main menu invisible
-        mainMenu.gameObject.SetActive(false);
+        pauseMenuActive = false;
+        //makes main menu invisible
+        pauseMenu.gameObject.SetActive(false);
     }
 }

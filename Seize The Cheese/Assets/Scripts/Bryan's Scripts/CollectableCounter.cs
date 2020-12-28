@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectableItems : MonoBehaviour
+public class CollectableCounter : MonoBehaviour
 {
     public int collectableCount = 0;
     public void addCollectable()
