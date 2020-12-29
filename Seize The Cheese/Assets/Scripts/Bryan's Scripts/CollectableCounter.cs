@@ -8,6 +8,6 @@ public class CollectableCounter : MonoBehaviour
     public void addCollectable()
     {
         collectableCount += 1;
-        Debug.Log("Collectable added");
+        //Debug.Log("Collectable added");
     }
 }

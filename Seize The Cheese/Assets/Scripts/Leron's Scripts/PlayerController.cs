@@ -113,13 +113,6 @@ public class PlayerController : MonoBehaviour
                 pauseMenu.GetComponent<PauseMenu>().ResumeGame();
             }
         }
-        //dialog test
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            //enable dialog gameobject and call function in DialogSystem's script to write text
-            dialog.gameObject.SetActive(true);
-            GameObject.Find("Dialog").GetComponent<DialogSystem>().WriteText(this.gameObject);
-        }
     }
     public void ResumePlayer() //called if player uses resume in main menu (closes menu for player)
     {

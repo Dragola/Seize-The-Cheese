@@ -1,40 +1,40 @@
 dialog,character,sentence,order,trigger
-dialog,Sir Bitsy,What is that tugging I feel!,1,beginning of level
-dialog,Sir Bitsy,"Hey, you! Stop! You down there!",2,beginning of level
-dialog,Sir Bitsy,"Oh my, oh my, is this real?",3,beginning of level
-dialog,Sir Bitsy,A little mouse just appeared out of thin air!,4,beginning of level
-dialog,Sir Bitsy,Who are you?,5,beginning of level
-dialog,Mousy,Apologies!,6,beginning of level
-dialog,Mousy,My name is Mousy - I’m not from this town,7,beginning of level
-dialog,Mousy,"I’m lost, you see, and I am feeling quite down",8,beginning of level
-dialog,Mousy,"I miss my parents, my siblings, and my friends",9,beginning of level
-dialog,Mousy,"Anyway, sorry for pulling on your rear end.",10,beginning of level
-dialog,Sir Bitsy,My rear-end! Hmph! ,11,beginning of level
-dialog,Sir Bitsy,"I can see that you’re upset, so I’ll let that slide",12,beginning of level
-dialog,Sir Bitsy,"If you’re lost, maybe I can be your guide?",13,beginning of level
-dialog,Mousy,Huh? You-you mean you would do that for me?,14,beginning of level
-dialog,Mousy, Hooray! Hooray! I would be so happy! ,15,beginning of level
-dialog,Mousy,"Bless you, dear Mister, and bless your family too",16,beginning of level
-dialog,Mousy,"Just one thing I have to ask, who are you? ",17,beginning of level
-dialog,Sir Bitsy,"My name is Sir Bitsy, I live here on the wall",18,beginning of level
-dialog,Sir Bitsy,"I’ve seen many things, and I know it all ",19,beginning of level
-dialog,Sir Bitsy,"I know that you mice like those blocks made of milk,",20,beginning of level
-dialog,Sir Bitsy,I can see that sitting here from my web made of silk,21,beginning of level
-dialog,Sir Bitsy,"Look around, Mousy, what do you see?",22,beginning of level
-dialog,Mousy,All I see are bricks - are we inside a wall?,23,beginning of level
-dialog,Sir Bitsy,"Yes, but look again, is there nothing else at all? ",24,beginning of level
-dialog,Mousy,"Blocks of cheese! Oh, I can’t believe my eyes. ",25,beginning of level
-dialog,Mousy,Why are they here? What a wonderful surprise. ,26,beginning of level
-dialog,Sir Bitsy,They were left by mice who came before you ,27,beginning of level
-dialog,Sir Bitsy,"Yes, dear Mousy, they never made it through ",28,beginning of level
-dialog,Sir Bitsy,"Be very very careful, and pay attention to me",29,beginning of level
-dialog,Sir Bitsy,What I’m about to say might just set you free ,30,beginning of level
-dialog,Sir Bitsy,To get out of here is simply confusing ,31,beginning of level
-dialog,Sir Bitsy,"It’ll be a challenge for sure, and not at all amusing ",32,beginning of level
-dialog,Sir Bitsy,"But the good thing is that you can walk, jump, and climb",33,beginning of level
-dialog,Sir Bitsy,"Hop right on those bricks, and don’t waste your time",34,beginning of level
-dialog,Sir Bitsy,"There are bricks that are low, there are bricks that are high",35,beginning of level
-dialog,Sir Bitsy,They’re out of reach - don’t you wish you could fly? ,36,beginning of level
-dialog,Sir Bitsy,"But don’t fret, just look for blocks of cheddar cheese, ",37,beginning of level
-dialog,Sir Bitsy,"Stack them on one another, now climb up with ease! ",38,beginning of level
-dialog,Sir Bitsy,"Try that, Mousy! ",39,beginning of level
+dialog,Sir Bitsy,What is that tugging I feel!,1,Beginning of Level
+dialog,Sir Bitsy,"Hey, you! Stop! You down there!",2,Beginning of Level
+dialog,Sir Bitsy,"Oh my, oh my, is this real?",3,Beginning of Level
+dialog,Sir Bitsy,A little mouse just appeared out of thin air!,4,Beginning of Level
+dialog,Sir Bitsy,Who are you?,5,Beginning of Level
+dialog,Mousy,Apologies!,6,Beginning of Level
+dialog,Mousy,My name is Mousy - I’m not from this town,7,Beginning of Level
+dialog,Mousy,"I’m lost, you see, and I am feeling quite down",8,Beginning of Level
+dialog,Mousy,"I miss my parents, my siblings, and my friends",9,Beginning of Level
+dialog,Mousy,"Anyway, sorry for pulling on your rear end.",10,Beginning of Level
+dialog,Sir Bitsy,My rear-end! Hmph! ,11,Beginning of Level
+dialog,Sir Bitsy,"I can see that you’re upset, so I’ll let that slide",12,Beginning of Level
+dialog,Sir Bitsy,"If you’re lost, maybe I can be your guide?",13,Beginning of Level
+dialog,Mousy,Huh? You-you mean you would do that for me?,14,Beginning of Level
+dialog,Mousy, Hooray! Hooray! I would be so happy! ,15,Beginning of Level
+dialog,Mousy,"Bless you, dear Mister, and bless your family too",16,Beginning of Level
+dialog,Mousy,"Just one thing I have to ask, who are you? ",17,Beginning of Level
+dialog,Sir Bitsy,"My name is Sir Bitsy, I live here on the wall",18,Beginning of Level
+dialog,Sir Bitsy,"I’ve seen many things, and I know it all ",19,Beginning of Level
+dialog,Sir Bitsy,"I know that you mice like those blocks made of milk,",20,Beginning of Level
+dialog,Sir Bitsy,I can see that sitting here from my web made of silk,21,Beginning of Level
+dialog,Sir Bitsy,"Look around, Mousy, what do you see?",22,Beginning of Level
+dialog,Mousy,All I see are bricks - are we inside a wall?,23,Beginning of Level
+dialog,Sir Bitsy,"Yes, but look again, is there nothing else at all? ",24,Beginning of Level
+dialog,Mousy,"Blocks of cheese! Oh, I can’t believe my eyes. ",25,Beginning of Level
+dialog,Mousy,Why are they here? What a wonderful surprise. ,26,Beginning of Level
+dialog,Sir Bitsy,They were left by mice who came before you ,27,Beginning of Level
+dialog,Sir Bitsy,"Yes, dear Mousy, they never made it through ",28,Beginning of Level
+dialog,Sir Bitsy,"Be very very careful, and pay attention to me",29,Beginning of Level
+dialog,Sir Bitsy,What I’m about to say might just set you free ,30,Beginning of Level
+dialog,Sir Bitsy,To get out of here is simply confusing ,31,Beginning of Level
+dialog,Sir Bitsy,"It’ll be a challenge for sure, and not at all amusing ",32,Beginning of Level
+dialog,Sir Bitsy,"But the good thing is that you can walk, jump, and climb",33,Beginning of Level
+dialog,Sir Bitsy,"Hop right on those bricks, and don’t waste your time",34,Beginning of Level
+dialog,Sir Bitsy,"There are bricks that are low, there are bricks that are high",35,Beginning of Level
+dialog,Sir Bitsy,They’re out of reach - don’t you wish you could fly? ,36,Beginning of Level
+dialog,Sir Bitsy,"But don’t fret, just look for blocks of cheddar cheese, ",37,Beginning of Level
+dialog,Sir Bitsy,"Stack them on one another, now climb up with ease! ",38,Beginning of Level
+dialog,Sir Bitsy,"Try that, Mousy! ",39,Beginning of Level

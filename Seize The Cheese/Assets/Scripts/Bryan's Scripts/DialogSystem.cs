@@ -8,12 +8,14 @@ public class DialogSystem : MonoBehaviour
     public TextAsset dialogJson;
     public CharacterDialogs characterDialogs;
     public Text dialogText = null;
-    public string firstSentence = "";
     public int stringIndex = 0;
     public float timer = 0f;
     public bool writeText = false;
+    public bool inDialogMode = false;
     public float textPrintRate = 0.25f;
     private PlayerController player = null;
+    public List<CharacterDialog> dialogsToPrint = new List<CharacterDialog>();
+    public CharacterDialog currentDialog;
 
     // Start is called before the first frame update
     void Start()
@@ -22,58 +24,119 @@ public class DialogSystem : MonoBehaviour
         dialogText = GameObject.Find("Dialog Text").GetComponent<Text>();
         dialogText.text = "";
 
+        //reference PlayerController script
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        
         //only get json file if variable isn't null
         if (dialogJson != null)
         {
             //read json file and store in class
             characterDialogs = JsonUtility.FromJson<CharacterDialogs>(dialogJson.text);
-            
-            //get first sentence (Sir Bitsy) for testing
-            firstSentence = characterDialogs.dialog[0].sentence;
         }
     }
     void Update()
     {
-        //write text
-        if (writeText)
+        //if in dialog mode
+        if (inDialogMode)
         {
-            //timer for printing text
-            timer += Time.deltaTime;
-            
-            //print the next letter once timer hits print rate
-            if(timer >= textPrintRate && stringIndex < firstSentence.Length + 1)
+            //write text
+            if (writeText)
             {
-                //print next letter of sentence
-                dialogText.text = firstSentence.Substring(0, stringIndex);
-                
-                //increment index and reset timer
-                stringIndex += 1;
-                timer = 0f;
+                //skip dialog if return is hit/held
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    //set full sentence (skip typerwritter effect)
+                    dialogText.text = currentDialog.sentence;
+
+                    //reset variables
+                    writeText = false;
+                    stringIndex = 0;
+                    timer = 0f;
+                }
+                //timer for printing text
+                timer += Time.deltaTime;
+
+                //print the next letter once timer hits print rate
+                if (timer >= textPrintRate && stringIndex < currentDialog.sentence.Length + 1)
+                {
+                    //print next letter of sentence
+                    dialogText.text = currentDialog.sentence.Substring(0, stringIndex);
+
+                    //increment index and reset timer
+                    stringIndex += 1;
+                    timer = 0f;
+                }
+                //stop printing text
+                else if (stringIndex >= currentDialog.sentence.Length + 1)
+                {
+                    //reset variables
+                    writeText = false;
+                    stringIndex = 0;
+                    timer = 0f;
+                }
             }
-            //stop printing text
-            else if (stringIndex >= firstSentence.Length + 1)
+            //if not writing sentence and return is hit/held
+            else if (writeText== false && Input.GetKeyDown(KeyCode.Return))
             {
-                //reset variables and set text to blank
-                writeText = false;
-                stringIndex = 0;
-                timer = 0f;
+                //blank text
                 dialogText.text = "";
 
-                //re-enabled PlayerController and disable dialog gameobject
-                player.enabled = true;
-                this.gameObject.SetActive(false);
+                //still dialog
+                if (dialogsToPrint.Count > 0)
+                {
+                    //Debug.Log("DialogSystem: More dialogs");
+                    //set sentence and remove from list
+                    currentDialog = dialogsToPrint[0];
+                    dialogsToPrint.RemoveAt(0);
+                    writeText = true;
+                }
+                //no more dialog
+                else
+                {
+                    //Debug.Log("DialogSystem: No more dialogs");
+                    //re-enabled PlayerController and disable dialog gameobject
+                    inDialogMode = false;
+                    player.enabled = true;
+                    this.gameObject.SetActive(false);
+                }
             }
         }
     }
-    public void WriteText(GameObject player)
+    private void GetDialogToPrint(string trigger)
+    {
+        //check all dialogs for trigger
+        foreach (CharacterDialog dialog in characterDialogs.dialog)
+        {
+            //if dialog's trigger matches trigger for dialog then add to list of dialogs to print
+            if(dialog.trigger.CompareTo(trigger) == 0)
+            {
+                dialogsToPrint.Add(dialog);
+            }
+        }
+    }
+    public void EnableDialog(string trigger)
     {
         //only enable writing text if not already enabled
         if (writeText == false)
         {
             writeText = true;
-            //reference PlayerController script and disable to prevent player from moving (WARNING- player stay in air if activated [aka gravity is disabled])
-            this.player = player.GetComponent<PlayerController>();
-            this.player.enabled = false;
+            
+            //disable to prevent player from moving (WARNING - player stay in air if activated[aka gravity is disabled])
+            player.enabled = false;
+            this.gameObject.SetActive(true);
+
+            //get dialogs for trigger
+            GetDialogToPrint(trigger);
+
+            //set initial sentence and remove from list
+            currentDialog = dialogsToPrint[0];
+            dialogsToPrint.RemoveAt(0);
+
+            //indicate dialog is active
+            inDialogMode = true;
+            
+            //start writing first sentence
+            writeText = true;
         }
     }
 }
