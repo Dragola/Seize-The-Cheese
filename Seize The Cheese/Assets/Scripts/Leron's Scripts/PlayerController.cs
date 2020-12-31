@@ -13,10 +13,13 @@ public class PlayerController : MonoBehaviour
     public bool canMoveLeft = true;
     public bool canMoveRight = true;
     public bool didJump = false;
-    
+
+    Vector2 stayVector = new Vector2(0, 0);
+
     //UI
     public bool mainMenuActive = false; //used to prevent other controls + for colsing/opening main menu
-    private Canvas mainMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
+    public GameObject mainMenu;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
+    public bool isActive = false;
 
     private Vector2 moveDirection = Vector2.zero;
 
@@ -25,11 +28,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        //locate main menu
-        mainMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
 
         //make main menu invisible
-        mainMenu.gameObject.SetActive(false);
+        //mainMenu.gameObject.SetActive(false);
     }
 
     void Update()
@@ -81,37 +82,52 @@ public class PlayerController : MonoBehaviour
 
         else
         {
-            if (Input.GetAxis("Horizontal") < 0 && canMoveLeft)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            if (Input.GetAxis("Horizontal") < 0 && !canMoveLeft)
+                controller.Move((stayVector + jumpVelocity) * Time.deltaTime);
 
 
-            if (Input.GetAxis("Horizontal") > 0 && canMoveRight)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            if (Input.GetAxis("Horizontal") > 0 && !canMoveRight)
+                controller.Move((stayVector + jumpVelocity) * Time.deltaTime);
         }
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //if main menu isn't currently active
-            if (mainMenuActive == false) {
-                mainMenuActive = true;
+            ////if main menu isn't currently active
+            //if (mainMenuActive == false) {
+            //    mainMenuActive = true;
 
-                //make main menu visible
-                mainMenu.gameObject.SetActive(true);
+            //    //make main menu visible
+            //    mainMenu.gameObject.SetActive(true);
 
-                //pauses game
-                mainMenu.GetComponent<PauseMenu>().PauseGame();
+            //    //pauses game
+            //    mainMenu.GetComponent<MainMenu>().PauseGame();
+            //}
+            ////if main menu is currently active
+            //else
+            //{
+            //    mainMenuActive = false;
+
+            //    //make main menu invisible
+            //    mainMenu.gameObject.SetActive(false);
+
+            //    //resumes game
+            //    mainMenu.GetComponent<MainMenu>().ResumeGame();
+            //}
+
+            if (!isActive) {
+                Time.timeScale = 0; //sets the time in game to 0, thus pausing the game
+                mainMenu.SetActive(true);
+                isActive = true;
             }
-            //if main menu is currently active
+
             else
             {
-                mainMenuActive = false;
-
-                //make main menu invisible
-                mainMenu.gameObject.SetActive(false);
-
-                //resumes game
-                mainMenu.GetComponent<PauseMenu>().ResumeGame();
+                Time.timeScale = 1; //sets the time in game to 0, thus pausing the game
+                mainMenu.SetActive(false);
+                isActive = false;
             }
+
+
         }
     }
     public void ResumePlayer() //called if player uses resume in main menu (closes menu for player)
@@ -122,3 +138,4 @@ public class PlayerController : MonoBehaviour
         mainMenu.gameObject.SetActive(false);
     }
 }
+
