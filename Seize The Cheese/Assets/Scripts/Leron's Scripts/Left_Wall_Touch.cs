@@ -9,7 +9,6 @@ public class Left_Wall_Touch : MonoBehaviour
         
         if (other.tag == "Wall")
         {
-            //GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             transform.parent.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
             Transform[] ks = GetComponentsInParent<Transform>();
@@ -25,9 +24,16 @@ public class Left_Wall_Touch : MonoBehaviour
                 {
                     PlayerController controller = t.GetComponent<PlayerController>();
                     controller.canMoveLeft = false;
+                    controller.moveDirection *= 0;
+                    controller.jumpVelocity.x *= 0;
+                    controller.jumpVelocity.y -= controller.gravity * Time.deltaTime;
+
+                    if (controller.didJump)
+                    {
+
+                    }
                 }
             }
-
         }
     }
 
@@ -36,7 +42,6 @@ public class Left_Wall_Touch : MonoBehaviour
 
         if (other.tag == "Wall")
         {
-            //GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             transform.parent.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
             Transform[] ks = GetComponentsInParent<Transform>();
@@ -55,7 +60,5 @@ public class Left_Wall_Touch : MonoBehaviour
                 }
             }
         }
-            
-
     }
 }

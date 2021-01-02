@@ -21,17 +21,10 @@ public class PlayerController : MonoBehaviour
     public GameObject mainMenu;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
     public bool isActive = false;
 
-    private Vector2 moveDirection = Vector2.zero;
+    public Vector2 moveDirection = Vector2.zero;
+    public Vector2 jumpVelocity = Vector2.zero;
 
-    private Vector2 jumpVelocity = Vector2.zero;
 
-
-    private void Start()
-    {
-
-        //make main menu invisible
-        //mainMenu.gameObject.SetActive(false);
-    }
 
     void Update()
     {
@@ -40,7 +33,7 @@ public class PlayerController : MonoBehaviour
             canMoveLeft = true;
             canMoveRight = true;
         }
-        
+
         CharacterController controller = GetComponent<CharacterController>();
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
         moveDirection = transform.TransformDirection(moveDirection);
@@ -48,20 +41,24 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded)
         {
             moveDirection *= groundSpeed;
+
             if (Input.GetButton("Jump"))
             {
                 didJump = true;
-                jumpVelocity = moveDirection/1.6f;
-                jumpVelocity.y = jumpSpeed;
-
+          
+                if ((Input.GetAxis("Horizontal") == 0) || (Input.GetAxis("Horizontal") < 0 && canMoveLeft) || (Input.GetAxis("Horizontal") > 0 && canMoveRight))
+                {
+                    jumpVelocity = moveDirection / 1.6f;
+                    jumpVelocity.y = jumpSpeed;
+                }
             }
             else
             {
                 didJump = false;
                 jumpVelocity = Vector2.zero;
-
             }
         }
+
         else
         {
             moveDirection *= midairSpeed;
@@ -69,26 +66,33 @@ public class PlayerController : MonoBehaviour
 
         }
 
-
-
-        if (canMoveLeft && canMoveRight || Input.GetAxis("Horizontal") == 0)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+        if (Input.GetAxis("Horizontal") == 0 && didJump)
+        {
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            Debug.Log("Jumping");
+        }
 
         else if (canMoveLeft && Input.GetAxis("Horizontal") < 0)
-                   controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
 
         else if (canMoveRight && Input.GetAxis("Horizontal") > 0)
-                   controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
 
         else
         {
             if (Input.GetAxis("Horizontal") < 0 && !canMoveLeft)
+            {
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
                 controller.Move((stayVector + jumpVelocity) * Time.deltaTime);
-
+            }
 
             if (Input.GetAxis("Horizontal") > 0 && !canMoveRight)
+            {
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
                 controller.Move((stayVector + jumpVelocity) * Time.deltaTime);
+            }
         }
+
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -114,7 +118,8 @@ public class PlayerController : MonoBehaviour
             //    mainMenu.GetComponent<MainMenu>().ResumeGame();
             //}
 
-            if (!isActive) {
+            if (!isActive)
+            {
                 Time.timeScale = 0; //sets the time in game to 0, thus pausing the game
                 mainMenu.SetActive(true);
                 isActive = true;

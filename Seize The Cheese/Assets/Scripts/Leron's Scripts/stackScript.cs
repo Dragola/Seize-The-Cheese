@@ -40,7 +40,7 @@ public class stackScript : MonoBehaviour
             other.GetComponent<Rigidbody>().useGravity = false; // gravity gets set to false because the cube is now ontop of this cube and thus wont move when jumping.
             stackedCube = other.gameObject;
             isAnotherBoxStacked = true; //sets isAnotherBoxStacked true
-            Debug.Log("5");
+            //Debug.Log("5");
 
         }
     }
@@ -54,7 +54,7 @@ public class stackScript : MonoBehaviour
             other.tag = "CubeCheese";
             other.GetComponent<Rigidbody>().useGravity = true; // enables gravity so that cube may fall.
             isAnotherBoxStacked = false;
-            Debug.Log("6");
+            //Debug.Log("6");
         }
 
         //when any stacked cube gets hit off by obstacle while the player IS holding onto the most bottom cube.
@@ -64,8 +64,7 @@ public class stackScript : MonoBehaviour
             other.tag = "CubeCheese";
             other.GetComponent<Rigidbody>().useGravity = true; // enables gravity so that cube may fall.
             isAnotherBoxStacked = false; ;
-
-            Debug.Log("7");
+            //Debug.Log("7");
         }
 
 

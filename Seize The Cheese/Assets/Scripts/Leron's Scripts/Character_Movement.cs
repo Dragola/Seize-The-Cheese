@@ -117,7 +117,7 @@ public class Character_Movement : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "touchPointLeft" && Input.GetKey(KeyCode.X)) // if button X is pressed and player is in a cubes touchPointLeft trigger
+        if (other.tag == "touchPointLeft" && (!didPickUpParentCube && !didPickUpChildCube) && Input.GetKey(KeyCode.X)) // if button X is pressed and player is in a cubes touchPointLeft trigger
         {
             pickedUpMainCube = other.transform.parent.gameObject; // assigns an empty gameobject varaible to equal the picked up cube (allows the cube gameobject varaibles to be altered outside the trigger function)
             pickedUpMainCube.GetComponent<CheeseController>().didPickUp = true;
@@ -131,25 +131,25 @@ public class Character_Movement : MonoBehaviour
             other.transform.parent.position = pickUpPosition_Right.transform.position; // sets the position of the picked up cube to equal the pickUpPosition_Right position
             other.GetComponentInParent<Rigidbody>().useGravity = false; // disables gravity for the picked up cube
 
-            if (!didPickUpParentCube && other.transform.parent.tag == "CubeCheese") // checks to see if the player is picking up the most parent cube (which will always be the most bottom cube in a stack)
+            if (other.transform.parent.tag == "CubeCheese") // checks to see if the player is picking up the most parent cube (which will always be the most bottom cube in a stack)
             {
                 didPickUpParentCube = true; // sets to true
                 pickedUpOnLeftSide = true; // sets to true
                 //Debug.Log("1"); 
             }
 
-            if (!didPickUpChildCube && other.transform.parent.tag == "ChildCube")
+            if (other.transform.parent.tag == "ChildCube")
             {
 
                 didPickUpChildCube = true; // sets to true
                 pickedUpOnLeftSide = true; // sets to true
-                other.transform.parent.parent.GetComponent<stackScript>().isAnotherBoxStacked = false; // sets isAnotherBoxStacked in the cubes touchpoint gameobject's stackScript
+                //other.transform.parent.parent.GetComponent<stackScript>().isAnotherBoxStacked = false; // sets isAnotherBoxStacked in the cubes touchpoint gameobject's stackScript
                 other.transform.parent.tag = "CubeCheese"; //sets the picked cube's tag to equal "CubeCheese"
                 //Debug.Log("2");
             }
         }
 
-        if (other.tag == "touchPointRight" && Input.GetKey(KeyCode.X))
+        if (other.tag == "touchPointRight" && (!didPickUpParentCube && !didPickUpChildCube) && Input.GetKey(KeyCode.X))
         {
             pickedUpMainCube = other.transform.parent.gameObject; // assigns an empty gameobject varaible to equal the picked up cube (allows the cube gameobject varaibles to be altered outside the trigger function)
             pickedUpMainCube.GetComponent<CheeseController>().didPickUp = true;
@@ -162,21 +162,19 @@ public class Character_Movement : MonoBehaviour
             other.transform.parent.position = pickUpPosition_Left.transform.position; // sets the position of the picked up cube to equal the pickUpPosition_Right position
             other.GetComponentInParent<Rigidbody>().useGravity = false; // disables gravity for the picked up cube
 
-            if (!didPickUpParentCube && other.transform.parent.tag == "CubeCheese")
+            if (other.transform.parent.tag == "CubeCheese")
             {
                 didPickUpParentCube = true; // sets to true
                 pickedUpOnRightSide = true; // sets to true
-                
-
                 //Debug.Log("3");
             }
 
-            if (!didPickUpChildCube && other.transform.parent.tag == "ChildCube")
+            if (other.transform.parent.tag == "ChildCube")
             {
 
                 didPickUpChildCube = true;
                 pickedUpOnRightSide = true;
-                other.transform.parent.parent.GetComponent<stackScript>().isAnotherBoxStacked = false; // sets isAnotherBoxStacked in the cubes touchpoint gameobject's stackScript
+                //other.transform.parent.parent.GetComponent<stackScript>().isAnotherBoxStacked = false; // sets isAnotherBoxStacked in the cubes touchpoint gameobject's stackScript
                 other.transform.parent.tag = "CubeCheese"; //sets the picked cube's tag to equal "CubeCheese"
                 //Debug.Log("4");
             }

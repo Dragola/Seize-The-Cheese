@@ -9,9 +9,6 @@ public class Right_Wall_Touch : MonoBehaviour
 
         if (other.tag == "Wall")
         {
-            //touchingWall = true;
-
-            //GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             transform.parent.GetComponent<Rigidbody>().velocity = Vector3.zero; // DO NOT DELETE THIS - Makes the cube not push off the player when colliding with a wall.
 
             Transform[] ks = GetComponentsInParent<Transform>();
@@ -27,6 +24,10 @@ public class Right_Wall_Touch : MonoBehaviour
                 {
                     PlayerController controller = t.GetComponent<PlayerController>();
                     controller.canMoveRight = false;
+                    controller.moveDirection *= 0;
+                    controller.jumpVelocity.x *= 0;
+                    controller.jumpVelocity.y -= controller.gravity * Time.deltaTime;
+                    Debug.Log("Touched Wall While Jumping");
                 }
             }
         }
@@ -37,10 +38,8 @@ public class Right_Wall_Touch : MonoBehaviour
 
         if (other.tag == "Wall")
         {
-            //touchingWall = false;
-
-            //GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             transform.parent.GetComponent<Rigidbody>().velocity = Vector3.zero; // DO NOT DELETE THIS - Makes the cube not push off the player when colliding with a wall.
+            //transform.parent.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
             Transform[] ks = GetComponentsInParent<Transform>();
             foreach (Transform t in ks)
