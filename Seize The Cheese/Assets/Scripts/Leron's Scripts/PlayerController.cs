@@ -66,11 +66,8 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (Input.GetAxis("Horizontal") == 0 && didJump)
-        {
-            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-            Debug.Log("Jumping");
-        }
+        if (Input.GetAxis("Horizontal") == 0)
+             controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
 
         else if (canMoveLeft && Input.GetAxis("Horizontal") < 0)
             controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
