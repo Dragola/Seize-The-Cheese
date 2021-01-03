@@ -8,9 +8,22 @@ public class lerper : MonoBehaviour
     public Vector3 endPoint;
 
     public float speed;
+    public bool canMove = true;
 
     void Update()
     {
-        transform.position = Vector3.Lerp(startPoint, endPoint, Mathf.PingPong(Time.time/2, 1));
+        //call movement function if movement is enabled
+        if (canMove)
+        {
+            Movement();
+        }
+    }
+    private void Movement()
+    {
+        transform.position = Vector3.Lerp(startPoint, endPoint, Mathf.PingPong(Time.time / 2, 1));
+    }
+    public void SetMovement(bool enabled)
+    {
+        canMove = enabled;
     }
 }
