@@ -43,7 +43,6 @@ public class Character_Movement : MonoBehaviour
     public bool onStrongCheese = false; // checks to see if the player who at the time of eating strong cheese, is currently on it 
     public bool dead = false; // checks to see if the player is dead
     public float timeRemaining = 6; // sets the countdown timer value from 6 seconds
-    public bool notInDialog = true; //prevents strong cheese from counting down if in dialog
 
     private BoxCollider boxCollider;
 
@@ -332,7 +331,7 @@ public class Character_Movement : MonoBehaviour
 
         if (onStrongCheese)
         { // when the player picks up strong cheese a count down timer aprears inside a panel
-            if (timeRemaining > 0 && notInDialog == true)
+            if (timeRemaining > 0)
             {
                 Debug.Log(timeRemaining);
                 holder.SetActive(true);
@@ -340,7 +339,7 @@ public class Character_Movement : MonoBehaviour
                 DisplayTime(timeRemaining);
             }
 
-            else if (timeRemaining <= 0) // once the time reaches 0 on the timer the panel disappears
+            if (timeRemaining <= 0) // once the time reaches 0 on the timer the panel disappears
             {
                 Debug.Log("Done");
                 holder.SetActive(false);
@@ -356,10 +355,6 @@ public class Character_Movement : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
         txt.text = string.Format("Power Timer: {00:0}", seconds);
-    }
-    public void SetInDialog(bool status)
-    {
-        notInDialog = status;
     }
 }
 

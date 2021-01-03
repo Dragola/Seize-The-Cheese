@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +16,6 @@ public class DialogSystem : MonoBehaviour
     private PlayerController player = null;
     public List<CharacterDialog> dialogsToPrint = new List<CharacterDialog>();
     public CharacterDialog currentDialog;
-    public List<string> alreadyTriggered = new List<string>();
 
     // Start is called before the first frame update
     void Start()
@@ -100,9 +98,6 @@ public class DialogSystem : MonoBehaviour
                     inDialogMode = false;
                     player.enabled = true;
                     this.gameObject.SetActive(false);
-                    
-                    //allow enemies to moving and abilities to ticking down again
-                    ResumeGame();
                 }
             }
         }
@@ -124,69 +119,25 @@ public class DialogSystem : MonoBehaviour
         //only enable writing text if not already enabled
         if (writeText == false)
         {
-            //check dialog wasn't triggererd before (prevent repeated dialog)
-            if (alreadyTriggered.Contains(trigger) == false)
-            {
-                //prevent enemies from moving and abilities from ticking down
-                PauseGame();
+            writeText = true;
+            
+            //disable to prevent player from moving (WARNING - player stay in air if activated[aka gravity is disabled])
+            player.enabled = false;
+            this.gameObject.SetActive(true);
 
-                //add trigger to list of already done triggers
-                alreadyTriggered.Add(trigger);
+            //get dialogs for trigger
+            GetDialogToPrint(trigger);
 
-                //disable to prevent player from moving (WARNING - player stay in air if activated[aka gravity is disabled])
-                player.enabled = false;
-                this.gameObject.SetActive(true);
+            //set initial sentence and remove from list
+            currentDialog = dialogsToPrint[0];
+            dialogsToPrint.RemoveAt(0);
 
-                //get dialogs for trigger
-                GetDialogToPrint(trigger);
-
-                //set initial sentence and remove from list
-                currentDialog = dialogsToPrint[0];
-                dialogsToPrint.RemoveAt(0);
-
-                //indicate dialog is active
-                inDialogMode = true;
-
-                //start writing first sentence
-                writeText = true;
-            }
+            //indicate dialog is active
+            inDialogMode = true;
+            
+            //start writing first sentence
+            writeText = true;
         }
-    }
-    public void PauseGame()
-    {
-        //stop/freeze all enemies
-        GameObject[] dustBalls = GameObject.FindGameObjectsWithTag("Dust");
-        foreach (GameObject dust in dustBalls)
-        {
-            try
-            {
-                dust.GetComponent<lerper>().SetMovement(false);
-            }
-            catch (Exception e)
-            {
-                print(e);
-            }
-        }
-        //prevent strong cheese from ticking down
-        GameObject.Find("Player").GetComponent<Character_Movement>().SetInDialog(false);
-    }
-    public void ResumeGame()
-    {
-        //resume/unfreeze all enemies
-        GameObject[] dustBalls = GameObject.FindGameObjectsWithTag("Dust");
-        foreach (GameObject dust in dustBalls)
-        {
-            try
-            {
-                dust.GetComponent<lerper>().SetMovement(true);
-            }
-            catch (Exception e)
-            {
-                print(e);
-            }
-        }
-        //allow strong cheese to ticking down
-        GameObject.Find("Player").GetComponent<Character_Movement>().SetInDialog(true);
     }
 }
 //classes for the json file
