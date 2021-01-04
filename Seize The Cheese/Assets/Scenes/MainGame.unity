@@ -769,6 +769,7 @@ MonoBehaviour:
     sentence: 
     trigger: 
   alreadyTriggered: []
+  setInitialDialogActive: 0
 --- !u!4 &152608825 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3615640160459403239, guid: 4493abb8c519779419fd5f9da215ee51, type: 3}
@@ -2086,7 +2087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &444558205
 Transform:
   m_ObjectHideFlags: 0
@@ -4723,6 +4724,7 @@ MonoBehaviour:
   onStrongCheese: 0
   dead: 0
   timeRemaining: 11
+  notInDialog: 1
 --- !u!143 &999203582
 CharacterController:
   m_ObjectHideFlags: 0

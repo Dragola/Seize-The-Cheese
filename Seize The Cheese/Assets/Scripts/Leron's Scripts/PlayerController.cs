@@ -23,16 +23,14 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 jumpVelocity = Vector2.zero;
 
-
-    private void Start()
+    private void Awake()
     {
         //locate pause menu and make invisible
         pauseMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
         pauseMenu.gameObject.SetActive(false);
 
-        //locate and make dialog invisible
+        //locate dialog
         dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
-        dialog.gameObject.SetActive(false);
     }
     void Update()
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +34,9 @@ public class DialogSystem : MonoBehaviour
             //read json file and store in class
             characterDialogs = JsonUtility.FromJson<CharacterDialogs>(dialogJson.text);
         }
+
+        //make this object inactive until needed
+        this.gameObject.SetActive(false);
     }
     void Update()
     {
