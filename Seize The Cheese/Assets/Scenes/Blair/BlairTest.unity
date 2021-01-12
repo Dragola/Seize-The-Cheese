@@ -769,7 +769,6 @@ MonoBehaviour:
     sentence: 
     trigger: 
   alreadyTriggered: []
-  setInitialDialogActive: 0
 --- !u!4 &152608825 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3615640160459403239, guid: 4493abb8c519779419fd5f9da215ee51, type: 3}
@@ -4577,6 +4576,7 @@ GameObject:
   - component: {fileID: 999203579}
   - component: {fileID: 999203578}
   - component: {fileID: 999203577}
+  - component: {fileID: 999203585}
   - component: {fileID: 999203576}
   - component: {fileID: 999203580}
   - component: {fileID: 999203581}
@@ -4777,6 +4777,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0690712, y: 0.866585, z: 1}
   m_Center: {x: 0.0024758996, y: -0.07391864, z: 0}
+--- !u!114 &999203585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999203575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 0.75
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1007489301
 GameObject:
   m_ObjectHideFlags: 0
