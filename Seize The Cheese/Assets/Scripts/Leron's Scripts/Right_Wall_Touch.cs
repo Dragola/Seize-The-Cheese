@@ -18,7 +18,7 @@ public class Right_Wall_Touch : MonoBehaviour
             {
                 if (t.tag == "Player")
                 {
-                    PlayerController controller = t.GetComponent<PlayerController>();
+                    PlayerMovement controller = t.GetComponent<PlayerMovement>();
                     controller.canMoveRight = false;
                 }
             }
@@ -37,7 +37,7 @@ public class Right_Wall_Touch : MonoBehaviour
             {
                 if (t.tag == "Player")
                 {
-                    PlayerController controller = t.GetComponent<PlayerController>();
+                    PlayerMovement controller = t.GetComponent<PlayerMovement>();
                     controller.canMoveRight = true;
                 }
             }

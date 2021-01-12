@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Character_Movement : MonoBehaviour
+public class PlayerMechanics : MonoBehaviour
 {
 
     public float health; // health variable
@@ -284,7 +284,7 @@ public class Character_Movement : MonoBehaviour
                         didPickUpParentCube = false;
                         pickedUpOnLeftSide = false;
                         pickedUpOnRightSide = false;
-                        PlayerController playercontroller = GetComponent<PlayerController>();
+                        PlayerMovement playercontroller = GetComponent<PlayerMovement>();
                         playercontroller.canMoveLeft = true;
                         playercontroller.canMoveRight = true;
 
@@ -318,7 +318,7 @@ public class Character_Movement : MonoBehaviour
                             didPickUpParentCube = false;
                             pickedUpOnLeftSide = false;
                             pickedUpOnRightSide = false;
-                            PlayerController playercontroller = GetComponent<PlayerController>();
+                            PlayerMovement playercontroller = GetComponent<PlayerMovement>();
                             playercontroller.canMoveLeft = true;
                             playercontroller.canMoveRight = true;
 

@@ -13,7 +13,7 @@ public class DialogSystem : MonoBehaviour
     public bool writeText = false;
     public bool inDialogMode = false;
     public float textPrintRate = 0.25f;
-    private PlayerController player = null;
+    private PlayerMovement player = null;
     public List<CharacterDialog> dialogsToPrint = new List<CharacterDialog>();
     public CharacterDialog currentDialog;
     public List<string> alreadyTriggered = new List<string>();
@@ -26,7 +26,7 @@ public class DialogSystem : MonoBehaviour
         dialogText.text = "";
 
         //reference PlayerController script
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
         
         //only get json file if variable isn't null
         if (dialogJson != null)
@@ -170,7 +170,7 @@ public class DialogSystem : MonoBehaviour
             }
         }
         //prevent strong cheese from ticking down
-        GameObject.Find("Player").GetComponent<Character_Movement>().SetInDialog(false);
+        GameObject.Find("Player").GetComponent<PlayerMechanics>().SetInDialog(false);
     }
     public void ResumeGame()
     {
@@ -188,7 +188,7 @@ public class DialogSystem : MonoBehaviour
             }
         }
         //allow strong cheese to ticking down
-        GameObject.Find("Player").GetComponent<Character_Movement>().SetInDialog(true);
+        GameObject.Find("Player").GetComponent<PlayerMechanics>().SetInDialog(true);
     }
 }
 //classes for the json file

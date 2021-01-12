@@ -16,7 +16,7 @@ public class Left_Wall_Touch : MonoBehaviour
             {
                 if (t.tag == "Player")
                 {
-                    PlayerController controller = t.GetComponent<PlayerController>();
+                    PlayerMovement controller = t.GetComponent<PlayerMovement>();
                     controller.canMoveLeft = false;
                 }
             }
@@ -36,7 +36,7 @@ public class Left_Wall_Touch : MonoBehaviour
 
                 if (t.tag == "Player")
                 {
-                    PlayerController controller = t.GetComponent<PlayerController>();
+                    PlayerMovement controller = t.GetComponent<PlayerMovement>();
                     controller.canMoveLeft = true;
                 }
             }
