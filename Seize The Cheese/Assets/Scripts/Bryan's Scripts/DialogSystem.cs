@@ -27,7 +27,7 @@ public class DialogSystem : MonoBehaviour
 
         //reference PlayerController script
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        
+
         //only get json file if variable isn't null
         if (dialogJson != null)
         {
@@ -80,7 +80,7 @@ public class DialogSystem : MonoBehaviour
                 }
             }
             //if not writing sentence and return is hit/held
-            else if (writeText== false && Input.GetKeyDown(KeyCode.Return))
+            else if (writeText == false && Input.GetKeyDown(KeyCode.Return))
             {
                 //blank text
                 dialogText.text = "";
@@ -102,7 +102,7 @@ public class DialogSystem : MonoBehaviour
                     inDialogMode = false;
                     player.enabled = true;
                     this.gameObject.SetActive(false);
-                    
+
                     //allow enemies to moving and abilities to ticking down again
                     ResumeGame();
                 }
@@ -115,7 +115,7 @@ public class DialogSystem : MonoBehaviour
         foreach (CharacterDialog dialog in characterDialogs.dialog)
         {
             //if dialog's trigger matches trigger for dialog then add to list of dialogs to print
-            if(dialog.trigger.CompareTo(trigger) == 0)
+            if (dialog.trigger.CompareTo(trigger) == 0)
             {
                 dialogsToPrint.Add(dialog);
             }
