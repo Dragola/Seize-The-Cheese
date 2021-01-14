@@ -769,7 +769,6 @@ MonoBehaviour:
     sentence: 
     trigger: 
   alreadyTriggered: []
-  setInitialDialogActive: 0
 --- !u!4 &152608825 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3615640160459403239, guid: 4493abb8c519779419fd5f9da215ee51, type: 3}
@@ -3911,7 +3910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3615640160459403239, guid: 4493abb8c519779419fd5f9da215ee51, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3615640160459403239, guid: 4493abb8c519779419fd5f9da215ee51, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4703,6 +4702,7 @@ MonoBehaviour:
   healthBar: {fileID: 1134092716}
   didPickUpParentCube: 0
   didPickUpChildCube: 0
+  notInDialog: 1
   introPanel: {fileID: 444260073}
   DustPanel: {fileID: 743314743}
   healthCheesePanel: {fileID: 668078801}
@@ -4724,7 +4724,6 @@ MonoBehaviour:
   onStrongCheese: 0
   dead: 0
   timeRemaining: 11
-  notInDialog: 1
 --- !u!143 &999203582
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4764,6 +4763,11 @@ MonoBehaviour:
   canMoveRight: 1
   didJump: 0
   pauseMenuActive: 0
+  moveDirection: {x: 0, y: 0}
+  jumpVelocity: {x: 0, y: 0}
+  isActive: 0
+  mainMenu: {fileID: 0}
+  mainMenuActive: 0
 --- !u!65 &999203584
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5710,7 +5714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1210794617
 Transform:
   m_ObjectHideFlags: 0
@@ -7687,7 +7691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3615640160459403239, guid: 4493abb8c519779419fd5f9da215ee51, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3615640160459403239, guid: 4493abb8c519779419fd5f9da215ee51, type: 3}
       propertyPath: m_LocalPosition.x

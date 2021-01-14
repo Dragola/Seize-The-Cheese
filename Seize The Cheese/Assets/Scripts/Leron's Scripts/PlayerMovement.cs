@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //locate dialog
         dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
+        mainMenu = GameObject.Find("Pause Menu");
+        mainMenu.SetActive(false);
     }
     void Update()
     {
@@ -101,27 +103,28 @@ public class PlayerMovement : MonoBehaviour
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ////if main menu isn't currently active
-            //if (mainMenuActive == false) {
-            //    mainMenuActive = true;
+            //if main menu isn't currently active
+            if (mainMenuActive == false)
+            {
+                mainMenuActive = true;
 
-            //    //make main menu visible
-            //    mainMenu.gameObject.SetActive(true);
+                //make main menu visible
+                mainMenu.gameObject.SetActive(true);
 
-            //    //pauses game
-            //    mainMenu.GetComponent<MainMenu>().PauseGame();
-            //}
-            ////if main menu is currently active
-            //else
-            //{
-            //    mainMenuActive = false;
+                //pauses game
+                mainMenu.GetComponent<PauseMenu>().PauseGame();
+            }
+            //if main menu is currently active
+            else
+            {
+                mainMenuActive = false;
 
-            //    //make main menu invisible
-            //    mainMenu.gameObject.SetActive(false);
+                //make main menu invisible
+                mainMenu.gameObject.SetActive(false);
 
-            //    //resumes game
-            //    mainMenu.GetComponent<MainMenu>().ResumeGame();
-            //}
+                //resumes game
+                mainMenu.GetComponent<PauseMenu>().ResumeGame();
+            }
 
             if (!isActive)
             {

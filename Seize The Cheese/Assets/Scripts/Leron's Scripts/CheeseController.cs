@@ -7,13 +7,14 @@ public class CheeseController : MonoBehaviour
     public bool touchingWall = false;
     public bool didPickUp = false;
     public GameObject player;
-    public float amount;
+    public float MaxDistanceFromPlayer;
 
     PlayerMovement playercontroller;
     PlayerMechanics character_Movement;
 
     private void Start()
     {
+        player = GameObject.Find("Player");
         playercontroller = player.GetComponent<PlayerMovement>();
         character_Movement = player.GetComponent<PlayerMechanics>();
     }
@@ -22,7 +23,7 @@ public class CheeseController : MonoBehaviour
     {
         if (didPickUp)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) > amount)
+            if (Vector3.Distance(transform.position, player.transform.position) > MaxDistanceFromPlayer)
             {
                 transform.parent = null; // detaches from the pickUpPosition_Right gameobject
                 transform.parent = null; // detaches from the player gameobject
