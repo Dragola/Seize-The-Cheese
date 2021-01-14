@@ -58,10 +58,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  stackedCube: {fileID: 0}
-  amount: 0
-  isAnotherBoxStacked: 0
-  didHitSomething: 0
 --- !u!1 &3615640160459403238
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,9 +72,9 @@ GameObject:
   - component: {fileID: 3615640160459403235}
   - component: {fileID: 3615640160459403234}
   - component: {fileID: 3615640160459403237}
-  - component: {fileID: 3796146512263467691}
+  - component: {fileID: 3615640160459403236}
   m_Layer: 0
-  m_Name: Moveable Cheese
+  m_Name: Cube (26)
   m_TagString: CubeCheese
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +186,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 3
---- !u!114 &3796146512263467691
+--- !u!114 &3615640160459403236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -199,10 +195,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3615640160459403238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd6ad52f29c083342ae4a51e05a92528, type: 3}
+  m_Script: {fileID: 11500000, guid: 89fba1e5f63ba414c95e50a3640680ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchingWall: 0
-  didPickUp: 0
-  player: {fileID: 0}
-  MaxDistanceFromPlayer: 1
