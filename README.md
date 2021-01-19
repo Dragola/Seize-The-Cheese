@@ -1,4 +1,4 @@
-# George Brown College - Seize-The-Cheese
+# George Brown College | Seize-The-Cheese
 
 ## Game Description: 
 
