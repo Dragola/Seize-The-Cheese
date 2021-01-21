@@ -38,13 +38,13 @@
       },
       {
          "character": "Mousy",
-         "sentence": "My name is Mousy - I�m not from this town",
+         "sentence": "My name is Mousy - I'm not from this town",
          "order": 7,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Mousy",
-         "sentence": "I�m lost, you see, and I am feeling quite down",
+         "sentence": "I'm lost, you see, and I am feeling quite down",
          "order": 8,
          "trigger": "Beginning of Level"
       },
@@ -62,19 +62,19 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "My rear-end! Hmph!�",
+         "sentence": "My rear-end! Hmph!",
          "order": 11,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "I can see that you�re upset, so I�ll let that slide",
+         "sentence": "I can see that you're upset, so I'll let that slide",
          "order": 12,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "If you�re lost, maybe I can be your guide?",
+         "sentence": "If you're lost, maybe I can be your guide?",
          "order": 13,
          "trigger": "Beginning of Level"
       },
@@ -86,7 +86,7 @@
       },
       {
          "character": "Mousy",
-         "sentence": "�Hooray! Hooray! I would be so happy!�",
+         "sentence": "Hooray! Hooray! I would be so happy!",
          "order": 15,
          "trigger": "Beginning of Level"
       },
@@ -98,7 +98,7 @@
       },
       {
          "character": "Mousy",
-         "sentence": "Just one thing I have to ask, who are you?�",
+         "sentence": "Just one thing I have to ask, who are you?",
          "order": 17,
          "trigger": "Beginning of Level"
       },
@@ -110,7 +110,7 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "I�ve seen many things, and I know it all�",
+         "sentence": "I've seen many things, and I know it all",
          "order": 19,
          "trigger": "Beginning of Level"
       },
@@ -140,31 +140,31 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Yes, but look again, is there nothing else at all?�",
+         "sentence": "Yes, but look again, is there nothing else at all?",
          "order": 24,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Mousy",
-         "sentence": "Blocks of cheese! Oh, I can�t believe my eyes.�",
+         "sentence": "Blocks of cheese! Oh, I can't believe my eyes.",
          "order": 25,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Mousy",
-         "sentence": "Why are they here? What a wonderful surprise.�",
+         "sentence": "Why are they here? What a wonderful surprise.",
          "order": 26,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "They were left by mice who came before you�",
+         "sentence": "They were left by mice who came before you",
          "order": 27,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Yes, dear Mousy, they never made it through�",
+         "sentence": "Yes, dear Mousy, they never made it through",
          "order": 28,
          "trigger": "Beginning of Level"
       },
@@ -176,19 +176,19 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "What I�m about to say might just set you free�",
+         "sentence": "What I'm about to say might just set you free",
          "order": 30,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "To get out of here is simply confusing�",
+         "sentence": "To get out of here is simply confusing",
          "order": 31,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "It�ll be a challenge for sure, and not at all amusing�",
+         "sentence": "It'll be a challenge for sure, and not at all amusing",
          "order": 32,
          "trigger": "Beginning of Level"
       },
@@ -200,7 +200,7 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Hop right on those bricks, and don�t waste your time",
+         "sentence": "Hop right on those bricks, and don't waste your time",
          "order": 34,
          "trigger": "Beginning of Level"
       },
@@ -212,43 +212,43 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "They�re out of reach - don�t you wish you could fly?�",
+         "sentence": "They're out of reach - don't you wish you could fly?",
          "order": 36,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "But don�t fret, just look for blocks of cheddar cheese,�",
+         "sentence": "But don't fret, just look for blocks of cheddar cheese,",
          "order": 37,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Stack them on one another, now climb up with ease!�",
+         "sentence": "Stack them on one another, now climb up with ease!",
          "order": 38,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Try that, Mousy!�",
+         "sentence": "Try that, Mousy!",
          "order": 39,
          "trigger": "Beginning of Level"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "These grimy critters! Are you all right, dear Mousy?�",
+         "sentence": "These grimy critters! Are you all right, dear Mousy?",
          "order": 40,
          "trigger": "Dust Ball"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Of course not. You just ran right into a Dust Bunny!�",
+         "sentence": "Of course not. You just ran right into a Dust Bunny!",
          "order": 41,
          "trigger": "Dust Ball"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "These guys and gals don�t mean to offend you at all,",
+         "sentence": "These guys and gals don't mean to offend you at all,",
          "order": 42,
          "trigger": "Dust Ball"
       },
@@ -260,7 +260,7 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Mousy, good job! You�re a pretty tough fella.�",
+         "sentence": "Mousy, good job! You're a pretty tough fella.",
          "order": 44,
          "trigger": "Health Cheese"
       },
@@ -272,19 +272,19 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Eat these, and you will soon feel as good as new�",
+         "sentence": "Eat these, and you will soon feel as good as new",
          "order": 46,
          "trigger": "Health Cheese"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "If I weren�t a spider, I�d sure eat some too!",
+         "sentence": "If I weren't a spider, I'd sure eat some too!",
          "order": 47,
          "trigger": "Health Cheese"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Oh wow! Look, Mousy. It�s a nice block of Swiss",
+         "sentence": "Oh wow! Look, Mousy. It's a nice block of Swiss",
          "order": 48,
          "trigger": "Strong Cheese"
       },
@@ -296,25 +296,25 @@
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "They won�t make you cough, when you�re so big and strong�",
+         "sentence": "They won't make you cough, when you're so big and strong",
          "order": 50,
          "trigger": "Strong Cheese"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "You�ll run them right over, but not all day long!�",
+         "sentence": "You'll run them right over, but not all day long!",
          "order": 51,
          "trigger": "Strong Cheese"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "Three seconds, Mousy, that�s all it will give you�",
+         "sentence": "Three seconds, Mousy, that's all it will give you",
          "order": 52,
          "trigger": "Strong Cheese"
       },
       {
          "character": "Sir Bitsy",
-         "sentence": "But three seconds is all you�ll need to get through",
+         "sentence": "But three seconds is all you'll need to get through",
          "order": 53,
          "trigger": "Strong Cheese"
       }
