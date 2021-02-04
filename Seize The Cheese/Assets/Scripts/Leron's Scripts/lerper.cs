@@ -13,14 +13,14 @@ public class lerper : MonoBehaviour
     void Update()
     {
         //call movement function if movement is enabled
-        if (canMove)
+        if (canMove == true)
         {
             Movement();
         }
     }
     private void Movement()
     {
-        transform.position = Vector3.Lerp(startPoint, endPoint, Mathf.PingPong(Time.time / 2, 1));
+        transform.position = Vector3.Lerp(startPoint, endPoint, Mathf.PingPong(Time.time / 2 * speed, 1 ));
     }
     public void SetMovement(bool enabled)
     {
