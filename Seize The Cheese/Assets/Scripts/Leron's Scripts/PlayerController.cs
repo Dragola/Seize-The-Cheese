@@ -23,9 +23,48 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 jumpVelocity = Vector2.zero;
 
+    // KH_ParticleSystem
+    private CapsuleCollider playerCollider;
+    public ParticleSystem dustTrailPS;
+    public ParticleSystem dustKickoffPS;
+
+    void CreateDustTrail()
+    {
+        if (!dustTrailPS.isPlaying)
+        {
+            dustTrailPS.Play();
+        }
+    }
+    void StopDustTrail()
+    {
+        if (dustTrailPS.isPlaying)
+        {
+            dustTrailPS.Stop();
+        }
+    }
+     void CreateDustKickoff()
+    {
+        if (!dustKickoffPS.isPlaying)
+        {
+            dustKickoffPS.gameObject.transform.position = new Vector3(playerCollider.gameObject.transform.position.x, 
+                                                    playerCollider.bounds.min.y, 
+                                                    playerCollider.gameObject.transform.position.z);
+            dustKickoffPS.Play();
+        }
+    }
+    void StopDustKickoff()
+    {
+        if (dustKickoffPS.isPlaying)
+        {
+            dustKickoffPS.Stop();
+        }
+    }
 
     private void Start()
     {
+        playerCollider = GetComponent<CapsuleCollider>();
+        //Debug.Log(playerCollider.radius);
+
         //locate pause menu and make invisible
         pauseMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
         pauseMenu.gameObject.SetActive(false);
@@ -49,28 +88,29 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded)
         {
             moveDirection *= groundSpeed;
+            
+            //CreateDustTrail();
             if (Input.GetButton("Jump"))
             {
                 didJump = true;
                 jumpVelocity = moveDirection/1.6f;
                 jumpVelocity.y = jumpSpeed;
 
+                CreateDustKickoff();
             }
             else
             {
                 didJump = false;
                 jumpVelocity = Vector2.zero;
-
             }
         }
         else
         {
+            //StopDustTrail();
             moveDirection *= midairSpeed;
             jumpVelocity.y -= gravity * Time.deltaTime;
 
         }
-
-
 
         if (canMoveLeft && canMoveRight || Input.GetAxis("Horizontal") == 0)
                 controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
