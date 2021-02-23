@@ -13,22 +13,24 @@ public class PlayerMovement : MonoBehaviour
     public bool canMoveLeft = true;
     public bool canMoveRight = true;
     public bool didJump = false;
-    
+
     //UI
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
-    private Canvas pauseMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
+    //private Canvas pauseMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
     private Canvas dialog = null;
 
-    private Vector2 moveDirection = Vector2.zero;
+    public Vector2 moveDirection = Vector2.zero;
 
-    private Vector2 jumpVelocity = Vector2.zero;
+    public Vector2 jumpVelocity = Vector2.zero;
+
+    Vector2 stayVector = new Vector2(0, 0);
+    public bool isActive = false;
+    public GameObject mainMenu;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
+    public bool mainMenuActive = false; //used to prevent other controls + for colsing/opening main menu
+
 
     private void Awake()
     {
-        //locate pause menu and make invisible
-        pauseMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
-        pauseMenu.gameObject.SetActive(false);
-
         //locate dialog
         dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
     }
@@ -39,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
             canMoveLeft = true;
             canMoveRight = true;
         }
-        
+
         CharacterController controller = GetComponent<CharacterController>();
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
         moveDirection = transform.TransformDirection(moveDirection);
@@ -47,20 +49,24 @@ public class PlayerMovement : MonoBehaviour
         if (controller.isGrounded)
         {
             moveDirection *= groundSpeed;
+
             if (Input.GetButton("Jump"))
             {
                 didJump = true;
-                jumpVelocity = moveDirection/1.6f;
-                jumpVelocity.y = jumpSpeed;
 
+                if ((Input.GetAxis("Horizontal") == 0) || (Input.GetAxis("Horizontal") < 0 && canMoveLeft) || (Input.GetAxis("Horizontal") > 0 && canMoveRight))
+                {
+                    jumpVelocity = moveDirection / 1.6f;
+                    jumpVelocity.y = jumpSpeed;
+                }
             }
             else
             {
                 didJump = false;
                 jumpVelocity = Vector2.zero;
-
             }
         }
+
         else
         {
             moveDirection *= midairSpeed;
@@ -68,54 +74,77 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-
-
-        if (canMoveLeft && canMoveRight || Input.GetAxis("Horizontal") == 0)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+        if (Input.GetAxis("Horizontal") == 0)
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
 
         else if (canMoveLeft && Input.GetAxis("Horizontal") < 0)
-                   controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
 
         else if (canMoveRight && Input.GetAxis("Horizontal") > 0)
-                   controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
 
         else
         {
-            if (Input.GetAxis("Horizontal") < 0 && canMoveLeft)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            if (Input.GetAxis("Horizontal") < 0 && !canMoveLeft)
+            {
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                controller.Move((stayVector + jumpVelocity) * Time.deltaTime);
+            }
 
-
-            if (Input.GetAxis("Horizontal") > 0 && canMoveRight)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            if (Input.GetAxis("Horizontal") > 0 && !canMoveRight)
+            {
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                controller.Move((stayVector + jumpVelocity) * Time.deltaTime);
+            }
         }
+
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //if main menu isn't currently active
-            if (pauseMenuActive == false) {
-                pauseMenuActive = true;
-                //makes main menu visible
-                pauseMenu.gameObject.SetActive(true);
+            ////if main menu isn't currently active
+            //if (mainMenuActive == false) {
+            //    mainMenuActive = true;
 
-                //pauses game
-                pauseMenu.GetComponent<PauseMenu>().PauseGame();
+            //    //make main menu visible
+            //    mainMenu.gameObject.SetActive(true);
+
+            //    //pauses game
+            //    mainMenu.GetComponent<MainMenu>().PauseGame();
+            //}
+            ////if main menu is currently active
+            //else
+            //{
+            //    mainMenuActive = false;
+
+            //    //make main menu invisible
+            //    mainMenu.gameObject.SetActive(false);
+
+            //    //resumes game
+            //    mainMenu.GetComponent<MainMenu>().ResumeGame();
+            //}
+
+            if (!isActive)
+            {
+                Time.timeScale = 0; //sets the time in game to 0, thus pausing the game
+                mainMenu.SetActive(true);
+                isActive = true;
             }
-            //if main menu is currently active
+
             else
             {
-                pauseMenuActive = false;
-                //makes main menu invisible
-                pauseMenu.gameObject.SetActive(false);
-
-                //resumes game
-                pauseMenu.GetComponent<PauseMenu>().ResumeGame();
+                Time.timeScale = 1; //sets the time in game to 0, thus pausing the game
+                mainMenu.SetActive(false);
+                isActive = false;
             }
+
+
         }
     }
     public void ResumePlayer() //called if player uses resume in main menu (closes menu for player)
     {
-        pauseMenuActive = false;
-        //makes main menu invisible
-        pauseMenu.gameObject.SetActive(false);
+        mainMenuActive = false;
+
+        //make main menu invisible
+        mainMenu.gameObject.SetActive(false);
     }
 }
