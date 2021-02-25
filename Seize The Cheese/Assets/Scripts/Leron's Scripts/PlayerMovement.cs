@@ -34,12 +34,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K)) // iterates through all CubeCheese and ChildCube and drops them whe K is pressed
-        {
-            canMoveLeft = true;
-            canMoveRight = true;
-        }
-        
         CharacterController controller = GetComponent<CharacterController>();
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
         moveDirection = transform.TransformDirection(moveDirection);
@@ -67,8 +61,6 @@ public class PlayerMovement : MonoBehaviour
             jumpVelocity.y -= gravity * Time.deltaTime;
 
         }
-
-
 
         if (canMoveLeft && canMoveRight || Input.GetAxis("Horizontal") == 0)
                 controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);

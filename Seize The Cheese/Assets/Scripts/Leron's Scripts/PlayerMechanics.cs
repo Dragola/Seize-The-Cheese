@@ -9,9 +9,6 @@ public class PlayerMechanics : MonoBehaviour
     public float health; // health variable
     public Slider healthBar; // slider gameobject
 
-    public bool didPickUpParentCube = false;
-    public bool didPickUpChildCube = false;
-
     //various panels that appear once the player makes contact a specific object or has died
     public GameObject introPanel;
     public GameObject DustPanel;
@@ -25,14 +22,6 @@ public class PlayerMechanics : MonoBehaviour
 
     public Text txt; // text field gameobject which is used in the countdown timer appears for the power up
 
-    public GameObject pickUpPosition_Left; // gameobject that is found on the left side of the player, used to position a picked up cube
-    public GameObject pickUpPosition_Right; // gameobject that is found on the right side of the player, used to position a picked up cube
-    public bool pickedUpOnLeftSide = false; // boolean value created to check if the player has picked up the cube on his left side
-    public bool pickedUpOnRightSide = false; // boolean value created to check if the player has picked up the cube on his right side
-
-
-    public GameObject pickedUpMainCube; //empty gameobject created to be a placeholder in order to be linked to a future picked up cube.
-
     // boolean variables associated to various powerups and enemies.
     public bool touchedStrongCheese = false;
     public bool touchedHealthCheese = false;
@@ -45,9 +34,39 @@ public class PlayerMechanics : MonoBehaviour
     public float timeRemaining = 6; // sets the countdown timer value from 6 seconds
     public bool notInDialog = true; //prevents strong cheese from counting down if in dialog
 
+    //bryan's cheese block variables
+    public bool pickedUpCheese = false;
+    public GameObject cheeseBlock = null;
+    public byte collisionDirection = 0;     //0 = neither, 1 = right, 2 = left
+
     private BoxCollider boxCollider;
 
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("player collision = " + collision.gameObject.name);
+
+        //if hit block of cheese then call function to pick it up
+        if (collision.gameObject.name.CompareTo("Cheese") == 0 && cheeseBlock == null)
+        {
+            //set the cheese block one touch one
+            cheeseBlock = collision.gameObject;
+
+            //get contacts for collision
+            Vector2 direction = collision.GetContact(0).normal;
+
+            //hit from right side- put block on left side
+            if (direction.x == 1)
+            {
+                collisionDirection = 2;
+            }
+            //hit from left side- put block on right side
+            else if (direction.x == -1)
+            {
+                collisionDirection = 1;
+            }
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Dust") // when player touches a 'Dust Bunnie'
@@ -119,80 +138,6 @@ public class PlayerMechanics : MonoBehaviour
 
         }
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "touchPointLeft" && Input.GetKey(KeyCode.X)) // if button X is pressed and player is in a cubes touchPointLeft trigger
-        {
-
-            if (!didPickUpParentCube && other.transform.parent.tag == "CubeCheese") // checks to see if the player is picking up the most parent cube (which will always be the most bottom cube in a stack)
-            {
-                didPickUpParentCube = true; // sets to true
-                pickedUpOnLeftSide = true; // sets to true
-
-                other.transform.parent.parent = pickUpPosition_Right.transform; // the picked up cubes parent is now the players pickUpPosition_Right gameobject which is found on the rightside of the player
-                other.transform.parent.position = pickUpPosition_Right.transform.position; // sets the position of the picked up cube to equal the pickUpPosition_Right position
-                other.GetComponentInParent<Rigidbody>().useGravity = false; // disables gravity for the picked up cube
-                pickedUpMainCube = other.transform.parent.gameObject; // assigns an empty gameobject varaible to equal the picked up cube (allows the cube gameobject varaibles to be altered outside the trigger function)
-
-                //Debug.Log("1"); 
-            }
-
-            if (!didPickUpChildCube && other.transform.parent.tag == "ChildCube")
-            {
-
-                didPickUpChildCube = true; // sets to true
-                pickedUpOnLeftSide = true; // sets to true
-
-                other.transform.parent.parent = pickUpPosition_Right.transform; // the picked up cubes parent is now the players pickUpPosition_Right gameobject which is found on the rightside of the player
-                other.transform.parent.position = pickUpPosition_Right.transform.position; // sets the position of the picked up cube to equal the pickUpPosition_Right position
-                other.GetComponentInParent<Rigidbody>().useGravity = false; // disables gravity for the picked up cube
-                other.transform.parent.parent.GetComponent<stackScript>().isAnotherBoxStacked = false; // sets isAnotherBoxStacked in the cubes touchpoint gameobject's stackScript
-                other.transform.parent.tag = "CubeCheese"; //sets the picked cube's tag to equal "CubeCheese"
-                pickedUpMainCube = other.transform.parent.gameObject; // assigns an empty gameobject varaible to equal the picked up cube (allows the cube gameobject varaibles to be altered outside the trigger function)
-
-                //Debug.Log("2");
-            }
-
-        }
-
-        if (other.tag == "touchPointRight" && Input.GetKey(KeyCode.X))
-        {
-
-
-            if (!didPickUpParentCube && other.transform.parent.tag == "CubeCheese")
-            {
-                didPickUpParentCube = true; // sets to true
-                pickedUpOnRightSide = true; // sets to true
-
-                other.transform.parent.parent = pickUpPosition_Left.transform; // the picked up cubes parent is now the players pickUpPosition_Right gameobject which is found on the rightside of the player
-                other.transform.parent.position = pickUpPosition_Left.transform.position; // sets the position of the picked up cube to equal the pickUpPosition_Right position
-                other.GetComponentInParent<Rigidbody>().useGravity = false; // disables gravity for the picked up cube
-                pickedUpMainCube = other.transform.parent.gameObject; // assigns an empty gameobject varaible to equal the picked up cube (allows the cube gameobject varaibles to be altered outside the trigger function)
-
-                //Debug.Log("3");
-            }
-
-            if (!didPickUpChildCube && other.transform.parent.tag == "ChildCube")
-            {
-
-                didPickUpChildCube = true;
-                pickedUpOnRightSide = true;
-
-                other.transform.parent.parent = pickUpPosition_Left.transform; // the picked up cubes parent is now the players pickUpPosition_Right gameobject which is found on the rightside of the player
-                other.transform.parent.position = pickUpPosition_Left.transform.position; // sets the position of the picked up cube to equal the pickUpPosition_Right position
-                other.GetComponentInParent<Rigidbody>().useGravity = false;  // disables gravity for the picked up cube
-                other.transform.parent.parent.GetComponent<stackScript>().isAnotherBoxStacked = false; // sets isAnotherBoxStacked in the cubes touchpoint gameobject's stackScript
-                other.transform.parent.tag = "CubeCheese"; //sets the picked cube's tag to equal "CubeCheese"
-                pickedUpMainCube = other.transform.parent.gameObject;
-
-
-                //Debug.Log("4");
-            }
-
-        }
-    }
-
     void PauseGame()
     {
         Time.timeScale = 0; //sets the time in game to 0, thus pausing the game
@@ -231,103 +176,42 @@ public class PlayerMechanics : MonoBehaviour
             ResumeGame();
         }
 
-        if (Input.GetKeyDown(KeyCode.K)) // iterates through all CubeCheese and ChildCube and drops them whe K is pressed
+        //pickup cheese
+        if (cheeseBlock != null && pickedUpCheese == false && Input.GetKeyDown(KeyCode.E))
         {
-            Transform[] ks = GetComponentsInChildren<Transform>();
-            foreach (Transform t in ks)
+            //indicate cheese was picked up
+            pickedUpCheese = true;
+            cheeseBlock.GetComponent<CheeseBlock>().PickedUp();
+
+            //prevent rigidbody from moving block while being carried
+            cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+            //tell block it's been picked up
+            cheeseBlock.GetComponent<CheeseBlock>().PickedUp();
+
+            //attach gameobject to player
+            cheeseBlock.transform.parent = this.gameObject.transform;
+
+            //move block accordingly
+            if (collisionDirection == 1)
             {
-                if (t.tag == "CubeCheese")
-                {
-                    t.transform.parent = null;
-                    t.GetComponent<Rigidbody>().useGravity = true;
-                    //t.transform.position = pickUpPosition_Right.transform.position;
-                    didPickUpChildCube = false;
-                    didPickUpParentCube = false;
-                    pickedUpOnLeftSide = false;
-                    pickedUpOnRightSide = false;
-                    Debug.Log("Dropped");
-                }
-
-                if (t.tag == "ChildCube")
-                {
-                    //t.GetComponentInParent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-                    t.transform.parent = null;
-                    t.GetComponent<Rigidbody>().useGravity = true;
-                    //t.transform.position = pickUpPosition_Right.transform.position;
-                    didPickUpChildCube = false;
-                    didPickUpParentCube = false;
-                    pickedUpOnLeftSide = false;
-                    pickedUpOnRightSide = false;
-                    Debug.Log("Dropped");
-                }
+                Debug.Log("Right put");
+                //move cude to position
+                cheeseBlock.transform.localPosition = new Vector3(1.5f, 0.5f, 0);
             }
-        }
-
-        //will continuesly check if the picked up cube (which will always be the most parent cube) distance from the player in order to see if the cube was hit away from the player.
-
-        if (pickedUpOnRightSide)
-        {
-            Debug.Log("entered");
-            Transform[] ks = GetComponentsInChildren<Transform>();
-            foreach (Transform t in ks)
+            else if(collisionDirection == 2)
             {
-                Debug.Log(t.tag);
-                if (t.tag == "CubeCheese")
-                {
-                    if (Vector3.Distance(t.transform.position, pickUpPosition_Left.transform.position) > amount)
-                    {
-                        t.transform.parent = null; // detaches from the pickUpPosition_Right gameobject
-                        t.transform.parent = null; // detaches from the player gameobject
-
-                        t.GetComponent<Rigidbody>().useGravity = true;
-                        didPickUpChildCube = false;
-                        didPickUpParentCube = false;
-                        pickedUpOnLeftSide = false;
-                        pickedUpOnRightSide = false;
-                        PlayerMovement playercontroller = GetComponent<PlayerMovement>();
-                        playercontroller.canMoveLeft = true;
-                        playercontroller.canMoveRight = true;
-
-                        Debug.Log("oof");
-
-                    }
-                }
-
+                Debug.Log("Left put");
+                //move cude to position
+                cheeseBlock.transform.localPosition = new Vector3(-1.5f, 0.5f, 0);
             }
+
+            //reset collision drection
+            collisionDirection = 0;
         }
-
-        if (pickedUpOnLeftSide)
+        if(cheeseBlock!= null && pickedUpCheese == true && Input.GetKeyDown(KeyCode.R))
         {
-                Debug.Log("entered2");
-
-                Transform[] ks = GetComponentsInChildren<Transform>();
-                foreach (Transform t in ks)
-                {
-                    Debug.Log(t.tag);
-
-                    if (t.tag == "CubeCheese")
-                    {
-
-                        if (Vector3.Distance(t.transform.position, pickUpPosition_Right.transform.position) > amount)
-                        {
-                            t.transform.parent = null; // detaches from the pickUpPosition_Right gameobject
-                            t.transform.parent = null; // detaches from the player gameobject
-
-                            t.GetComponent<Rigidbody>().useGravity = true;
-                            didPickUpChildCube = false;
-                            didPickUpParentCube = false;
-                            pickedUpOnLeftSide = false;
-                            pickedUpOnRightSide = false;
-                            PlayerMovement playercontroller = GetComponent<PlayerMovement>();
-                            playercontroller.canMoveLeft = true;
-                            playercontroller.canMoveRight = true;
-
-                            Debug.Log("oof2");
-
-                        }
-
-                    }
-                }
+            DropCheese();
         }
 
         if (onStrongCheese)
@@ -349,6 +233,16 @@ public class PlayerMechanics : MonoBehaviour
             }
         }
     }
+   
+    private void OnCollisionExit(Collision collision)
+    {
+        //set the cheese block to null if not touching
+        if(cheeseBlock != null && pickedUpCheese == false)
+        {
+            cheeseBlock = null;
+            collisionDirection = 0;
+        }
+    }
 
     // calculation for the timer
     void DisplayTime(float timeToDisplay)
@@ -360,6 +254,44 @@ public class PlayerMechanics : MonoBehaviour
     public void SetInDialog(bool status)
     {
         notInDialog = status;
+    }
+    public void DropCheese()
+    {
+        pickedUpCheese = false;
+        cheeseBlock.GetComponent<CheeseBlock>().Dropped();
+
+        //set constraints for rigidbody
+        Rigidbody cheeseRigid = cheeseBlock.GetComponent<Rigidbody>();
+        cheeseRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+
+        //remove parent for cheese
+        cheeseBlock.transform.parent = null;
+
+        cheeseBlock = null;
+        collisionDirection = 0;
+    }
+    public void PlayerMovement(byte direction)
+    {
+        //prevent right movement
+        if(direction == 0)
+        {
+            this.GetComponent<PlayerMovement>().canMoveRight = false;
+        }
+        //prevent left movement
+        else if (direction == 1)
+        {
+            this.GetComponent<PlayerMovement>().canMoveLeft = false;
+        }
+        //enable right movment
+        else if (direction == 2)
+        {
+            this.GetComponent<PlayerMovement>().canMoveLeft = true;
+        }
+        //enable left movment
+        else if (direction == 3)
+        {
+            this.GetComponent<PlayerMovement>().canMoveRight = true;
+        }
     }
 }
 
