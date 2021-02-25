@@ -933,6 +933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadAsync: 1
+  currentSceneName: 
 --- !u!1 &176035362
 GameObject:
   m_ObjectHideFlags: 0
@@ -4709,7 +4710,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999203575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.06, y: 4.91, z: -6.182}
+  m_LocalPosition: {x: -15.39, y: 0.97, z: -6.182}
   m_LocalScale: {x: 0.49207124, y: 0.47571385, z: 0.3705077}
   m_Children:
   - {fileID: 10008852}
