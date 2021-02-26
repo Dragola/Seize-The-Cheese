@@ -77,13 +77,7 @@ public class PlayerMechanics : MonoBehaviour
             {
                 healthBar.value -= 0.5f; // lowers current health by half
 
-                if (!touchedDust) // when the player touches the dust bunny for the first time a message appears exaplaing what a dust bunnie does when interacted with.
-                {
-                    Debug.Log("Touched");
-                    touchedDust = true;
-                    DustPanel.SetActive(true);
-                    PauseGame();
-                }
+               
 
                 if (healthBar.value <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
                 {
@@ -103,25 +97,11 @@ public class PlayerMechanics : MonoBehaviour
             healthBar.value += 0.5f;
             Destroy(other.gameObject);
 
-            if (!touchedHealthCheese)
-            {
-                touchedHealthCheese = true;
-                healthCheesePanel.SetActive(true);
-                PauseGame();
-            }
         }
 
-        if (other.tag == "Spider") // when the player interacts with 'Sir Bitsy' 
-        {
-            if (!touchedSpider)
-            {
-                touchedSpider = true;
-                introPanel.SetActive(true);
-                PauseGame();
-            }
+       
 
-
-        }
+        
 
         if (other.tag == "StrongCheese")  // when the player interacts with 'StrongCheese' 
         {
@@ -129,12 +109,7 @@ public class PlayerMechanics : MonoBehaviour
             onStrongCheese = true;
             Destroy(other.gameObject);
 
-            if (!touchedStrongCheese)
-            {
-                touchedStrongCheese = true;
-                strongCheesePanel.SetActive(true);
-                PauseGame();
-            }
+           
 
         }
     }
