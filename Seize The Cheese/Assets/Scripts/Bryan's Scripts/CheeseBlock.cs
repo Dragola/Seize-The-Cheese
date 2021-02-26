@@ -30,7 +30,7 @@ public class CheeseBlock : MonoBehaviour
     {
         //Debug.Log("cheese collision = " + collision.gameObject.name);
         //if it collides with something other then the player then determine where it was hit
-        if (collision.gameObject.name.CompareTo("Player") != 0)
+        if (collision.gameObject.name.CompareTo("Player") != 0 && pickedUp)
         {
             collidedObject = collision.gameObject;
 
@@ -46,22 +46,24 @@ public class CheeseBlock : MonoBehaviour
             else if (direction.x == -1 && pickedUp)
             {
                 player.PlayerMovement(0);
+                player.PlayerMovement(3);
             }
             //[revent left movement if cheese is hitting object
             else if (direction.x == 1 && pickedUp)
             {
                 player.PlayerMovement(1);
+                player.PlayerMovement(3);
             }
         }
     }
     private void OnCollisionExit(Collision collision)
     {
         //unreference the collided object
-        if(collidedObject != null)
+        if(collidedObject != null && pickedUp)
         {
             collidedObject = null;
             player.PlayerMovement(2);
-            player.PlayerMovement(3);
+            player.PlayerMovement(4);
         }
     }
 }

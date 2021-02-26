@@ -77,12 +77,9 @@ public class PlayerMechanics : MonoBehaviour
         if (other.tag == "Dust") // when player touches a 'Dust Bunnie'
         {
             Destroy(other.gameObject); // destorys the dust bunnie
-
             if (!onStrongCheese)
             {
                 healthBar.value -= 0.5f; // lowers current health by half
-
-               
 
                 if (healthBar.value <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
                 {
@@ -96,25 +93,16 @@ public class PlayerMechanics : MonoBehaviour
             }
         }
 
-
         if (other.tag == "HealthCheese") // when the player interacts with a 'Health Cheese' power up
         {
             healthBar.value += 0.5f;
             Destroy(other.gameObject);
-
         }
-
-       
-
-        
 
         if (other.tag == "StrongCheese")  // when the player interacts with 'StrongCheese' 
         {
-
             onStrongCheese = true;
             Destroy(other.gameObject);
-
-           
 
         }
     }
@@ -240,6 +228,10 @@ public class PlayerMechanics : MonoBehaviour
 
         cheeseBlock = null;
         collisionDirection = 0;
+
+        //enable movement and uncheck cheese hitting wall
+        PlayerMovement(2);
+        PlayerMovement(4);
     }
     public void PlayerMovement(byte direction)
     {
@@ -247,21 +239,30 @@ public class PlayerMechanics : MonoBehaviour
         if(direction == 0)
         {
             this.GetComponent<PlayerMovement>().canMoveRight = false;
+            this.GetComponent<PlayerMovement>().cheeseHittingWall = true;
         }
         //prevent left movement
         else if (direction == 1)
         {
             this.GetComponent<PlayerMovement>().canMoveLeft = false;
+            this.GetComponent<PlayerMovement>().cheeseHittingWall = true;
         }
-        //enable right movment
+        //enable movment
         else if (direction == 2)
         {
             this.GetComponent<PlayerMovement>().canMoveLeft = true;
+            this.GetComponent<PlayerMovement>().canMoveRight = true;
+            this.GetComponent<PlayerMovement>().cheeseHittingWall = false;
         }
-        //enable left movment
+        //indicate cheese is touching wall
         else if (direction == 3)
         {
-            this.GetComponent<PlayerMovement>().canMoveRight = true;
+            this.GetComponent<PlayerMovement>().cheeseHittingWall = true;
+        }
+        //indicate cheese is not in wall
+        else if (direction == 4)
+        {
+            this.GetComponent<PlayerMovement>().cheeseHittingWall = false;
         }
     }
 }

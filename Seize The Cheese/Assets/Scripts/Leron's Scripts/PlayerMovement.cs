@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canMoveLeft = true;
     public bool canMoveRight = true;
     public bool didJump = false;
+    public bool cheeseHittingWall = false;
     
     //UI
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
@@ -21,10 +22,13 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveDirection = Vector2.zero;
 
-    private Vector2 jumpVelocity = Vector2.zero;
+    public Vector2 jumpVelocity = Vector2.zero;
+
+    CharacterController controller = null;
 
     private void Awake()
     {
+        controller = GetComponent<CharacterController>();
         //locate pause menu and make invisible
         pauseMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
         pauseMenu.gameObject.SetActive(false);
@@ -34,9 +38,18 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        CharacterController controller = GetComponent<CharacterController>();
-        Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
+        moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
         moveDirection = transform.TransformDirection(moveDirection);
+
+        //prevent player from moving if cheese is hitting wall and jumped
+        if (didJump && cheeseHittingWall)
+        {
+            moveDirection *= 0;
+            jumpVelocity.x *= 0;
+            jumpVelocity.y -= gravity * Time.deltaTime;
+            
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+        }
 
         if (controller.isGrounded)
         {
@@ -45,17 +58,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 Debug.Log("controller.isGrounded + input 'Jump'");
                 didJump = true;
-                jumpVelocity = moveDirection/1.6f;
+                jumpVelocity = moveDirection / 1.6f;
                 jumpVelocity.y = jumpSpeed;
 
             }
             else
             {
                 Debug.Log("controller.isGrounded - input 'Jump'");
-                didJump = true;
+                //didJump = true;
                 didJump = false;
                 jumpVelocity = Vector2.zero;
-
             }
         }
         else
@@ -63,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("controller.isGrounded = false");
             moveDirection *= midairSpeed;
             jumpVelocity.y -= gravity * Time.deltaTime;
-
         }
 
         if (canMoveLeft && canMoveRight || Input.GetAxis("Horizontal") == 0)
