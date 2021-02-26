@@ -28,8 +28,8 @@ public class CheeseBlock : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("cheese collision = " + collision.gameObject.name);
-        //if it collides with something other then the player
+        //Debug.Log("cheese collision = " + collision.gameObject.name);
+        //if it collides with something other then the player then determine where it was hit
         if (collision.gameObject.name.CompareTo("Player") != 0)
         {
             collidedObject = collision.gameObject;
@@ -37,17 +37,17 @@ public class CheeseBlock : MonoBehaviour
             //get contacts for collision
             Vector2 direction = collision.GetContact(0).normal;
 
-            if (direction.y == 1 && pickedUp)
+            //if top or bottom of the cheese is hit then drop if player is holding
+            if ((direction.y == 1 || direction.y == -1) && pickedUp)
             {
                 player.DropCheese();
-
             }
-            //right
+            //prevent right movement if cheese is hitting object
             else if (direction.x == -1 && pickedUp)
             {
                 player.PlayerMovement(0);
             }
-            //left
+            //[revent left movement if cheese is hitting object
             else if (direction.x == 1 && pickedUp)
             {
                 player.PlayerMovement(1);
@@ -59,30 +59,9 @@ public class CheeseBlock : MonoBehaviour
         //unreference the collided object
         if(collidedObject != null)
         {
+            collidedObject = null;
             player.PlayerMovement(2);
             player.PlayerMovement(3);
-            collidedObject = null;
-        }
-        
-        if (collision.gameObject.name.CompareTo("Player") != 0)
-        {
-            //if there is a contact point
-            if (collision.contactCount > 1)
-            {
-                //get contacts for collision
-                Vector2 direction = collision.GetContact(0).normal;
-
-                //right
-                if (direction.x == -1 && pickedUp)
-                {
-                    player.PlayerMovement(2);
-                }
-                //left
-                else if (direction.x == 1 && pickedUp)
-                {
-                    player.PlayerMovement(3);
-                }
-            }
         }
     }
 }

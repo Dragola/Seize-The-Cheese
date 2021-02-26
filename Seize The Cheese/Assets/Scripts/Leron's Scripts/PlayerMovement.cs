@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         //locate dialog
         dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
     }
-    void Update()
+    private void Update()
     {
         CharacterController controller = GetComponent<CharacterController>();
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
             moveDirection *= groundSpeed;
             if (Input.GetButton("Jump"))
             {
+                Debug.Log("controller.isGrounded + input 'Jump'");
                 didJump = true;
                 jumpVelocity = moveDirection/1.6f;
                 jumpVelocity.y = jumpSpeed;
@@ -50,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                Debug.Log("controller.isGrounded - input 'Jump'");
+                didJump = true;
                 didJump = false;
                 jumpVelocity = Vector2.zero;
 
@@ -57,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            Debug.Log("controller.isGrounded = false");
             moveDirection *= midairSpeed;
             jumpVelocity.y -= gravity * Time.deltaTime;
 

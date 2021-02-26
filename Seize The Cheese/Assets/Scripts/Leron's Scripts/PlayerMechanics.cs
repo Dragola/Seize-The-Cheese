@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerMechanics : MonoBehaviour
 {
-
     public float health; // health variable
     public Slider healthBar; // slider gameobject
 
@@ -28,7 +27,6 @@ public class PlayerMechanics : MonoBehaviour
     public bool touchedDust = false;
     public bool touchedSpider = false;
 
-
     public bool onStrongCheese = false; // checks to see if the player who at the time of eating strong cheese, is currently on it 
     public bool dead = false; // checks to see if the player is dead
     public float timeRemaining = 6; // sets the countdown timer value from 6 seconds
@@ -39,12 +37,10 @@ public class PlayerMechanics : MonoBehaviour
     public GameObject cheeseBlock = null;
     public byte collisionDirection = 0;     //0 = neither, 1 = right, 2 = left
 
-    private BoxCollider boxCollider;
-
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("player collision = " + collision.gameObject.name);
+        //Debug.Log("player collision = " + collision.gameObject.name);
 
         //if hit block of cheese then call function to pick it up
         if (collision.gameObject.name.CompareTo("Cheese") == 0 && cheeseBlock == null)
@@ -65,6 +61,15 @@ public class PlayerMechanics : MonoBehaviour
             {
                 collisionDirection = 1;
             }
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        //set the cheese block to null if not touching
+        if (cheeseBlock != null && pickedUpCheese == false)
+        {
+            cheeseBlock = null;
+            collisionDirection = 0;
         }
     }
     void OnTriggerEnter(Collider other)
@@ -147,7 +152,7 @@ public class PlayerMechanics : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return)) // if enter is pressed the game continues unless the player is dead.
         {
-            Debug.Log("Return key was pressed.");
+            //Debug.Log("Return key was pressed.");
             ResumeGame();
         }
 
@@ -170,13 +175,13 @@ public class PlayerMechanics : MonoBehaviour
             //move block accordingly
             if (collisionDirection == 1)
             {
-                Debug.Log("Right put");
+                //Debug.Log("Right put");
                 //move cude to position
                 cheeseBlock.transform.localPosition = new Vector3(1.5f, 0.5f, 0);
             }
             else if(collisionDirection == 2)
             {
-                Debug.Log("Left put");
+                //Debug.Log("Left put");
                 //move cude to position
                 cheeseBlock.transform.localPosition = new Vector3(-1.5f, 0.5f, 0);
             }
@@ -184,16 +189,18 @@ public class PlayerMechanics : MonoBehaviour
             //reset collision drection
             collisionDirection = 0;
         }
+        //release cheese if holding one
         if(cheeseBlock!= null && pickedUpCheese == true && Input.GetKeyDown(KeyCode.R))
         {
             DropCheese();
         }
 
+        //if strong cheese effect is active
         if (onStrongCheese)
         { // when the player picks up strong cheese a count down timer aprears inside a panel
             if (timeRemaining > 0 && notInDialog == true)
             {
-                Debug.Log(timeRemaining);
+                //Debug.Log(timeRemaining);
                 holder.SetActive(true);
                 timeRemaining -= Time.deltaTime;
                 DisplayTime(timeRemaining);
@@ -201,24 +208,13 @@ public class PlayerMechanics : MonoBehaviour
 
             else if (timeRemaining <= 0) // once the time reaches 0 on the timer the panel disappears
             {
-                Debug.Log("Done");
+                //Debug.Log("Done");
                 holder.SetActive(false);
                 onStrongCheese = false;
                 timeRemaining = 11;
             }
         }
     }
-   
-    private void OnCollisionExit(Collision collision)
-    {
-        //set the cheese block to null if not touching
-        if(cheeseBlock != null && pickedUpCheese == false)
-        {
-            cheeseBlock = null;
-            collisionDirection = 0;
-        }
-    }
-
     // calculation for the timer
     void DisplayTime(float timeToDisplay)
     {
