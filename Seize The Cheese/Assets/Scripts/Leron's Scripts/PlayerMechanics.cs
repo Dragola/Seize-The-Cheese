@@ -149,30 +149,15 @@ public class PlayerMechanics : MonoBehaviour
         {
             //indicate cheese was picked up
             pickedUpCheese = true;
-            cheeseBlock.GetComponent<CheeseBlock>().PickedUp();
 
             //prevent rigidbody from moving block while being carried
             cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
-            //tell block it's been picked up
-            cheeseBlock.GetComponent<CheeseBlock>().PickedUp();
-
             //attach gameobject to player
             cheeseBlock.transform.parent = this.gameObject.transform;
 
-            //move block accordingly
-            if (collisionDirection == 1)
-            {
-                //Debug.Log("Right put");
-                //move cude to position
-                cheeseBlock.transform.localPosition = new Vector3(1.5f, 0.5f, 0);
-            }
-            else if(collisionDirection == 2)
-            {
-                //Debug.Log("Left put");
-                //move cude to position
-                cheeseBlock.transform.localPosition = new Vector3(-1.5f, 0.5f, 0);
-            }
+            //tell block it's been picked up
+            cheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection);
 
             //reset collision drection
             collisionDirection = 0;
@@ -225,9 +210,6 @@ public class PlayerMechanics : MonoBehaviour
 
         //remove parent for cheese
         cheeseBlock.transform.parent = null;
-
-        cheeseBlock = null;
-        collisionDirection = 0;
 
         //enable movement and uncheck cheese hitting wall
         PlayerMovement(2);

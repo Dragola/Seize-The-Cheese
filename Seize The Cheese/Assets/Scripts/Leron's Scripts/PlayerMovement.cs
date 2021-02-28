@@ -20,11 +20,13 @@ public class PlayerMovement : MonoBehaviour
     private Canvas pauseMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
     private Canvas dialog = null;
 
-    private Vector2 moveDirection = Vector2.zero;
+    public Vector2 moveDirection = Vector2.zero;
 
     public Vector2 jumpVelocity = Vector2.zero;
 
-    CharacterController controller = null;
+    public Vector2 jumpVelocityHolder = Vector2.zero;
+
+    public CharacterController controller = null;
 
     private void Awake()
     {
@@ -42,15 +44,6 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = transform.TransformDirection(moveDirection);
 
         //prevent player from moving if cheese is hitting wall and jumped
-        if (didJump && cheeseHittingWall)
-        {
-            moveDirection *= 0;
-            jumpVelocity.x *= 0;
-            jumpVelocity.y -= gravity * Time.deltaTime;
-            
-            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-        }
-
         if (controller.isGrounded)
         {
             moveDirection *= groundSpeed;
@@ -72,28 +65,58 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("controller.isGrounded = false");
-            moveDirection *= midairSpeed;
-            jumpVelocity.y -= gravity * Time.deltaTime;
+            //if not jumping into a wall
+            if (cheeseHittingWall == false)
+            {
+                Debug.Log("controller.isGrounded = false");
+                moveDirection *= midairSpeed;
+                jumpVelocity.y -= gravity * Time.deltaTime;
+            }
         }
 
-        if (canMoveLeft && canMoveRight || Input.GetAxis("Horizontal") == 0)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-
-        else if (canMoveLeft && Input.GetAxis("Horizontal") < 0)
-                   controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-
-        else if (canMoveRight && Input.GetAxis("Horizontal") > 0)
-                   controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-
+        //if in mid air and cheese is hitting a wall
+        if (didJump && cheeseHittingWall)
+        {
+            moveDirection = Vector3.zero;
+            //hopefully stop player 
+            if (jumpVelocityHolder == Vector2.zero)
+            {
+                Debug.Log("jumpVelocityHolder == Vector2.zero");
+                jumpVelocityHolder = jumpVelocity;
+                jumpVelocity = Vector2.zero;
+            }
+            else
+            {
+                Debug.Log("jumpVelocityHolder != Vector2.zero");
+                jumpVelocity.x *= 0;
+                jumpVelocity.y -= gravity * Time.deltaTime;
+            }
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+        }
         else
         {
-            if (Input.GetAxis("Horizontal") < 0 && canMoveLeft)
+            //reset holader
+            Debug.Log("Reset jumpVelocityHolder");
+            jumpVelocityHolder = Vector2.zero;
+
+            if (canMoveLeft && canMoveRight || Input.GetAxis("Horizontal") == 0)
                 controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
 
-
-            if (Input.GetAxis("Horizontal") > 0 && canMoveRight)
+            else if (canMoveLeft && Input.GetAxis("Horizontal") < 0)
                 controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+
+            else if (canMoveRight && Input.GetAxis("Horizontal") > 0)
+                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+
+            else
+            {
+                if (Input.GetAxis("Horizontal") < 0 && canMoveLeft)
+                    controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+
+
+                if (Input.GetAxis("Horizontal") > 0 && canMoveRight)
+                    controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            }
         }
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -124,5 +147,19 @@ public class PlayerMovement : MonoBehaviour
         pauseMenuActive = false;
         //makes main menu invisible
         pauseMenu.gameObject.SetActive(false);
+    }
+    public void MoveBack()
+    {
+        //if not in mid air then move player back
+        if (didJump == false && cheeseHittingWall == true)
+        {
+            moveDirection = Vector3.zero;
+            moveDirection.x = -0.08f;
+
+            jumpVelocity = Vector2.zero;
+            jumpVelocity.x = -0.08f;
+
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+        }
     }
 }

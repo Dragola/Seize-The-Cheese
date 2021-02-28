@@ -16,10 +16,21 @@ public class CheeseBlock : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerMechanics>();
     }
 
-    public void PickedUp()
+    public void PickedUp(byte direction)
     {
         pickedUp = true;
-        return;
+
+        //place block on right side
+        if (direction == 1)
+        {
+            transform.localPosition = new Vector3(1.5f, 0.5f, 0);
+        }
+        //place block on left side
+        else if (direction == 2)
+        {
+            transform.localPosition = new Vector3(-1.5f, 0.5f, 0);
+        }
+            return;
     }
     public void Dropped()
     {
@@ -54,6 +65,14 @@ public class CheeseBlock : MonoBehaviour
                 player.PlayerMovement(1);
                 player.PlayerMovement(3);
             }
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (pickedUp && collision.gameObject.name.CompareTo("Player") != 0)
+        {
+            //move player back if block is in the wall
+            gameObject.GetComponentInParent<PlayerMovement>().MoveBack();
         }
     }
     private void OnCollisionExit(Collision collision)
