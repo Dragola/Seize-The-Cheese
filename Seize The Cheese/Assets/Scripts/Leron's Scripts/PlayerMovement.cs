@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool didJump = false;
     public bool cheeseHittingWall = false;
     public bool cheeseRayHit = false;
-    
+
     //UI
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
     private Canvas pauseMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
@@ -25,13 +25,12 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector2 jumpVelocity = Vector2.zero;
 
-    public Vector2 jumpVelocityHolder = Vector2.zero;
-
     public CharacterController controller = null;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+
         //locate pause menu and make invisible
         pauseMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
         pauseMenu.gameObject.SetActive(false);
@@ -51,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetButton("Jump"))
             {
-                Debug.Log("controller.isGrounded + input 'Jump'");
+                //Debug.Log("controller.isGrounded + input 'Jump'");
                 didJump = true;
                 jumpVelocity = moveDirection / 1.6f;
                 jumpVelocity.y = jumpSpeed;
@@ -59,17 +58,17 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("controller.isGrounded - input 'Jump'");
+                //Debug.Log("controller.isGrounded - input 'Jump'");
                 didJump = false;
                 jumpVelocity = Vector2.zero;
             }
         }
         else
         {
-            Debug.Log("controller.isGrounded = false");
+            //Debug.Log("controller.isGrounded = false");
             moveDirection *= midairSpeed;
             jumpVelocity.y -= gravity * Time.deltaTime;
-            
+
         }
 
         //if jumped and cheese's raycast and player is still moving then reduce x direction
@@ -78,79 +77,43 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.x = 0;
             jumpVelocity.x = 0;
             controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-            
-            //if cheese is hitting then wall then push player back
+            //push player back if the cheese is in the wall
             if (cheeseHittingWall)
             {
                 PushPlayer();
             }
         }
-        //
-        else if(cheeseRayHit || cheeseHittingWall)
-        {
-            if (canMoveLeft)
-            {
-                //lock moving in the wrong direction
-                if(moveDirection.x > 0)
-                {
-                    moveDirection.x = 0;
-                }
-                //lock moving in the wrong direction
-                if(jumpVelocity.x > 0)
-                {
-                    jumpVelocity.x = 0;
-                }
-            }
-            else if (canMoveRight)
-            {
-                //lock moving in the wrong direction
-                if (moveDirection.x < 0)
-                {
-                    moveDirection.x = 0;
-                }
-                //lock moving in the wrong direction
-                if (jumpVelocity.x < 0)
-                {
-                    jumpVelocity.x = 0;
-                }
-            }
-            //if cheese is hitting then wall then push player back
-            if (cheeseHittingWall)
-            {
-                PushPlayer();
-            }
-            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-        }
+        //move player normally
         else
         {
-            //reset holader
-            Debug.Log("Reset jumpVelocityHolder");
-            jumpVelocityHolder = Vector2.zero;
-
-            if (canMoveLeft && canMoveRight || Input.GetAxis("Horizontal") == 0)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-
-            else if (canMoveLeft && Input.GetAxis("Horizontal") < 0)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-
-            else if (canMoveRight && Input.GetAxis("Horizontal") > 0)
-                controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-
+            if (cheeseHittingWall)
+            {
+                //push player back if the cheese is in the wall
+                if (cheeseHittingWall)
+                {
+                    PushPlayer();
+                }
+            }
             else
             {
-                if (Input.GetAxis("Horizontal") < 0 && canMoveLeft)
+                //if can move it set direction
+                if ((canMoveRight && moveDirection.x > 0) || (canMoveLeft && moveDirection.x < 0))
+                {
                     controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-
-
-                if (Input.GetAxis("Horizontal") > 0 && canMoveRight)
-                    controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+                }
+                else
+                {
+                    jumpVelocity.x = 0;
+                    controller.Move(jumpVelocity * Time.deltaTime);
+                }
             }
         }
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             //if main menu isn't currently active
-            if (pauseMenuActive == false) {
+            if (pauseMenuActive == false)
+            {
                 pauseMenuActive = true;
                 //makes main menu visible
                 pauseMenu.gameObject.SetActive(true);
@@ -182,13 +145,13 @@ public class PlayerMovement : MonoBehaviour
         //left
         if (canMoveLeft == false)
         {
-            moveDirection.x += 0.05f;
+            moveDirection.x = 0.5f;
             controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
         }
         //right
         else
         {
-            moveDirection.x -= 0.05f;
+            moveDirection.x = -0.5f;
             controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
         }
     }

@@ -34,7 +34,9 @@ public class PlayerMechanics : MonoBehaviour
 
     //bryan's cheese block variables
     public bool pickedUpCheese = false;
+    public bool pickedUpCheese2 = false;
     public GameObject cheeseBlock = null;
+    public GameObject secondCheeseBlock = null;
     public byte collisionDirection = 0;     //0 = neither, 1 = right, 2 = left
 
 
@@ -62,6 +64,25 @@ public class PlayerMechanics : MonoBehaviour
                 collisionDirection = 1;
             }
         }
+        else if (collision.gameObject.name.CompareTo("Cheese") == 0 && secondCheeseBlock == null)
+        {
+            //set the cheese block one touch one
+            secondCheeseBlock = collision.gameObject;
+
+            //get contacts for collision
+            Vector2 direction = collision.GetContact(0).normal;
+
+            //hit from right side- put block on left side
+            if (direction.x == 1)
+            {
+                collisionDirection = 2;
+            }
+            //hit from left side- put block on right side
+            else if (direction.x == -1)
+            {
+                collisionDirection = 1;
+            }
+        }
     }
     private void OnCollisionExit(Collision collision)
     {
@@ -69,8 +90,12 @@ public class PlayerMechanics : MonoBehaviour
         if (cheeseBlock != null && pickedUpCheese == false)
         {
             cheeseBlock = null;
-            collisionDirection = 0;
         }
+        else if (secondCheeseBlock != null && pickedUpCheese2 == false)
+        {
+            secondCheeseBlock = null;
+        }
+        collisionDirection = 0;
     }
     void OnTriggerEnter(Collider other)
     {
@@ -157,10 +182,34 @@ public class PlayerMechanics : MonoBehaviour
             cheeseBlock.transform.parent = this.gameObject.transform;
 
             //tell block it's been picked up
-            cheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection);
+            cheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, false);
 
             //reset collision drection
             collisionDirection = 0;
+
+            PlayerMovement(2);
+            PlayerMovement(5);
+        }
+        else if (secondCheeseBlock != null && pickedUpCheese2 == false && Input.GetKeyDown(KeyCode.E))
+        {
+            pickedUpCheese2 = true;
+
+            Debug.Log("Second Cheese pickup");
+
+            //prevent rigidbody from moving block while being carried
+            secondCheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+            //attach gameobject to player
+            secondCheeseBlock.transform.parent = this.gameObject.transform;
+
+            //tell block it's been picked up
+            secondCheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, true);
+
+            //reset collision drection
+            collisionDirection = 0;
+
+            PlayerMovement(2);
+            PlayerMovement(5);
         }
         //release cheese if holding one
         if(cheeseBlock!= null && pickedUpCheese == true && Input.GetKeyDown(KeyCode.R))
@@ -202,6 +251,7 @@ public class PlayerMechanics : MonoBehaviour
     public void DropCheese()
     {
         pickedUpCheese = false;
+
         cheeseBlock.GetComponent<CheeseBlock>().Dropped();
 
         //set constraints for rigidbody
@@ -211,9 +261,23 @@ public class PlayerMechanics : MonoBehaviour
         //remove parent for cheese
         cheeseBlock.transform.parent = null;
 
+        if (secondCheeseBlock != null && pickedUpCheese2 == true)
+        {
+            pickedUpCheese2 = false;
+
+            secondCheeseBlock.GetComponent<CheeseBlock>().Dropped();
+
+            //set constraints for rigidbody
+            cheeseRigid = secondCheeseBlock.GetComponent<Rigidbody>();
+            cheeseRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+
+            //remove parent for cheese
+            secondCheeseBlock.transform.parent = null;
+        }
+
         //enable movement and uncheck cheese hitting wall
         PlayerMovement(2);
-        PlayerMovement(4);
+        PlayerMovement(5);
     }
     public void PlayerMovement(byte direction)
     {
@@ -221,40 +285,81 @@ public class PlayerMechanics : MonoBehaviour
         if(direction == 0)
         {
             this.GetComponent<PlayerMovement>().canMoveRight = false;
+            this.GetComponent<PlayerMovement>().cheeseHittingWall = true;
         }
         //prevent left movement
         else if (direction == 1)
         {
             this.GetComponent<PlayerMovement>().canMoveLeft = false;
+            this.GetComponent<PlayerMovement>().cheeseHittingWall = true;
         }
         //enable movment
         else if (direction == 2)
         {
-            this.GetComponent<PlayerMovement>().canMoveLeft = true;
-            this.GetComponent<PlayerMovement>().canMoveRight = true;
+            //only enable movment if ray isn't hitting
+            if (this.GetComponent<PlayerMovement>().cheeseRayHit == false)
+            {
+                this.GetComponent<PlayerMovement>().canMoveLeft = true;
+                this.GetComponent<PlayerMovement>().canMoveRight = true;
+            }
             this.GetComponent<PlayerMovement>().cheeseHittingWall = false;
-            this.GetComponent<PlayerMovement>().cheeseRayHit = false;
         }
-        //indicate cheese is touching wall
+        //raycast hit left
         else if (direction == 3)
         {
-            this.GetComponent<PlayerMovement>().cheeseHittingWall = true;
+            this.GetComponent<PlayerMovement>().cheeseRayHit = true;
+            this.GetComponent<PlayerMovement>().canMoveLeft = false;
         }
-        //indicate cheese is not in wall
-        else if (direction == 4)
-        {
-            this.GetComponent<PlayerMovement>().cheeseHittingWall = false;
-        }
-        //raycast hit
-        else if (direction == 5)
+        //raycast hity right
+        else if(direction == 4)
         {
             this.GetComponent<PlayerMovement>().cheeseRayHit = true;
+            this.GetComponent<PlayerMovement>().canMoveRight = false;
         }
-        //raycast didn't hit
-        else if(direction == 6)
+        //ray not hitting
+        else if (direction == 5)
         {
+            //only enable movment if cheese is not touching wall
+            if (this.GetComponent<PlayerMovement>().cheeseHittingWall == false)
+            {
+                this.GetComponent<PlayerMovement>().canMoveLeft = true;
+                this.GetComponent<PlayerMovement>().canMoveRight = true;
+            }
             this.GetComponent<PlayerMovement>().cheeseRayHit = false;
         }
+    }
+    public void SecondCheeseBlock(GameObject cheese, byte status) 
+    {
+        //reference cheese block right
+        if (status == 0)
+        {
+            if (secondCheeseBlock == null && pickedUpCheese2 == false)
+            {
+                secondCheeseBlock = cheese;
+                collisionDirection = 1;
+            }
+        }
+        //reference cheese block left
+        else if (status == 1)
+        {
+            if(secondCheeseBlock != null && pickedUpCheese2 == false)
+            {
+                secondCheeseBlock = cheese;
+                collisionDirection = 2;
+            }
+        }
+        //unreference cheese
+        else if (status == 2)
+        {
+            if (secondCheeseBlock != null && pickedUpCheese2 == false)
+            {
+                secondCheeseBlock = null;
+            }
+        }
+    }
+    public GameObject GetSecondCheeseBlock()
+    {
+        return secondCheeseBlock;
     }
 }
 
