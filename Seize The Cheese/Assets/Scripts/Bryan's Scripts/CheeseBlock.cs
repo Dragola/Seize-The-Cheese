@@ -5,8 +5,10 @@ using UnityEngine;
 public class CheeseBlock : MonoBehaviour
 {
     public bool pickedUp = false;
+    public byte pickedUpDirection = 0;
     public GameObject connectedCheese = null;
     public GameObject collidedObject = null;
+    public Vector3 tempTransform = Vector3.zero;
 
     PlayerMechanics player = null;
 
@@ -14,6 +16,44 @@ public class CheeseBlock : MonoBehaviour
     {
         //reference player's script
         player = GameObject.Find("Player").GetComponent<PlayerMechanics>();
+    }
+    private void FixedUpdate()
+    {
+        //only use raycast if cheese is picked up
+        if (pickedUp)
+        {
+            Debug.Log("FixedUpdate: pickUp is true");
+
+            tempTransform = transform.position;
+            tempTransform.y -= 0.7f;
+
+            Debug.DrawRay(tempTransform, Vector2.right);
+
+            if (pickedUpDirection == 0)
+            {
+                //if raycast is hitting anything
+                if (Physics.Raycast(tempTransform, transform.TransformDirection(Vector3.right), out _, 0.43f))
+                {
+                    GetComponentInParent<PlayerMechanics>().PlayerMovement(5);
+                }
+                else
+                {
+                    GetComponentInParent<PlayerMechanics>().PlayerMovement(6);
+                }
+            }
+            else
+            {
+                //if raycast is hitting anything
+                if (Physics.Raycast(tempTransform, transform.TransformDirection(Vector3.left), out _, 0.43f))
+                {
+                    GetComponentInParent<PlayerMechanics>().PlayerMovement(5);
+                }
+                else
+                {
+                    GetComponentInParent<PlayerMechanics>().PlayerMovement(6);
+                }
+            }
+        }
     }
 
     public void PickedUp(byte direction)
@@ -24,11 +64,13 @@ public class CheeseBlock : MonoBehaviour
         if (direction == 1)
         {
             transform.localPosition = new Vector3(1.5f, 0.5f, 0);
+            pickedUpDirection = 0;
         }
         //place block on left side
         else if (direction == 2)
         {
             transform.localPosition = new Vector3(-1.5f, 0.5f, 0);
+            pickedUpDirection = 1;
         }
             return;
     }
@@ -58,6 +100,7 @@ public class CheeseBlock : MonoBehaviour
             {
                 player.PlayerMovement(0);
                 player.PlayerMovement(3);
+
             }
             //[revent left movement if cheese is hitting object
             else if (direction.x == 1 && pickedUp)
@@ -65,14 +108,6 @@ public class CheeseBlock : MonoBehaviour
                 player.PlayerMovement(1);
                 player.PlayerMovement(3);
             }
-        }
-    }
-    private void OnCollisionStay(Collision collision)
-    {
-        if (pickedUp && collision.gameObject.name.CompareTo("Player") != 0)
-        {
-            //move player back if block is in the wall
-            gameObject.GetComponentInParent<PlayerMovement>().MoveBack();
         }
     }
     private void OnCollisionExit(Collision collision)

@@ -221,13 +221,11 @@ public class PlayerMechanics : MonoBehaviour
         if(direction == 0)
         {
             this.GetComponent<PlayerMovement>().canMoveRight = false;
-            this.GetComponent<PlayerMovement>().cheeseHittingWall = true;
         }
         //prevent left movement
         else if (direction == 1)
         {
             this.GetComponent<PlayerMovement>().canMoveLeft = false;
-            this.GetComponent<PlayerMovement>().cheeseHittingWall = true;
         }
         //enable movment
         else if (direction == 2)
@@ -235,6 +233,7 @@ public class PlayerMechanics : MonoBehaviour
             this.GetComponent<PlayerMovement>().canMoveLeft = true;
             this.GetComponent<PlayerMovement>().canMoveRight = true;
             this.GetComponent<PlayerMovement>().cheeseHittingWall = false;
+            this.GetComponent<PlayerMovement>().cheeseRayHit = false;
         }
         //indicate cheese is touching wall
         else if (direction == 3)
@@ -245,6 +244,16 @@ public class PlayerMechanics : MonoBehaviour
         else if (direction == 4)
         {
             this.GetComponent<PlayerMovement>().cheeseHittingWall = false;
+        }
+        //raycast hit
+        else if (direction == 5)
+        {
+            this.GetComponent<PlayerMovement>().cheeseRayHit = true;
+        }
+        //raycast didn't hit
+        else if(direction == 6)
+        {
+            this.GetComponent<PlayerMovement>().cheeseRayHit = false;
         }
     }
 }

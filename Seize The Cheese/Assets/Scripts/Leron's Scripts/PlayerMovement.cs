@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canMoveRight = true;
     public bool didJump = false;
     public bool cheeseHittingWall = false;
+    public bool cheeseRayHit = false;
     
     //UI
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
@@ -47,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         if (controller.isGrounded)
         {
             moveDirection *= groundSpeed;
+
             if (Input.GetButton("Jump"))
             {
                 Debug.Log("controller.isGrounded + input 'Jump'");
@@ -58,38 +60,64 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 Debug.Log("controller.isGrounded - input 'Jump'");
-                //didJump = true;
                 didJump = false;
                 jumpVelocity = Vector2.zero;
             }
         }
         else
         {
-            //if not jumping into a wall
-            if (cheeseHittingWall == false)
-            {
-                Debug.Log("controller.isGrounded = false");
-                moveDirection *= midairSpeed;
-                jumpVelocity.y -= gravity * Time.deltaTime;
-            }
+            Debug.Log("controller.isGrounded = false");
+            moveDirection *= midairSpeed;
+            jumpVelocity.y -= gravity * Time.deltaTime;
+            
         }
 
-        //if in mid air and cheese is hitting a wall
-        if (didJump && cheeseHittingWall)
+        //if jumped and cheese's raycast and player is still moving then reduce x direction
+        if (didJump && (cheeseRayHit || cheeseHittingWall) && (jumpVelocity.x != 0 || moveDirection.x != 0))
         {
-            moveDirection = Vector3.zero;
-            //hopefully stop player 
-            if (jumpVelocityHolder == Vector2.zero)
+            moveDirection.x = 0;
+            jumpVelocity.x = 0;
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+            
+            //if cheese is hitting then wall then push player back
+            if (cheeseHittingWall)
             {
-                Debug.Log("jumpVelocityHolder == Vector2.zero");
-                jumpVelocityHolder = jumpVelocity;
-                jumpVelocity = Vector2.zero;
+                PushPlayer();
             }
-            else
+        }
+        //
+        else if(cheeseRayHit || cheeseHittingWall)
+        {
+            if (canMoveLeft)
             {
-                Debug.Log("jumpVelocityHolder != Vector2.zero");
-                jumpVelocity.x *= 0;
-                jumpVelocity.y -= gravity * Time.deltaTime;
+                //lock moving in the wrong direction
+                if(moveDirection.x > 0)
+                {
+                    moveDirection.x = 0;
+                }
+                //lock moving in the wrong direction
+                if(jumpVelocity.x > 0)
+                {
+                    jumpVelocity.x = 0;
+                }
+            }
+            else if (canMoveRight)
+            {
+                //lock moving in the wrong direction
+                if (moveDirection.x < 0)
+                {
+                    moveDirection.x = 0;
+                }
+                //lock moving in the wrong direction
+                if (jumpVelocity.x < 0)
+                {
+                    jumpVelocity.x = 0;
+                }
+            }
+            //if cheese is hitting then wall then push player back
+            if (cheeseHittingWall)
+            {
+                PushPlayer();
             }
             controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
         }
@@ -148,17 +176,19 @@ public class PlayerMovement : MonoBehaviour
         //makes main menu invisible
         pauseMenu.gameObject.SetActive(false);
     }
-    public void MoveBack()
+    public void PushPlayer()
     {
-        //if not in mid air then move player back
-        if (didJump == false && cheeseHittingWall == true)
+        jumpVelocity.x = 0;
+        //left
+        if (canMoveLeft == false)
         {
-            moveDirection = Vector3.zero;
-            moveDirection.x = -0.08f;
-
-            jumpVelocity = Vector2.zero;
-            jumpVelocity.x = -0.08f;
-
+            moveDirection.x += 0.05f;
+            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+        }
+        //right
+        else
+        {
+            moveDirection.x -= 0.05f;
             controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
         }
     }
