@@ -172,6 +172,7 @@ public class PlayerMechanics : MonoBehaviour
         //pickup cheese
         if (cheeseBlock != null && pickedUpCheese == false && Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("Picked up first cheese");
             //indicate cheese was picked up
             pickedUpCheese = true;
 
@@ -192,6 +193,8 @@ public class PlayerMechanics : MonoBehaviour
         }
         else if (secondCheeseBlock != null && pickedUpCheese2 == false && Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("Picked up second cheese");
+
             pickedUpCheese2 = true;
 
             Debug.Log("Second Cheese pickup");
@@ -360,6 +363,19 @@ public class PlayerMechanics : MonoBehaviour
     public GameObject GetSecondCheeseBlock()
     {
         return secondCheeseBlock;
+    }
+    public void UpdateCheeseDirection(bool isFacingRight)
+    {
+        //if holding first block
+        if(cheeseBlock !=null && pickedUpCheese == true)
+        {
+            cheeseBlock.GetComponent<CheeseBlock>().UpdateCheeseDirection(isFacingRight);
+        }
+        //if holding a second cheese block
+        if(secondCheeseBlock != null && pickedUpCheese2 == true)
+        {
+            secondCheeseBlock.GetComponent<CheeseBlock>().UpdateCheeseDirection(isFacingRight);
+        } 
     }
 }
 

@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool didJump = false;
     public bool cheeseHittingWall = false;
     public bool cheeseRayHit = false;
+    public bool moveDirectionIsRight = true;
 
     //UI
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
@@ -42,6 +43,19 @@ public class PlayerMovement : MonoBehaviour
     {
         moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
         moveDirection = transform.TransformDirection(moveDirection);
+
+        //moving right
+        if(moveDirection.x > 0)
+        {
+            moveDirectionIsRight = true;
+            GetComponent<PlayerMechanics>().UpdateCheeseDirection(moveDirectionIsRight);
+        }
+        //moving left
+        else if(moveDirection.x < 0)
+        {
+            moveDirectionIsRight = false;
+            GetComponent<PlayerMechanics>().UpdateCheeseDirection(moveDirectionIsRight);
+        }
 
         //prevent player from moving if cheese is hitting wall and jumped
         if (controller.isGrounded)
