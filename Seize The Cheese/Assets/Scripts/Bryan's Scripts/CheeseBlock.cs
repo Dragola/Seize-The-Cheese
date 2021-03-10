@@ -12,7 +12,7 @@ public class CheeseBlock : MonoBehaviour
     public bool rayHit = false;
     public RaycastHit hit;
 
-    PlayerMechanics player = null;
+    public PlayerMechanics player = null;
 
     private void Awake()
     {
@@ -36,13 +36,14 @@ public class CheeseBlock : MonoBehaviour
                     if (hit.distance < 0.05f)
                     {
                         //if ray hits cheese block
-                        if (hit.collider.name.CompareTo("Cheese") == 0)
+                        if (hit.collider.tag.CompareTo("CubeCheese")== 0)
                         {
                             //if this block is the first cheese block then indicate this is second cheese block
-                            if (pickedUp && isSecondCheese == false)
+                            if (pickedUp)
                             {
+                                Debug.Log("Second cheese hit");
                                 //indicate to reference cheese if not already
-                                player.SecondCheeseBlock(hit.collider.gameObject, 0);
+                                player.CheeseBlockHit(hit.collider.gameObject, 0);
                             }
                             //if this is the first block hit
                             else if (pickedUp == false && player.cheeseBlock == null)
@@ -63,9 +64,9 @@ public class CheeseBlock : MonoBehaviour
                     rayHit = false;
 
                     //remove cheese from player if not touched
-                    if (hit.collider != null && hit.collider.name.CompareTo("Cheese") == 0)
+                    if (hit.collider != null && hit.collider.tag.CompareTo("CubeCheese")== 0)
                     {
-                        player.SecondCheeseBlock(null, 2);
+                        player.CheeseBlockHit(null, 1);
                     }
                 }
 
@@ -81,13 +82,14 @@ public class CheeseBlock : MonoBehaviour
                     if (hit.distance < 0.05f)
                     {
                         //if ray hits cheese block
-                        if (hit.collider.name.CompareTo("Cheese") == 0)
+                        if (hit.collider.tag.CompareTo("CubeCheese") == 0)
                         {
                             //if this block is the first cheese block then indicate this is second cheese block
-                            if (pickedUp && isSecondCheese == false)
+                            if (pickedUp)
                             {
+                                Debug.Log("Second cheese hit left side");
                                 //indicate to reference cheese if not already
-                                player.SecondCheeseBlock(hit.collider.gameObject, 1);
+                                player.CheeseBlockHit(hit.collider.gameObject, 0);
                             }
                             //if this is the first block hit
                             else if (pickedUp == false && player.cheeseBlock == null)
@@ -107,9 +109,9 @@ public class CheeseBlock : MonoBehaviour
                     rayHit = false;
 
                     //remove cheese from player if not touched
-                    if (hit.collider != null && hit.collider.name.CompareTo("Cheese") == 0)
+                    if (hit.collider != null && hit.collider.tag.CompareTo("CubeCheese") == 0)
                     {
-                        player.SecondCheeseBlock(null, 2);
+                        player.CheeseBlockHit(null, 1);
                     }
                 }
             }
@@ -118,7 +120,7 @@ public class CheeseBlock : MonoBehaviour
 
     public void PickedUp(byte direction, bool isSecondCheese)
     {
-        Debug.Log("Cheese: PickUp() called with direction = " + direction + " and isSecondCheese = " + isSecondCheese);
+        //Debug.Log("Cheese: PickUp() called with direction = " + direction + " and isSecondCheese = " + isSecondCheese);
         pickedUp = true;
         this.isSecondCheese = isSecondCheese;
         //place block on right side
@@ -160,6 +162,7 @@ public class CheeseBlock : MonoBehaviour
     public void Dropped()
     {
         pickedUp = false;
+        isSecondCheese = false;
         return;
     }
     private void OnCollisionEnter(Collision collision)
@@ -183,23 +186,23 @@ public class CheeseBlock : MonoBehaviour
             {
                 player.PlayerMovement(0);
                 //if hit a second cheese block then reference
-                if (collision.gameObject.name.CompareTo("Cheese") == 0 && player.pickedUpCheese)
+                if (collision.gameObject.tag.CompareTo("CubeCheese") == 0)
                 {
                     //hit second cheese
-                    player.SecondCheeseBlock(collision.gameObject, 0);
+                    player.CheeseBlockHit(collision.gameObject,0);
                 }
 
             }
             //prevent left movement if cheese is hitting object
             else if (direction.x == 1 && pickedUp)
             {
-                player.PlayerMovement(1);
                 //if hit a second cheese block then reference
-                if (collision.gameObject.name.CompareTo("Cheese") == 0 && player.pickedUpCheese)
+                if (collision.gameObject.tag.CompareTo("CubeCheese") == 0)
                 {
                     //hit second cheese
-                    player.SecondCheeseBlock(collision.gameObject, 1);
+                    player.CheeseBlockHit(collision.gameObject, 0);
                 }
+                player.PlayerMovement(1);
             }
         }
     }
@@ -210,11 +213,6 @@ public class CheeseBlock : MonoBehaviour
         {
             collidedObject = null;
             player.PlayerMovement(2);
-        }
-        //remove cheese from player if not touched
-        if (player.GetSecondCheeseBlock()!= null)
-        {
-            player.SecondCheeseBlock(null,2);
         }
     }
     public void UpdateCheeseDirection(bool isFacingRight)

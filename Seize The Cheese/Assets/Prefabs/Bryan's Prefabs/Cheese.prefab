@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8435179146342670593}
   m_Layer: 0
   m_Name: Cheese
-  m_TagString: Untagged
+  m_TagString: CubeCheese
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickedUp: 0
-  pickedUpDirection: 0
+  isSecondCheese: 0
+  cheeseDirection: 0
   collidedObject: {fileID: 0}
   tempTransform: {x: 0, y: 0, z: 0}
   rayHit: 0
+  player: {fileID: 0}

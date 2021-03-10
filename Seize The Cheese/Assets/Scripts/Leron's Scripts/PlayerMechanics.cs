@@ -191,7 +191,7 @@ public class PlayerMechanics : MonoBehaviour
             PlayerMovement(2);
             PlayerMovement(5);
         }
-        else if (secondCheeseBlock != null && pickedUpCheese2 == false && Input.GetKeyDown(KeyCode.E))
+        else if (secondCheeseBlock != null && pickedUpCheese == true && pickedUpCheese2 == false && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Picked up second cheese");
 
@@ -255,6 +255,7 @@ public class PlayerMechanics : MonoBehaviour
     {
         pickedUpCheese = false;
 
+        //indicate to cheese that it has been dropped
         cheeseBlock.GetComponent<CheeseBlock>().Dropped();
 
         //set constraints for rigidbody
@@ -264,10 +265,12 @@ public class PlayerMechanics : MonoBehaviour
         //remove parent for cheese
         cheeseBlock.transform.parent = null;
 
+        //drop second cheese
         if (secondCheeseBlock != null && pickedUpCheese2 == true)
         {
             pickedUpCheese2 = false;
 
+            //indicate to cheese that it has been dropped
             secondCheeseBlock.GetComponent<CheeseBlock>().Dropped();
 
             //set constraints for rigidbody
@@ -276,6 +279,9 @@ public class PlayerMechanics : MonoBehaviour
 
             //remove parent for cheese
             secondCheeseBlock.transform.parent = null;
+
+            //null reference
+            secondCheeseBlock = null;
         }
 
         //enable movement and uncheck cheese hitting wall
@@ -331,33 +337,16 @@ public class PlayerMechanics : MonoBehaviour
             this.GetComponent<PlayerMovement>().cheeseRayHit = false;
         }
     }
-    public void SecondCheeseBlock(GameObject cheese, byte status) 
+    public void CheeseBlockHit(GameObject cheese, byte status) 
     {
-        //reference cheese block right
-        if (status == 0)
+        //reference cheese block if hit
+        if (status == 0 && secondCheeseBlock == null)
         {
-            if (secondCheeseBlock == null && pickedUpCheese2 == false)
-            {
-                secondCheeseBlock = cheese;
-                collisionDirection = 1;
-            }
+            secondCheeseBlock = cheese;
         }
-        //reference cheese block left
         else if (status == 1)
         {
-            if(secondCheeseBlock != null && pickedUpCheese2 == false)
-            {
-                secondCheeseBlock = cheese;
-                collisionDirection = 2;
-            }
-        }
-        //unreference cheese
-        else if (status == 2)
-        {
-            if (secondCheeseBlock != null && pickedUpCheese2 == false)
-            {
-                secondCheeseBlock = null;
-            }
+            secondCheeseBlock = cheese;
         }
     }
     public GameObject GetSecondCheeseBlock()

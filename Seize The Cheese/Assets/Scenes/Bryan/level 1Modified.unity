@@ -5033,6 +5033,7 @@ MonoBehaviour:
   timeRemaining: 11
   notInDialog: 1
   pickedUpCheese: 0
+  pickedUpCheese2: 0
   cheeseBlock: {fileID: 0}
   secondCheeseBlock: {fileID: 0}
   collisionDirection: 0
@@ -5076,6 +5077,7 @@ MonoBehaviour:
   didJump: 0
   cheeseHittingWall: 0
   cheeseRayHit: 0
+  moveDirectionIsRight: 1
   pauseMenuActive: 0
   moveDirection: {x: 0, y: 0}
   jumpVelocity: {x: 0, y: 0}
@@ -5091,8 +5093,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.5, y: 0.5, z: 1}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1001 &1010829768
 PrefabInstance:
   m_ObjectHideFlags: 0
