@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    private PlayerController playerControllerScript = null;
+    private PlayerMovement playerControllerScript = null;
     // Start is called before the first frame update
     void Start()
     {
         //locate and reference player's script
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
     public void OnClickResume()
     {
