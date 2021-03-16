@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Blair/Logo.unity
+    path: Assets/Scenes/Menu Scenes/Logo.unity
     guid: a612080f7c3af1241823a0cc7a3a8ff2
   - enabled: 1
-    path: Assets/Scenes/Blair/MainMenu.unity
+    path: Assets/Scenes/Menu Scenes/MainMenu.unity
     guid: 961ebb6d41f241e45bbdbd2457046623
   - enabled: 1
-    path: Assets/Scenes/MainGame.unity
+    path: Assets/Scenes/Level 1/MainGame.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Bryan/LoadingScreen.unity
+    path: Assets/Scenes/Misc Scenes/LoadingScreen.unity
     guid: 88437d01a9e5d3248b859768d3fa31ed
   - enabled: 1
     path: Assets/Scenes/Bryan/Level2.unity
