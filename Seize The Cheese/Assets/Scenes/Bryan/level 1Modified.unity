@@ -8557,7 +8557,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 30
+  m_CookingOptions: -1
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1773591049
 MeshRenderer:
@@ -9872,6 +9872,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 908930561}
     m_Modifications:
+    - target: {fileID: 6395313581260305821, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_RootOrder
       value: 3

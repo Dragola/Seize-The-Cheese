@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8646457380628557148}
   - component: {fileID: 4712343767932039793}
   - component: {fileID: 8435179146342670593}
-  - component: {fileID: 9182545511340201326}
+  - component: {fileID: 1487774494646556773}
   m_Layer: 0
   m_Name: Cheese
   m_TagString: CubeCheese
@@ -118,10 +118,8 @@ MonoBehaviour:
   collidedObject: {fileID: 0}
   tempTransform: {x: 0, y: 0, z: 0}
   rayHit: 0
-  pickedUpDirection: 0
-  collidedObject: {fileID: 0}
-  tempTransform: {x: 0, y: 0, z: 0}
-  rayHit: 0
+  player: {fileID: 0}
+--- !u!65 &1487774494646556773
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,5 +130,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.63500005, y: 0.63500005, z: 0.6711466}
-  m_Center: {x: 0, y: 0.31750003, z: -0.00000001490116}
+  m_Size: {x: 0.6350001, y: 0.6350001, z: 0.67114663}
+  m_Center: {x: 0, y: 0.31750005, z: -0.000000014901161}
