@@ -410,7 +410,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30230362}
   m_LocalRotation: {x: 0.041714057, y: -0, z: -0, w: 0.9991296}
-  m_LocalPosition: {x: 35.6, y: 12.67, z: -5.16}
+  m_LocalPosition: {x: 35.6, y: 12.719, z: -5.738}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1034327279}
@@ -484,8 +484,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {x: 39.8, y: 11.2, z: -6.075128}
   endPoint: {x: 45, y: 11.2, z: -6.075128}
+  currentPoint: {x: 0, y: 0, z: 0}
   speed: 0.5
-  canMove: 1
+  updateSpeed: 0
+  canMoveRight: 1
+  canMoveLeft: 1
 --- !u!135 &30230369
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -732,8 +735,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {x: 32, y: 0.8892038, z: -6.075128}
   endPoint: {x: 40, y: 0.8892038, z: -6.075128}
+  currentPoint: {x: 0, y: 0, z: 0}
   speed: 0.5
-  canMove: 1
+  updateSpeed: 0
+  canMoveRight: 1
+  canMoveLeft: 1
 --- !u!135 &65351861
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2567,8 +2573,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 425009400}
-  m_LocalRotation: {x: 0.041714057, y: -0, z: -0, w: 0.9991296}
-  m_LocalPosition: {x: 46.56, y: 2.37, z: -6.07}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 46.56, y: 2.37, z: -5.836}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1034327279}
@@ -2626,7 +2632,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &425009406
 MonoBehaviour:
@@ -2642,8 +2648,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {x: 55, y: 0.8892038, z: -6.075128}
   endPoint: {x: 44, y: 0.8892038, z: -6.075128}
+  currentPoint: {x: 0, y: 0, z: 0}
   speed: 0.4
-  canMove: 0
+  updateSpeed: 0
+  canMoveRight: 0
+  canMoveLeft: 1
 --- !u!135 &425009407
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2655,7 +2664,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &425009408
 MeshRenderer:
@@ -6064,15 +6073,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 64.69
+      value: 61.17
       objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.18
+      value: -3.173
       objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.76
+      value: 9.84
       objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7286,7 +7295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.35
+      value: 7.53
       objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8356,9 +8365,9 @@ GameObject:
   - component: {fileID: 1760532463}
   - component: {fileID: 1760532462}
   - component: {fileID: 1760532461}
-  - component: {fileID: 1760532460}
   - component: {fileID: 1760532465}
   - component: {fileID: 1760532466}
+  - component: {fileID: 1760532460}
   - component: {fileID: 1760532467}
   - component: {fileID: 1760532468}
   m_Layer: 0
@@ -8380,10 +8389,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1e429a20dd9bf48bd2bb174071f313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {x: 4, y: 0.8892038, z: -6.075128}
-  endPoint: {x: 13.45, y: 0.8892038, z: -6.075128}
-  speed: 0.5
-  canMove: 1
+  startPoint: {x: 12, y: 2.36, z: -5.59}
+  endPoint: {x: -1, y: 2.36, z: -5.59}
+  currentPoint: {x: 0, y: 0, z: 0}
+  speed: 2
+  updateSpeed: 0
+  canMoveRight: 0
+  canMoveLeft: 1
 --- !u!135 &1760532461
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8454,7 +8466,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760532459}
   m_LocalRotation: {x: 0.041714057, y: -0, z: -0, w: 0.9991296}
-  m_LocalPosition: {x: 0.32, y: 2.36, z: -5.59}
+  m_LocalPosition: {x: 2.87, y: 2.36, z: -5.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1034327279}
@@ -8474,7 +8486,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!135 &1760532466
 SphereCollider:
