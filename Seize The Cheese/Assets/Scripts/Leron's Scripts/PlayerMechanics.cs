@@ -265,6 +265,9 @@ public class PlayerMechanics : MonoBehaviour
         //remove parent for cheese
         cheeseBlock.transform.parent = null;
 
+        //null reference
+        cheeseBlock = null;
+
         //drop second cheese
         if (secondCheeseBlock != null && pickedUpCheese2 == true)
         {
