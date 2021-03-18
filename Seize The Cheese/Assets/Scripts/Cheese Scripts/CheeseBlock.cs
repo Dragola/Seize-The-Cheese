@@ -24,10 +24,13 @@ public class CheeseBlock : MonoBehaviour
         //right side raycast
         if (pickedUp == true)
         {
+            tempTransform.y = transform.position.y - 0.05f;
+            tempTransform.z = transform.position.z;
             Debug.Log("FixedUpdate- pickedUp == true");
 
             if (cheeseDirection == 0)
             {
+                tempTransform.x = transform.position.x + 0.22f;
                 Debug.DrawRay(tempTransform, Vector3.right);
                 //shoot raycast
                 if (Physics.Raycast(tempTransform, transform.TransformDirection(Vector3.right), out hit, 0.1f))
@@ -73,6 +76,7 @@ public class CheeseBlock : MonoBehaviour
             //left side raycast
             else if (cheeseDirection == 1)
             {
+                tempTransform.x = transform.position.x - 0.22f;
                 Debug.DrawRay(tempTransform, Vector3.left);
                 //shoot raycast
                 if (Physics.Raycast(tempTransform, transform.TransformDirection(Vector3.left), out hit, 0.1f))
