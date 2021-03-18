@@ -22,7 +22,7 @@ public class BasicCamera : MonoBehaviour
     {
         if (playerTransform != null)
         {
-            transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, -10);
+            transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, -14);
         }
     }
 }

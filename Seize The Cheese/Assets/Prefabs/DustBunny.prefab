@@ -1575,8 +1575,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {x: 0, y: 0, z: 0}
   endPoint: {x: 0, y: 0, z: 0}
+  currentPoint: {x: 0, y: 0, z: 0}
   speed: 0
-  canMove: 0
+  updateSpeed: 0
+  canMoveRight: 0
+  canMoveLeft: 1
 --- !u!1 &8000887851305633157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,6 +1590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5507677568683996642}
   - component: {fileID: 6340945357336812369}
+  - component: {fileID: 8635313783595730259}
   m_Layer: 0
   m_Name: DustBunny_Idle:DustBunny:fluff_low
   m_TagString: Untagged
@@ -1664,6 +1668,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.07653175, y: 0.02811943, z: 0.15359187}
     m_Extent: {x: 0.18819465, y: 0.14831953, z: 0.2785079}
   m_DirtyAABB: 0
+--- !u!114 &8635313783595730259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000887851305633157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef48aaca602c7504aba1ece3105d1752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogSystem: {fileID: 0}
 --- !u!1 &8607650339287952516
 GameObject:
   m_ObjectHideFlags: 0
