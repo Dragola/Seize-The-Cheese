@@ -169,4 +169,9 @@ public class PlayerMovement : MonoBehaviour
             controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
         }
     }
+    public void FreezePlayer()
+    {
+        canMoveLeft = false;
+        canMoveRight = false;
+    }
 }
