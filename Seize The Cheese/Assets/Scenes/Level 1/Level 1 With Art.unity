@@ -8001,7 +8001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999203575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 71.1, y: 18.98, z: -6.182}
+  m_LocalPosition: {x: -14.96, y: 1.59, z: -6.182}
   m_LocalScale: {x: 0.49207124, y: 0.47571385, z: 0.3705077}
   m_Children:
   - {fileID: 10008852}
@@ -8096,12 +8096,14 @@ MonoBehaviour:
   gravity: 20
   midairSpeed: 4
   groundSpeed: 5
+  playerHeadRaycastPoint: {x: 0, y: 0, z: 0}
   canMoveLeft: 1
   canMoveRight: 1
   didJump: 0
   cheeseHittingWall: 0
   cheeseRayHit: 0
   moveDirectionIsRight: 1
+  stopPlayerFloating: 0
   pauseMenuActive: 0
   moveDirection: {x: 0, y: 0}
   jumpVelocity: {x: 0, y: 0}

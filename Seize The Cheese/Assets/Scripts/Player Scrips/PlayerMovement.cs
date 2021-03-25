@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = 1.0F;
     public float midairSpeed = 1.0F;
     public float groundSpeed = 1.0F;
+    public Vector3 playerHeadRaycastPoint;
+    RaycastHit hit;
 
     public bool canMoveLeft = true;
     public bool canMoveRight = true;
@@ -16,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public bool cheeseHittingWall = false;
     public bool cheeseRayHit = false;
     public bool moveDirectionIsRight = true;
+    public bool stopPlayerFloating = false;
 
     //UI
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
@@ -39,6 +42,21 @@ public class PlayerMovement : MonoBehaviour
         //locate dialog
         dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
     }
+
+    private void FixedUpdate()
+    {
+        if (didJump)
+        {
+            playerHeadRaycastPoint = new Vector3(transform.localPosition.x, transform.localPosition.y + 0.5f, transform.localPosition.z);
+            Debug.DrawRay(playerHeadRaycastPoint, Vector3.up);
+            if (Physics.Raycast(playerHeadRaycastPoint, transform.TransformDirection(Vector3.up), out hit, 0.1f))
+            {
+                Debug.Log("Head hit");
+                jumpVelocity = Vector2.zero;
+            }
+        }
+    }
+
     private void Update()
     {
         moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
@@ -57,14 +75,13 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<PlayerMechanics>().UpdateCheeseDirection(moveDirectionIsRight);
         }
 
-        //prevent player from moving if cheese is hitting wall and jumped
+        //
         if (controller.isGrounded)
         {
             moveDirection *= groundSpeed;
 
             if (Input.GetButton("Jump"))
             {
-                //Debug.Log("controller.isGrounded + input 'Jump'");
                 didJump = true;
                 jumpVelocity = moveDirection / 1.6f;
                 jumpVelocity.y = jumpSpeed;
@@ -72,7 +89,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                //Debug.Log("controller.isGrounded - input 'Jump'");
                 didJump = false;
                 jumpVelocity = Vector2.zero;
             }
@@ -82,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("controller.isGrounded = false");
             moveDirection *= midairSpeed;
             jumpVelocity.y -= gravity * Time.deltaTime;
-
         }
 
         //if jumped and cheese's raycast and player is still moving then reduce x direction
