@@ -11,7 +11,6 @@ public class LevelLoad : MonoBehaviour
     void Awake()
     {
         progressText = GameObject.Find("ProgressText").GetComponent<Text>();
-        Debug.Log("progressText referenced");
     }
     
     void Start()
@@ -26,26 +25,38 @@ public class LevelLoad : MonoBehaviour
         Debug.Log("After LoadNextLevel was called");
 
         //destroy object as no longer needed
-        Destroy(endofLevel.gameObject);
+        //Destroy(endofLevel.gameObject);
     }
 
     void LoadNextLevel(string sceneName)
     {
         Debug.Log("LoadNextLevel called");
 
-        //load next scene asyncronously
-        asyncLoad = SceneManager.LoadSceneAsync(GetNextLevel(sceneName), LoadSceneMode.Single);
+        string nextScene = GetNextLevel(sceneName);
 
-        //deny scene from activating as soon as it's done
-        asyncLoad.allowSceneActivation = false;
+        //
+        if (nextScene.CompareTo("") != 0) {
+            //load next scene asyncronously
+            asyncLoad = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Single);
 
-        //while progress is less then 90% (seems to freeze at 0.9 if allowSceneActivation is false)
-        while (asyncLoad.progress < 0.9f)
-        {
-            //while the scene is still being loaded
-            progressText.text = "Waiting for scene to load..." + asyncLoad.progress + ".";
+            //deny scene from activating as soon as it's done
+            asyncLoad.allowSceneActivation = false;
+
+            //while progress is less then 90% (seems to freeze at 0.9 if allowSceneActivation is false)
+            while (asyncLoad.progress < 0.9f)
+            {
+                //while the scene is still being loaded
+                progressText.text = "Waiting for scene to load..." + asyncLoad.progress + ".";
+                Debug.Log("Waiting for scene to load..." + asyncLoad.progress + ".");
+            }
+            progressText.text = "Level ready! Press enter to continue...";
+            Debug.Log("Level ready! Press enter to continue...");
         }
-        progressText.text = "Level ready! Press enter to continue...";
+        else
+        {
+            Debug.Log("Can't load next level");
+            progressText.text = "Unable to load next level...";
+        }
     }
     void Update()
     {
@@ -65,10 +76,15 @@ public class LevelLoad : MonoBehaviour
 
         Debug.Log("GetNextLevel called: sceneName = " + sceneName);
 
-        //level 2
-        if (sceneName.CompareTo("MainGame") == 0)
+        //level 1 -> level 2
+        if (sceneName.Contains("Level 1"))
         {
             nextLevel = "Level2";
+        }
+        //level 2 -> level 3
+        else if (sceneName.Contains("2"))
+        {
+            nextLevel = "Level3";
         }
         ///....
 

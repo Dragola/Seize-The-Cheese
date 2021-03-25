@@ -42,16 +42,14 @@ public class PlayerMechanics : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("player collision = " + collision.gameObject.name);
+        //get contacts for collision
+        Vector2 direction = collision.GetContact(0).normal;
 
         //if hit block of cheese then call function to pick it up
         if (collision.gameObject.name.CompareTo("Cheese") == 0 && cheeseBlock == null)
         {
             //set the cheese block one touch one
             cheeseBlock = collision.gameObject;
-
-            //get contacts for collision
-            Vector2 direction = collision.GetContact(0).normal;
 
             //hit from right side- put block on left side
             if (direction.x == 1)
@@ -68,9 +66,6 @@ public class PlayerMechanics : MonoBehaviour
         {
             //set the cheese block one touch one
             secondCheeseBlock = collision.gameObject;
-
-            //get contacts for collision
-            Vector2 direction = collision.GetContact(0).normal;
 
             //hit from right side- put block on left side
             if (direction.x == 1)
