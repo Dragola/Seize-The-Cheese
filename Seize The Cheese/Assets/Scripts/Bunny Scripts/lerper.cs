@@ -48,13 +48,13 @@ public class lerper : MonoBehaviour
         //change speed for left direction
         if (updateSpeed == true && canMoveRight == false)
         {
-            transform.position = new Vector3(startPoint.x - 5, 0.45f, -6.5f);
+            transform.position = new Vector3(startPoint.x, transform.position.y, -6.5f);
             updateSpeed = false;
         }
         //change speed for right direction
         else if (canMoveRight == true && updateSpeed == true)
         {
-            transform.position = new Vector3(endPoint.x + 5, 0.45f, -6.5f);
+            transform.position = new Vector3(endPoint.x, transform.position.y, -6.5f);
             updateSpeed = false;
         }
         //rotate bunny

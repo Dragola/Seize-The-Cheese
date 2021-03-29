@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerMechanics : MonoBehaviour
 {
-    public float health; // health variable
-    public Slider healthBar; // slider gameobject
+    public float Maxhealth; // health variable
+    public float Currenthealth; //current heath variable
 
     //various panels that appear once the player makes contact a specific object or has died
     public GameObject introPanel;
@@ -99,9 +99,9 @@ public class PlayerMechanics : MonoBehaviour
             Destroy(other.gameObject); // destorys the dust bunnie
             if (!onStrongCheese)
             {
-                healthBar.value -= 0.5f; // lowers current health by half
+                Currenthealth -= 5; // lowers current health by half
 
-                if (healthBar.value <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
+                if (Currenthealth <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
                 {
                     Debug.Log("Dead");
                     Cursor.visible = true;
@@ -115,7 +115,7 @@ public class PlayerMechanics : MonoBehaviour
 
         if (other.tag == "HealthCheese") // when the player interacts with a 'Health Cheese' power up
         {
-            healthBar.value += 0.5f;
+            Currenthealth += 5;
             Destroy(other.gameObject);
         }
 
