@@ -6,6 +6,7 @@ public class LevelLoad : MonoBehaviour
 {
     public Text progressText = null;
     public AsyncOperation asyncLoad = null;
+    LevelStorage levelStorage = null;
 
     // Start is called before the first frame update
     void Awake()
@@ -16,16 +17,14 @@ public class LevelLoad : MonoBehaviour
     void Start()
     {
         Debug.Log("Start called");
+
         //get the name of the previous level
-        EndOfLevel endofLevel = GameObject.Find("EndOfLevelTrigger").GetComponent<EndOfLevel>();
+        levelStorage = GameObject.Find("LevelStorage").GetComponent<LevelStorage>();
         
         //call function to load the next level
-        LoadNextLevel(endofLevel.GetSceneName());
+        LoadNextLevel(levelStorage.GetSceneName());
 
         Debug.Log("After LoadNextLevel was called");
-
-        //destroy object as no longer needed
-        //Destroy(endofLevel.gameObject);
     }
 
     void LoadNextLevel(string sceneName)
@@ -66,6 +65,7 @@ public class LevelLoad : MonoBehaviour
             Debug.Log("Return key hit");
 
             //allow scene to be activated
+            DontDestroyOnLoad(levelStorage.gameObject);
             asyncLoad.allowSceneActivation = true;
             Debug.Log("Scene loaded");
         }
@@ -76,8 +76,13 @@ public class LevelLoad : MonoBehaviour
 
         Debug.Log("GetNextLevel called: sceneName = " + sceneName);
 
+        //main menu -> level 1
+        if(sceneName.Contains("MainMenu"))
+        {
+            nextLevel = "Level 1 With Art";
+        }
         //level 1 -> level 2
-        if (sceneName.Contains("Level 1"))
+        else if (sceneName.Contains("Level 1"))
         {
             nextLevel = "Level2";
         }

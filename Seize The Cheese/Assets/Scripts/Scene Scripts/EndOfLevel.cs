@@ -4,15 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class EndOfLevel : MonoBehaviour
 {
-    private string currentSceneName = "";
     private PlayerMovement playerMovementScript = null;
     private Canvas endOfLevelUI = null;
     private bool playerHitTrigger = false;
+    private LevelStorage levelStorage = null;
 
     private void Start()
     {
-        //get current scenes name
-        currentSceneName = SceneManager.GetActiveScene().name;
+        levelStorage = GameObject.Find("LevelStorage").GetComponent<LevelStorage>();
         playerMovementScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
         endOfLevelUI = GameObject.Find("EndOfLevel UI").GetComponent<Canvas>();
         endOfLevelUI.gameObject.SetActive(false);
@@ -42,14 +41,10 @@ public class EndOfLevel : MonoBehaviour
             playerHitTrigger = true;
         }
     }
-    public string GetSceneName()
-    {
-        return currentSceneName;
-    }
     private void SwapToLoadingScene()
     {
         //prevents script from being deleted when loading screen is loaded (so that loading scene can determine what scene it needs to load)
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(levelStorage.gameObject);
 
         //switch to the loading screen
         SceneManager.LoadScene("LoadingScreen", LoadSceneMode.Single);
