@@ -32,6 +32,8 @@ public class MousyMovement : MonoBehaviour
     public bool preventLeftMovement = false;
     public bool preventJump = false;
 
+    //Animation
+    Animator animator;
 
     private void Awake()
     {
@@ -44,6 +46,9 @@ public class MousyMovement : MonoBehaviour
 
         //locate dialog
         dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
+
+        //locate Animator
+        animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -139,8 +144,13 @@ public class MousyMovement : MonoBehaviour
         //move right
         if (Input.GetKey(KeyCode.D) && preventRightMovement == false)
         {
+            //set walking animation true
+            animator.SetBool("iswalking", true);
+
+            transform.eulerAngles = new Vector3(0, 90, 0);
+
             //if player was moving the other direction then stop movment
-            if(movementSpeed < 0)
+            if (movementSpeed < 0)
             {
                 movementSpeed = 0;
             }
@@ -153,6 +163,11 @@ public class MousyMovement : MonoBehaviour
         //move left
         else if (Input.GetKey(KeyCode.A) && preventLeftMovement == false)
         {
+            //set walking animation true
+            animator.SetBool("iswalking", true);
+
+            transform.eulerAngles = new Vector3(0, 270, 0);
+
             //if player was moving the other direction then stop movment
             if (movementSpeed > 0)
             {
@@ -167,6 +182,9 @@ public class MousyMovement : MonoBehaviour
         //neither movement key was hit
         else
         {
+            //set walking animation false
+            animator.SetBool("iswalking", false);
+
             movementSpeed = 0f;
         }
         //jump
