@@ -26,7 +26,7 @@ public class DialogSystem : MonoBehaviour
         dialogText.text = "";
 
         //reference PlayerController script
-        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        player = GameObject.Find("Mousy").GetComponent<PlayerMovement>();
         
         //only get json file if variable isn't null
         if (dialogJson != null)
@@ -170,7 +170,7 @@ public class DialogSystem : MonoBehaviour
             }
         }
         //prevent strong cheese from ticking down
-        GameObject.Find("Player").GetComponent<PlayerMechanics>().SetInDialog(false);
+        GameObject.Find("Mousy").GetComponent<PlayerMechanics>().SetInDialog(false);
     }
     public void ResumeGame()
     {
@@ -188,7 +188,7 @@ public class DialogSystem : MonoBehaviour
             }
         }
         //allow strong cheese to ticking down
-        GameObject.Find("Player").GetComponent<PlayerMechanics>().SetInDialog(true);
+        GameObject.Find("Mousy").GetComponent<PlayerMechanics>().SetInDialog(true);
     }
 }
 //classes for the json file

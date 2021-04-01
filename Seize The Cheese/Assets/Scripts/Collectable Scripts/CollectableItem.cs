@@ -7,7 +7,7 @@ public class CollectableItem : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //only run if the collider is the player (prevent enemy or other from triggering)
-        if (other.gameObject.name.CompareTo("Player") == 0)
+        if (other.gameObject.name.CompareTo("Mousy") == 0)
         {
             //signal to parent script that collectable was grabbed
             other.GetComponent<CollectableCounter>().addCollectable();

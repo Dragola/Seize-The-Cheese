@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         //locate and reference player's script
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        playerControllerScript = GameObject.Find("Mousy").GetComponent<PlayerMovement>();
     }
     public void OnClickResume()
     {

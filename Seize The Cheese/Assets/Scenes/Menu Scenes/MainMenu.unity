@@ -656,6 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84186b220b08fdb40b67e7a2be7aba2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSceneName: 
 --- !u!4 &402103558
 Transform:
   m_ObjectHideFlags: 0
@@ -2096,6 +2097,7 @@ GameObject:
   - component: {fileID: 1975566690}
   - component: {fileID: 1975566689}
   - component: {fileID: 1975566688}
+  - component: {fileID: 1975566694}
   - component: {fileID: 1975566691}
   - component: {fileID: 1975566692}
   - component: {fileID: 1975566693}
@@ -2558,6 +2560,21 @@ MonoBehaviour:
   optionalRotationMode: 0
   optionalScrambleMode: 0
   optionalString: 
+--- !u!114 &1975566694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975566686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 40306178, guid: aa0b1eebb5db27a419fa4564bbe5c9c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preset: 0
+  onEnableBehaviour: 0
+  onDisableBehaviour: 0
 --- !u!1 &1979029640
 GameObject:
   m_ObjectHideFlags: 0

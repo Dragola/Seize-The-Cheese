@@ -11,7 +11,7 @@ public class DialogSystemDetection : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {    
         //once player hits enable dialog
-        if(other.gameObject.name.CompareTo("Player") == 0)
+        if(other.gameObject.name.CompareTo("Mousy") == 0)
         {
             //send name of trigger to dialog script
             dialogSystem.EnableDialog(this.gameObject.name);

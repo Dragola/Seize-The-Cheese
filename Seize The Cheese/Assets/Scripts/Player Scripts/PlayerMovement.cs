@@ -25,9 +25,17 @@ public class PlayerMovement : MonoBehaviour
     private Canvas pauseMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
     private Canvas dialog = null;
 
-    public Vector2 moveDirection = Vector2.zero;
+    public Vector3 moveDirection = Vector2.zero;
 
-    public Vector2 jumpVelocity = Vector2.zero;
+    public Vector3 jumpVelocity = Vector2.zero;
+
+    public float movementSpeed = 0f;
+
+    public bool directionKeyHit = false;
+
+    public bool movedRight = false;
+
+    public float maximumSpeed = 5f;
 
     public CharacterController controller = null;
 
@@ -59,84 +67,128 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        moveDirection = new Vector2(Input.GetAxis("Horizontal"), 0);
-        moveDirection = transform.TransformDirection(moveDirection);
-
-        //moving right
-        if(moveDirection.x > 0)
+        //right
+        if (Input.GetKey(KeyCode.D))
         {
-            moveDirectionIsRight = true;
-            GetComponent<PlayerMechanics>().UpdateCheeseDirection(moveDirectionIsRight);
-        }
-        //moving left
-        else if(moveDirection.x < 0)
-        {
-            moveDirectionIsRight = false;
-            GetComponent<PlayerMechanics>().UpdateCheeseDirection(moveDirectionIsRight);
-        }
-
-        //
-        if (controller.isGrounded)
-        {
-            moveDirection *= groundSpeed;
-
-            if (Input.GetButton("Jump"))
+            if (movementSpeed < maximumSpeed)
             {
-                didJump = true;
-                jumpVelocity = moveDirection / 1.6f;
-                jumpVelocity.y = jumpSpeed;
-
+                movementSpeed += 0.1f;
             }
-            else
+            directionKeyHit = true;
+            movedRight = true;
+        }
+        //left
+        else if (Input.GetKey(KeyCode.A))
+        {
+            if (movementSpeed > -maximumSpeed)
             {
-                didJump = false;
-                jumpVelocity = Vector2.zero;
+                movementSpeed -= 0.1f;
             }
+            directionKeyHit = true;
+            movedRight = false;
         }
         else
         {
-            //Debug.Log("controller.isGrounded = false");
-            moveDirection *= midairSpeed;
-            jumpVelocity.y -= gravity * Time.deltaTime;
+            directionKeyHit = false;
         }
+        //move player
+        
+        //return to zero movement (slow down)
+        if (movementSpeed > 0 && directionKeyHit == false && movedRight)
+        {
+            movementSpeed -= 0.3f;
+            if (movementSpeed < 0)
+            {
+                movementSpeed = 0;
+            }
+        }
+        else if (movementSpeed < 0 && directionKeyHit == false && movedRight == false)
+        {
+            movementSpeed += 0.3f;
+            if(movementSpeed > 0)
+            {
+                movementSpeed = 0;
+            }
+        }
+        transform.Translate(0, 0, movementSpeed * Time.deltaTime);
+        //moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0);
+        //moveDirection = transform.TransformDirection(moveDirection);
 
-        //if jumped and cheese's raycast and player is still moving then reduce x direction
-        if (didJump && (cheeseRayHit || cheeseHittingWall) && (jumpVelocity.x != 0 || moveDirection.x != 0))
-        {
-            moveDirection.x = 0;
-            jumpVelocity.x = 0;
-            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-            //push player back if the cheese is in the wall
-            if (cheeseHittingWall)
-            {
-                PushPlayer();
-            }
-        }
-        //move player normally
-        else
-        {
-            if (cheeseHittingWall)
-            {
-                //push player back if the cheese is in the wall
-                if (cheeseHittingWall)
-                {
-                    PushPlayer();
-                }
-            }
-            else
-            {
-                //if can move it set direction
-                if ((canMoveRight && moveDirection.x > 0) || (canMoveLeft && moveDirection.x < 0))
-                {
-                    controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
-                }
-                else
-                {
-                    jumpVelocity.x = 0;
-                    controller.Move(jumpVelocity * Time.deltaTime);
-                }
-            }
-        }
+        ////moving right
+        //if (moveDirection.x > 0)
+        //{
+        //    moveDirectionIsRight = true;
+        //    GetComponent<PlayerMechanics>().UpdateCheeseDirection(moveDirectionIsRight);
+        //}
+        ////moving left
+        //else if (moveDirection.x < 0)
+        //{
+        //    moveDirectionIsRight = false;
+        //    GetComponent<PlayerMechanics>().UpdateCheeseDirection(moveDirectionIsRight);
+        //}
+
+        ////
+        //if (controller.isGrounded)
+        //{
+        //    moveDirection *= groundSpeed;
+
+        //    if (Input.GetButton("Jump"))
+        //    {
+        //        didJump = true;
+        //        jumpVelocity = moveDirection / 1.6f;
+        //        jumpVelocity.y = jumpSpeed;
+
+        //    }
+        //    else
+        //    {
+        //        didJump = false;
+        //        jumpVelocity = Vector2.zero;
+        //    }
+        //}
+        //else
+        //{
+        //    //Debug.Log("controller.isGrounded = false");
+        //    moveDirection *= midairSpeed;
+        //    jumpVelocity.y -= gravity * Time.deltaTime;
+        //}
+
+        ////if jumped and cheese's raycast and player is still moving then reduce x direction
+        //if (didJump && (cheeseRayHit || cheeseHittingWall) && (jumpVelocity.x != 0 || moveDirection.x != 0))
+        //{
+        //    moveDirection.x = 0;
+        //    jumpVelocity.x = 0;
+        //    controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+        //    //push player back if the cheese is in the wall
+        //    if (cheeseHittingWall)
+        //    {
+        //        PushPlayer();
+        //    }
+        //}
+        ////move player normally
+        //else
+        //{
+        //    if (cheeseHittingWall)
+        //    {
+        //        //push player back if the cheese is in the wall
+        //        if (cheeseHittingWall)
+        //        {
+        //            PushPlayer();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //if can move it set direction
+        //        if ((canMoveRight && moveDirection.x > 0) || (canMoveLeft && moveDirection.x < 0))
+        //        {
+        //            controller.Move((moveDirection + jumpVelocity) * Time.deltaTime);
+        //        }
+        //        else
+        //        {
+        //            jumpVelocity.x = 0;
+        //            controller.Move(jumpVelocity * Time.deltaTime);
+        //        }
+        //    }
+        //}
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
         {

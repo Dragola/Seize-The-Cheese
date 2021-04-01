@@ -12,7 +12,7 @@ public class EndOfLevel : MonoBehaviour
     private void Start()
     {
         levelStorage = GameObject.Find("LevelStorage").GetComponent<LevelStorage>();
-        playerMovementScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        playerMovementScript = GameObject.Find("Mousy").GetComponent<PlayerMovement>();
         endOfLevelUI = GameObject.Find("EndOfLevel UI").GetComponent<Canvas>();
         endOfLevelUI.gameObject.SetActive(false);
     }
@@ -30,7 +30,7 @@ public class EndOfLevel : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //once player hits
-        if (other.gameObject.name.CompareTo("Player") == 0)
+        if (other.gameObject.name.CompareTo("Mousy") == 0)
         {
             //stop player from moving
             playerMovementScript.FreezePlayer();
