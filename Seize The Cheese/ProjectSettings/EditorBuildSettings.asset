@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu Scenes/Logo.unity
     guid: a612080f7c3af1241823a0cc7a3a8ff2
   - enabled: 1
-    path: Assets/Scenes/Menu Scenes/MainMenu.unity
+    path: Assets/Scenes/Menu Scenes/MainMenu(old).unity
     guid: 961ebb6d41f241e45bbdbd2457046623
   - enabled: 1
     path: Assets/Scenes/Misc Scenes/LoadingScreen.unity

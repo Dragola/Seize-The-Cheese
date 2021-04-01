@@ -79,6 +79,7 @@ public class LevelLoad : MonoBehaviour
         //main menu -> level 1
         if(sceneName.Contains("MainMenu"))
         {
+            Debug.Log("I made it this far!");
             nextLevel = "Level 1 With Art";
         }
         //level 1 -> level 2
