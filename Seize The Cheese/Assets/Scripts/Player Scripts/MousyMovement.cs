@@ -17,6 +17,7 @@ public class MousyMovement : MonoBehaviour
 
     //rigidbody
     private Rigidbody playerRigidbody = null;
+    private PlayerMechanics playerMechanicsScript = null;
 
     //UI
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
@@ -39,6 +40,7 @@ public class MousyMovement : MonoBehaviour
     {
         //rigidbody
         playerRigidbody = GetComponent<Rigidbody>();
+        playerMechanicsScript = GetComponent<PlayerMechanics>();
 
         //locate pause menu and make invisible
         pauseMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
@@ -147,7 +149,6 @@ public class MousyMovement : MonoBehaviour
             //set walking animation true
             animator.SetBool("iswalking", true);
 
-
             //Turn Mousey right
             transform.eulerAngles = new Vector3(0, 90, 0);
 
@@ -161,6 +162,7 @@ public class MousyMovement : MonoBehaviour
             {
                 movementSpeed += 10;
             }
+            playerMechanicsScript.UpdateCheeseDirection(true);
         }
         //move left
         else if (Input.GetKey(KeyCode.A) && preventLeftMovement == false)
@@ -181,6 +183,7 @@ public class MousyMovement : MonoBehaviour
             {
                 movementSpeed -= 10;
             }
+            playerMechanicsScript.UpdateCheeseDirection(false);
         }
         //neither movement key was hit
         else
@@ -253,6 +256,8 @@ public class MousyMovement : MonoBehaviour
         if (direction.y > 0)
         {
             Debug.Log("Hit floor");
+            inAir = false;
+            didJump = false;
         }
         //if top is hit
         else if (direction.y < 0)
