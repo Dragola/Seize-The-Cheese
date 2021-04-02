@@ -147,6 +147,8 @@ public class MousyMovement : MonoBehaviour
             //set walking animation true
             animator.SetBool("iswalking", true);
 
+
+            //Turn Mousey right
             transform.eulerAngles = new Vector3(0, 90, 0);
 
             //if player was moving the other direction then stop movment
@@ -166,6 +168,7 @@ public class MousyMovement : MonoBehaviour
             //set walking animation true
             animator.SetBool("iswalking", true);
 
+            //turn Mousey left
             transform.eulerAngles = new Vector3(0, 270, 0);
 
             //if player was moving the other direction then stop movment

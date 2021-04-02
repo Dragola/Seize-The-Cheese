@@ -40,6 +40,9 @@ public class PlayerMechanics : MonoBehaviour
     public byte collisionDirection = 0;     //0 = neither, 1 = right, 2 = left
 
 
+    //animations
+    Animator animator;
+
     private void OnCollisionEnter(Collision collision)
     {
         //get contacts for collision
@@ -113,9 +116,13 @@ public class PlayerMechanics : MonoBehaviour
             }
         }
 
-        if (other.tag == "HealthCheese") // when the player interacts with a 'Health Cheese' power up
+        if (other.tag == "HealthCheese" && Currenthealth < 10) // when the player interacts with a 'Health Cheese' power up
         {
             Currenthealth += 5;
+            Destroy(other.gameObject);
+        }
+        else
+        {
             Destroy(other.gameObject);
         }
 
@@ -150,6 +157,7 @@ public class PlayerMechanics : MonoBehaviour
     {
         Cursor.visible = false;
 
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -167,6 +175,9 @@ public class PlayerMechanics : MonoBehaviour
         //pickup cheese
         if (cheeseBlock != null && pickedUpCheese == false && Input.GetKeyDown(KeyCode.E))
         {
+            //triggers animation
+            animator.SetBool("isholdingcheese", true);
+
             Debug.Log("Picked up first cheese");
             //indicate cheese was picked up
             pickedUpCheese = true;
@@ -207,6 +218,8 @@ public class PlayerMechanics : MonoBehaviour
         if (cheeseBlock != null && pickedUpCheese == true && Input.GetKeyDown(KeyCode.R))
         {
             DropCheese();
+            //stops animation
+            animator.SetBool("isholdingcheese", false);
         }
 
         //if strong cheese effect is active
