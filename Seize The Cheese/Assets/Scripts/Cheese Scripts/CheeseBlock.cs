@@ -14,10 +14,14 @@ public class CheeseBlock : MonoBehaviour
 
     public PlayerMechanics player = null;
 
+
+    Animator animator;
     private void Awake()
     {
         //reference player's script
         player = GameObject.Find("Mousy").GetComponent<PlayerMechanics>();
+
+        animator = player.GetComponent<Animator>();
     }
     private void FixedUpdate()
     {
@@ -182,6 +186,9 @@ public class CheeseBlock : MonoBehaviour
             if ((direction.y == 1 || direction.y == -1) && pickedUp)
             {
                 player.DropCheese();
+
+                //stops animation
+                animator.SetBool("isholdingcheese", false);
             }
             //prevent right movement if cheese is hitting object
             else if (direction.x == -1 && pickedUp)
