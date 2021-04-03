@@ -207,6 +207,7 @@ public class MousyMovement : MonoBehaviour
             //if main menu isn't currently active
             if (pauseMenuActive == false)
             {
+                FreezePlayer(false);
                 pauseMenuActive = true;
                 //makes main menu visible
                 pauseMenu.gameObject.SetActive(true);
@@ -217,6 +218,7 @@ public class MousyMovement : MonoBehaviour
             //if main menu is currently active
             else
             {
+                ResumePlayer();
                 pauseMenuActive = false;
                 //makes main menu invisible
                 pauseMenu.gameObject.SetActive(false);
@@ -237,11 +239,15 @@ public class MousyMovement : MonoBehaviour
         preventLeftMovement = false;
         preventJump = false;
     }
-    public void FreezePlayer()
+    public void FreezePlayer(bool endOfLevel)
     {
         preventLeftMovement = true;
-        preventLeftMovement = true;
+        preventRightMovement = true;
         preventJump = true;
+        if (endOfLevel)
+        {
+            playerMechanicsScript.endOfLevel = true;
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
