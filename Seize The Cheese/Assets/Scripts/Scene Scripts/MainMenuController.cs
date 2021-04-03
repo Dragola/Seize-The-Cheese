@@ -17,7 +17,7 @@ public class MainMenuController : MonoBehaviour
         DontDestroyOnLoad(levelStorage.gameObject);
 
         //load MainGame (needs to be changed to level loading
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
     public void MoveToLoadGame()
     {
