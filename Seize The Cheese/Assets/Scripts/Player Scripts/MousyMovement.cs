@@ -78,6 +78,7 @@ public class MousyMovement : MonoBehaviour
         //prevent floating on walls
         if (inAir || didJump)
         {
+
             //right side
             if (Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.forward), out hit, 0.2f))
             {
@@ -119,6 +120,10 @@ public class MousyMovement : MonoBehaviour
         {
             Debug.Log("In air!");
             inAir = true;
+
+            //Animation control
+            //animator.SetBool("isgrounded", false);
+
             if (jumpSpeed > -400)
             {
                 jumpSpeed -= 9.81f;
@@ -132,9 +137,17 @@ public class MousyMovement : MonoBehaviour
             preventRightMovement = false;
             preventLeftMovement = false;
 
+            //Animation control
+            //animator.SetBool("isgrounded", true);
+
+            //Animation control
+            animator.SetBool("isjumping", false);
+
             if (didJump)
             {
                 didJump = false;
+
+                
             }
         }
         //move player
@@ -196,10 +209,12 @@ public class MousyMovement : MonoBehaviour
         //jump
         if (Input.GetKeyDown(KeyCode.Space) && didJump == false && preventJump == false)
         {
+            //Animation control
+            animator.SetBool("isjumping", true);
+
             Debug.Log("Jump!");
             didJump = true;
             jumpSpeed = 300;
-            
         }
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
