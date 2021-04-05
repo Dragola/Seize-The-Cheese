@@ -100,10 +100,15 @@ public class PlayerMechanics : MonoBehaviour
         if (other.tag == "Dust") // when player touches a 'Dust Bunnie'
         {
             Destroy(other.gameObject); // destorys the dust bunnie
+
+            
             if (!onStrongCheese)
             {
+                animator.SetBool("ishit", false);
+
                 Currenthealth -= 5; // lowers current health by half
 
+                animator.SetBool("ishit", false);
                 if (Currenthealth <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
                 {
                     Debug.Log("Dead");
@@ -114,6 +119,7 @@ public class PlayerMechanics : MonoBehaviour
 
                 }
             }
+            
         }
 
         if (other.tag == "HealthCheese" && Currenthealth < 10) // when the player interacts with a 'Health Cheese' power up
