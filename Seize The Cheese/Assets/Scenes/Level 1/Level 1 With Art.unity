@@ -20564,6 +20564,7 @@ PrefabInstance:
       value: Mousy
       objectReference: {fileID: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
     - target: {fileID: 3120019324915354698, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_Height
       value: 1.2
@@ -20582,6 +20583,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
 =======
 >>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
+=======
+>>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -20589,7 +20592,11 @@ PrefabInstance:
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_LocalPosition.x
 <<<<<<< HEAD
+<<<<<<< HEAD
       value: -13.65
+=======
+      value: -13.521
+>>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
 =======
       value: -13.521
 >>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)

@@ -80,9 +80,12 @@ public class MousyMovement : MonoBehaviour
         else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x - 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.down, out hit, playerCapsuleCollider.bounds.extents.y))
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             //reset jumpvelocity
             if ((inAir == false || didJump == false) && jumpVelocity != 0)
 =======
+=======
+>>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
             //right side
             if (Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.forward), out hit, 0.2f))
             {
@@ -123,6 +126,7 @@ public class MousyMovement : MonoBehaviour
             Debug.Log("Not touching floor");
             inAir = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
         }
 
         //jump detection
@@ -137,6 +141,8 @@ public class MousyMovement : MonoBehaviour
             jumpVelocity = 0;
             ceilingHitObject = hit.collider.gameObject;
 =======
+=======
+>>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
             if (jumpSpeed > -400)
             {
                 jumpSpeed -= 9.81f;
@@ -184,6 +190,9 @@ public class MousyMovement : MonoBehaviour
             if (didJump)
             {
                 didJump = false;
+<<<<<<< HEAD
+>>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
+=======
 >>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
             }
         }
@@ -325,6 +334,9 @@ public class MousyMovement : MonoBehaviour
 =======
             jumpSpeed = 300;
             
+<<<<<<< HEAD
+>>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
+=======
 >>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
         }
         //main menu key
