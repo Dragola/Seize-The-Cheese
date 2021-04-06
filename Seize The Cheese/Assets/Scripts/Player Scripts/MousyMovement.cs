@@ -5,8 +5,8 @@ using UnityEngine;
 public class MousyMovement : MonoBehaviour
 {
     //player
-    public float movementSpeed = 0f;
-    public float jumpSpeed = 0;
+    public float movmentVelocity = 0f;
+    public float jumpVelocity = 0;
     public float gravity = 1.0F;
     public bool didJump = false;
     public bool inAir = false;
@@ -25,13 +25,16 @@ public class MousyMovement : MonoBehaviour
     private Canvas dialog = null;
 
     //raycast
-    RaycastHit hit;
+    private RaycastHit hit;
+    public GameObject floorhHitObject;
+    public GameObject ceilingHitObject;
     public float hitDistanceMiddle;
     public float hitDistanceLeft;
     public float hitDistanceRight;
     public bool preventRightMovement = false;
     public bool preventLeftMovement = false;
     public bool preventJump = false;
+    private CapsuleCollider playerCapsuleCollider = null;
 
     //Animation
     Animator animator;
@@ -41,6 +44,7 @@ public class MousyMovement : MonoBehaviour
         //rigidbody
         playerRigidbody = GetComponent<Rigidbody>();
         playerMechanicsScript = GetComponent<PlayerMechanics>();
+        playerCapsuleCollider = GetComponent<CapsuleCollider>();
 
         //locate pause menu and make invisible
         pauseMenu = GameObject.Find("Pause Menu").GetComponent<Canvas>();
@@ -55,103 +59,172 @@ public class MousyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //floor detection
+        Debug.DrawRay(playerCapsuleCollider.bounds.center, Vector3.down, Color.yellow);
+        Debug.DrawRay(new Vector3(playerCapsuleCollider.bounds.center.x - 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.down, Color.gray);
+        Debug.DrawRay(new Vector3(playerCapsuleCollider.bounds.center.x + 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.down, Color.gray);
         //detect if player is hitting ground
         //middle bottom
-        if(Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.down), out hit, 5f))
+        if (Physics.Raycast(playerCapsuleCollider.bounds.center, Vector3.down, out hit, playerCapsuleCollider.bounds.extents.y + 0.05f))
         {
-            hitDistanceMiddle = hit.distance;
-            Debug.DrawRay(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.down), Color.yellow);
+            //reset jumpvelocity
+            if ((inAir == false || didJump == false) && jumpVelocity != 0)
+            {
+                jumpVelocity = 0;
+            }
+            Debug.Log("Fit Floor via raycast middle");
+            didJump = false;
+            inAir = false;
         }
         //left bottom
-        if(Physics.Raycast(new Vector3(transform.position.x - 0.29f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.down), out hit, 5f))
-        { 
-            hitDistanceLeft = hit.distance;
-            Debug.DrawRay(new Vector3(transform.position.x - 0.29f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.down), Color.red);
+        else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x - 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.down, out hit, playerCapsuleCollider.bounds.extents.y))
+        {
+            //reset jumpvelocity
+            if ((inAir == false || didJump == false) && jumpVelocity != 0)
+            {
+                jumpVelocity = 0;
+            }
+            Debug.Log("Fit Floor via raycast left");
+            didJump = false;
+            inAir = false;
         }
         //right bottom
-        if(Physics.Raycast(new Vector3(transform.position.x + 0.07f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.down), out hit, 5f))
+        else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x + 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.down, out hit, playerCapsuleCollider.bounds.extents.y))
         {
-            hitDistanceRight = hit.distance;
-            Debug.DrawRay(new Vector3(transform.position.x + 0.07f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.down), Color.green);
+            //reset jumpvelocity
+            if ((inAir == false || didJump == false) && jumpVelocity != 0)
+            {
+                jumpVelocity = 0;
+            }
+            Debug.Log("Fit Floor via raycast right");
+            didJump = false;
+            inAir = false;
+        }
+        //no ray hitting ground
+        else
+        {
+            Debug.Log("Not touching floor");
+            inAir = true;
+        }
+
+        //jump detection
+        Debug.DrawRay(playerCapsuleCollider.bounds.center, Vector3.up, Color.yellow);
+        Debug.DrawRay(new Vector3(playerCapsuleCollider.bounds.center.x - 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.up, Color.gray);
+        Debug.DrawRay(new Vector3(playerCapsuleCollider.bounds.center.x + 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.up, Color.gray);
+        //detect if player is hitting ground
+        //middle bottom
+        if (Physics.Raycast(playerCapsuleCollider.bounds.center, Vector3.up, out hit, playerCapsuleCollider.bounds.extents.y + 0.05f))
+        {
+            Debug.Log("Fit ceiling via raycast miidle");
+            jumpVelocity = 0;
+            ceilingHitObject = hit.collider.gameObject;
+        }
+        //left bottom
+        else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x +- 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.up, out hit, playerCapsuleCollider.bounds.extents.y))
+        {
+            Debug.Log("Fit ceiling via raycast left");
+            jumpVelocity = 0;
+            ceilingHitObject = hit.collider.gameObject;
+        }
+        //right bottom
+        else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x + 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.up, out hit, playerCapsuleCollider.bounds.extents.y))
+        {
+            Debug.Log("Fit ceiling via raycast right");
+            jumpVelocity = 0;
+            ceilingHitObject = hit.collider.gameObject;
+        }
+        else
+        {
+            ceilingHitObject = null;
         }
 
         //prevent floating on walls
         if (inAir || didJump)
         {
-
-            //right side
-            if (Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.forward), out hit, 0.2f))
+            Debug.Log("InAir = " + inAir + "|| didJump = " + didJump);
+            //
+            if (jumpVelocity > -200)
             {
-                //stop any movement (prevent floating on wall)
-                if (movementSpeed > 0)
-                {
-                    movementSpeed = 0;
-                }
-                preventRightMovement = true;
-                //jumpSpeed = -400;
-                Debug.Log("Right side about to hit, Raycast!");
-                Debug.DrawRay(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.forward), Color.magenta);
+                jumpVelocity -= 10;
             }
             else
             {
-                preventRightMovement = false;
-            }
-            //left side
-            if (Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y + 0.5f, transform.position.z), transform.TransformDirection(Vector3.back), out hit, 0.2f))
-            {
-                //stop any movement (prevent floating on wall)
-                if (movementSpeed < 0)
-                {
-                    movementSpeed = 0;
-                }
-                //jumpSpeed = -400;
-                preventLeftMovement = true;
-                Debug.Log("Left side about to hit, Raycast!");
-                Debug.DrawRay(new Vector3(transform.position.x - 0.1f, transform.position.y + 0.5f, transform.position.z), transform.TransformDirection(Vector3.back), Color.magenta);
-            }
-            else
-            {
-                preventLeftMovement = false;
+                jumpVelocity = -200;
             }
         }
+            //    //right side
+            //    if (Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.forward), out hit, 0.2f))
+            //    {
 
-        //if distance from all raycasts indicates player is in the air
-        if (hitDistanceLeft > 0.006f && hitDistanceMiddle > 0.006f && hitDistanceRight > 0.006f)
-        {
-            Debug.Log("In air!");
-            inAir = true;
+            //        //stop any movement (prevent floating on wall)
+            //        if (movmentVelocity > 0)
+            //        {
+            //            movmentVelocity = 0;
+            //        }
+            //        preventRightMovement = true;
+            //        //jumpVelocity = -400;
+            //        Debug.Log("Right side about to hit, Raycast!");
+            //        Debug.DrawRay(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.forward), Color.magenta);
+            //    }
+            //    else
+            //    {
+            //        preventRightMovement = false;
+            //    }
+            //    //left side
+            //    if (Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y + 0.5f, transform.position.z), transform.TransformDirection(Vector3.back), out hit, 0.2f))
+            //    {
+            //        //stop any movement (prevent floating on wall)
+            //        if (movmentVelocity < 0)
+            //        {
+            //            movmentVelocity = 0;
+            //        }
+            //        //jumpVelocity = -400;
+            //        preventLeftMovement = true;
+            //        Debug.Log("Left side about to hit, Raycast!");
+            //        Debug.DrawRay(new Vector3(transform.position.x - 0.1f, transform.position.y + 0.5f, transform.position.z), transform.TransformDirection(Vector3.back), Color.magenta);
+            //    }
+            //    else
+            //    {
+            //        preventLeftMovement = false;
+            //    }
+            //}
 
-            //Animation control
-            //animator.SetBool("isgrounded", false);
+            //if distance from all raycasts indicates player is in the air
+            //&& hitDistanceMiddle > 0.0055f && hitDistanceRight > 0.0055f
+            //if (hitDistanceLeft > 0.006f)
+            //{
+            //    Debug.Log("In air!");
+            //    inAir = true;
 
-            if (jumpSpeed > -400)
-            {
-                jumpSpeed -= 9.81f;
-            }
-        }
-        //if player touched the ground (at least 1 of the raycast distances is < 0.006)
-        else if (inAir)
-        {
-            inAir = false;
-            jumpSpeed = 0;
-            preventRightMovement = false;
-            preventLeftMovement = false;
+            //    //Animation control
+            //    //animator.SetBool("isgrounded", false);
 
-            //Animation control
-            //animator.SetBool("isgrounded", true);
+            //    if (jumpVelocity > -300)
+            //    {
+            //        jumpVelocity = -300;
+            //    }
+            //}
+            ////if player touched the ground (at least 1 of the raycast distances is < 0.006)
+            //else if (inAir)
+            //{
+            //    inAir = false;
+            //    jumpVelocity = 0;
+            //    preventRightMovement = false;
+            //    preventLeftMovement = false;
 
-            //Animation control
-            animator.SetBool("isjumping", false);
+            //    //Animation control
+            //    //animator.SetBool("isgrounded", true);
 
-            if (didJump)
-            {
-                didJump = false;
+            //    //Animation control
+            //    animator.SetBool("isjumping", false);
 
-                
-            }
-        }
-        //move player
-        playerRigidbody.velocity = new Vector3(movementSpeed * Time.deltaTime, jumpSpeed * Time.deltaTime, 0);
+            //    if (didJump)
+            //    {
+            //        didJump = false;
+            //    }
+            //}
+            //move player
+            playerRigidbody.velocity = new Vector3(movmentVelocity * Time.deltaTime, jumpVelocity * Time.deltaTime, 0);
     }
 
     private void Update()
@@ -166,14 +239,14 @@ public class MousyMovement : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 90, 0);
 
             //if player was moving the other direction then stop movment
-            if (movementSpeed < 0)
+            if (movmentVelocity < 0)
             {
-                movementSpeed = 0;
+                movmentVelocity = 0;
             }
-            //increase movementSpeed
-            if (movementSpeed < 300)
+            //increase movmentVelocity
+            if (movmentVelocity < 300)
             {
-                movementSpeed += 10;
+                movmentVelocity += 10;
             }
             playerMechanicsScript.UpdateCheeseDirection(true);
         }
@@ -187,14 +260,14 @@ public class MousyMovement : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 270, 0);
 
             //if player was moving the other direction then stop movment
-            if (movementSpeed > 0)
+            if (movmentVelocity > 0)
             {
-                movementSpeed = 0;
+                movmentVelocity = 0;
             }
-            //decrease movementSpeed
-            if (movementSpeed > -300)
+            //decrease movmentVelocity
+            if (movmentVelocity > -300)
             {
-                movementSpeed -= 10;
+                movmentVelocity -= 10;
             }
             playerMechanicsScript.UpdateCheeseDirection(false);
         }
@@ -204,17 +277,18 @@ public class MousyMovement : MonoBehaviour
             //set walking animation false
             animator.SetBool("iswalking", false);
 
-            movementSpeed = 0f;
+            movmentVelocity = 0f;
         }
         //jump
-        if (Input.GetKeyDown(KeyCode.Space) && didJump == false && preventJump == false)
+        if (Input.GetKeyDown(KeyCode.Space) && didJump == false && preventJump == false && inAir == false)
         {
             //Animation control
             animator.SetBool("isjumping", true);
 
             Debug.Log("Jump!");
             didJump = true;
-            jumpSpeed = 300;
+            inAir = true;
+            jumpVelocity = 310;
         }
         //main menu key
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -264,39 +338,66 @@ public class MousyMovement : MonoBehaviour
             playerMechanicsScript.endOfLevel = true;
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    Debug.Log("Collision Detected");
+    //    //get contacts for collision
+
+    //    if (collision.collider.name.CompareTo("Mousy") != 0 && inAir && hitCeiling == false)
+    //    {
+    //        Debug.Log("Collision Detected not mousy");
+    //        //hit front of player
+    //        if (gameObject.transform.position.x < collision.gameObject.transform.position.x)
+    //        {
+    //            preventRightMovement = true;
+    //        }
+    //        else if (gameObject.transform.position.x > collision.gameObject.transform.position.x)
+    //        {
+    //            preventLeftMovement = true;
+    //        }
+    //        movmentVelocity = 0;
+    //    }
+    //}
+    private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("Collision detected");
+        Debug.Log("Collision Staying");
 
+        //make sure object it's the ceiling
+        if (inAir) {
+            if (ceilingHitObject != null && ceilingHitObject != collision.gameObject)
+            {
+                Debug.Log("Hitting ceiling so ignoring this collision");
+                movmentVelocity = 0;
+            }
+            else
+            {
+                Debug.Log("Collision Staying not ceiling");
+                //hit front of player
+                if (gameObject.transform.position.x < collision.gameObject.transform.position.x)
+                {
+                    preventRightMovement = true;
+                }
+                else if (gameObject.transform.position.x > collision.gameObject.transform.position.x)
+                {
+                    preventLeftMovement = true;
+                }
+                movmentVelocity = 0;
+            }
+        }
+        
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        Debug.Log("Collision Exited");
         //get contacts for collision
-        Vector3 direction = collision.GetContact(0).normal;
-
-        //Debug.Log("collision.contactCount.ToString() = " + collision.contactCount.ToString());
-
-        //if bottom is hit
-        if (direction.y > 0)
+       
+        if (preventRightMovement)
         {
-            Debug.Log("Hit floor");
-            inAir = false;
-            didJump = false;
+            preventRightMovement = false;
         }
-        //if top is hit
-        else if (direction.y < 0)
+        else if (preventLeftMovement)
         {
-            Debug.Log("Hit roof");
-            jumpSpeed = 0;
-        }
-        //left side
-        if(direction.x > 0)
-        {
-            Debug.Log("Hit object on left");
-            movementSpeed = 0;
-        }
-        //right side
-        else if(direction.x < 0)
-        {
-            Debug.Log("Hit object on right");
-            movementSpeed = 0;
+            preventLeftMovement = false;
         }
     }
 
