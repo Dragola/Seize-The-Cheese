@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMechanics : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class PlayerMechanics : MonoBehaviour
     public GameObject cheeseBlock = null;
     public GameObject secondCheeseBlock = null;
     public byte collisionDirection = 0;     //0 = neither, 1 = right, 2 = left
+    public bool endOfLevel = false;
 
 
     //animations
@@ -112,36 +114,29 @@ public class PlayerMechanics : MonoBehaviour
                 if (Currenthealth <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
                 {
                     Debug.Log("Dead");
-                    Cursor.visible = true;
-                    deathPanel.SetActive(true);
-                    PauseGame();
-                    dead = true;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+                    //Cursor.visible = true;
+                    //deathPanel.SetActive(true);
+                    //PauseGame();
+                    //dead = true;
 
                 }
             }
             
         }
 
-        if (other.tag == "HealthCheese" && Currenthealth < 10) // when the player interacts with a 'Health Cheese' power up
+        else if (other.tag == "HealthCheese" && Currenthealth < 10) // when the player interacts with a 'Health Cheese' power up
         {
             Currenthealth += 5;
             Destroy(other.gameObject);
         }
-        else
-        {
-            Destroy(other.gameObject);
-        }
 
-        if (other.tag == "StrongCheese")  // when the player interacts with 'StrongCheese' 
+        else if (other.tag == "StrongCheese")  // when the player interacts with 'StrongCheese' 
         {
             onStrongCheese = true;
             Destroy(other.gameObject);
 
         }
-    }
-    void PauseGame()
-    {
-        Time.timeScale = 0; //sets the time in game to 0, thus pausing the game
     }
 
     void ResumeGame()
@@ -169,82 +164,81 @@ public class PlayerMechanics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CharacterController controller = GetComponent<CharacterController>();
-        // is the controller on the ground?
-
-        if (Input.GetKeyDown(KeyCode.Return)) // if enter is pressed the game continues unless the player is dead.
-        {
-            //Debug.Log("Return key was pressed.");
-            ResumeGame();
-        }
-
-        //pickup cheese
-        if (cheeseBlock != null && pickedUpCheese == false && Input.GetKeyDown(KeyCode.E))
-        {
-            //triggers animation
-            animator.SetBool("isholdingcheese", true);
-
-            Debug.Log("Picked up first cheese");
-            //indicate cheese was picked up
-            pickedUpCheese = true;
-
-            //prevent rigidbody from moving block while being carried
-            cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
-            //attach gameobject to player
-            cheeseBlock.transform.parent = this.gameObject.transform;
-
-            //tell block it's been picked up
-            cheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, false);
-
-            //reset collision drection
-            collisionDirection = 0;
-        }
-        else if (secondCheeseBlock != null && pickedUpCheese == true && pickedUpCheese2 == false && Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Picked up second cheese");
-
-            pickedUpCheese2 = true;
-
-            Debug.Log("Second Cheese pickup");
-
-            //prevent rigidbody from moving block while being carried
-            secondCheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
-            //attach gameobject to player
-            secondCheeseBlock.transform.parent = this.gameObject.transform;
-
-            //tell block it's been picked up
-            secondCheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, true);
-
-            //reset collision drection
-            collisionDirection = 0;
-        }
-        //release cheese if holding one
-        if (cheeseBlock != null && pickedUpCheese == true && Input.GetKeyDown(KeyCode.R))
-        {
-            DropCheese();
-            //stops animation
-            animator.SetBool("isholdingcheese", false);
-        }
-
-        //if strong cheese effect is active
-        if (onStrongCheese)
-        { // when the player picks up strong cheese a count down timer aprears inside a panel
-            if (timeRemaining > 0 && notInDialog == true)
+        if (endOfLevel == false) {
+            if (Input.GetKeyDown(KeyCode.Return)) // if enter is pressed the game continues unless the player is dead.
             {
-                //Debug.Log(timeRemaining);
-                holder.SetActive(true);
-                timeRemaining -= Time.deltaTime;
-                DisplayTime(timeRemaining);
+                //Debug.Log("Return key was pressed.");
+                ResumeGame();
             }
 
-            else if (timeRemaining <= 0) // once the time reaches 0 on the timer the panel disappears
+            //pickup cheese
+            if (cheeseBlock != null && pickedUpCheese == false && Input.GetKeyDown(KeyCode.E))
             {
-                //Debug.Log("Done");
-                holder.SetActive(false);
-                onStrongCheese = false;
-                timeRemaining = 11;
+                //triggers animation
+                animator.SetBool("isholdingcheese", true);
+
+                Debug.Log("Picked up first cheese");
+                //indicate cheese was picked up
+                pickedUpCheese = true;
+
+                //prevent rigidbody from moving block while being carried
+                cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+                //attach gameobject to player
+                cheeseBlock.transform.parent = this.gameObject.transform;
+
+                //tell block it's been picked up
+                cheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, false);
+
+                //reset collision drection
+                collisionDirection = 0;
+            }
+            else if (secondCheeseBlock != null && pickedUpCheese == true && pickedUpCheese2 == false && Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("Picked up second cheese");
+
+                pickedUpCheese2 = true;
+
+                Debug.Log("Second Cheese pickup");
+
+                //prevent rigidbody from moving block while being carried
+                secondCheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+                //attach gameobject to player
+                secondCheeseBlock.transform.parent = this.gameObject.transform;
+
+                //tell block it's been picked up
+                secondCheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, true);
+
+                //reset collision drection
+                collisionDirection = 0;
+            }
+            //release cheese if holding one
+            if (cheeseBlock != null && pickedUpCheese == true && Input.GetKeyDown(KeyCode.R))
+            {
+                DropCheese();
+                //stops animation
+                animator.SetBool("isholdingcheese", false);
+            }
+
+            //if strong cheese effect is active
+            if (onStrongCheese)
+            { // when the player picks up strong cheese a count down timer aprears inside a panel
+                if (timeRemaining > 0 && notInDialog == true)
+                {
+                    //Debug.Log(timeRemaining);
+                    holder.SetActive(true);
+                    timeRemaining -= Time.deltaTime;
+                    DisplayTime(timeRemaining);
+                }
+
+                else if (timeRemaining <= 0) // once the time reaches 0 on the timer the panel disappears
+                {
+                    //Debug.Log("Done");
+                    holder.SetActive(false);
+                    onStrongCheese = false;
+                    timeRemaining = 11;
+                }
             }
         }
     }

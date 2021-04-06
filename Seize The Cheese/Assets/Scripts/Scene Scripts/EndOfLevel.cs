@@ -4,15 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class EndOfLevel : MonoBehaviour
 {
-    private PlayerMovement playerMovementScript = null;
+    public MousyMovement playerMovementScript = null;
     private Canvas endOfLevelUI = null;
-    private bool playerHitTrigger = false;
+    public bool playerHitTrigger = false;
     private LevelStorage levelStorage = null;
 
     private void Start()
     {
         levelStorage = GameObject.Find("LevelStorage").GetComponent<LevelStorage>();
-        playerMovementScript = GameObject.Find("Mousy").GetComponent<PlayerMovement>();
+        playerMovementScript = GameObject.Find("Mousy").GetComponent<MousyMovement>();
         endOfLevelUI = GameObject.Find("EndOfLevel UI").GetComponent<Canvas>();
         endOfLevelUI.gameObject.SetActive(false);
     }
@@ -22,7 +22,8 @@ public class EndOfLevel : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                SwapToLoadingScene();
+                LoopLevelScene();
+                //SwapToLoadingScene();
                 playerHitTrigger = false;
             }
         }
@@ -30,10 +31,10 @@ public class EndOfLevel : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //once player hits
-        if (other.gameObject.name.CompareTo("Mousy") == 0)
+        if (other.gameObject.tag.CompareTo("Player") == 0)
         {
             //stop player from moving
-            playerMovementScript.FreezePlayer();
+            playerMovementScript.FreezePlayer(true);
 
             //show end of level UI
             endOfLevelUI.gameObject.SetActive(true);
@@ -48,5 +49,9 @@ public class EndOfLevel : MonoBehaviour
 
         //switch to the loading screen
         SceneManager.LoadScene("LoadingScreen", LoadSceneMode.Single);
+    }
+    private void LoopLevelScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 }
