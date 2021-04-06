@@ -48,13 +48,11 @@ public class lerper : MonoBehaviour
         //change speed for left direction
         if (updateSpeed == true && canMoveRight == false)
         {
-            transform.position = new Vector3(startPoint.x, transform.position.y, -6.5f);
             updateSpeed = false;
         }
         //change speed for right direction
         else if (canMoveRight == true && updateSpeed == true)
         {
-            transform.position = new Vector3(endPoint.x, transform.position.y, -6.5f);
             updateSpeed = false;
         }
         //rotate bunny
@@ -80,25 +78,28 @@ public class lerper : MonoBehaviour
     {
         canMoveRight = enabled;
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Vector2 direction = collision.GetContact(0).normal;
+        Debug.Log("Dust Bunny(" + gameObject.name + "): Collision detected");
 
-        //Left side hit
-        if (direction.x == -1)
+        if (other.name.CompareTo("Cheese") == 0)
         {
-            Debug.Log("Hit right" + name);
-            canMoveRight = false;
-            updateSpeed = true;
-            updateRotation = true;
-        }
-        //Right side hit
-        else if (direction.x == 1)
-        {
-            Debug.Log("Hit left" + name);
-            canMoveRight = true;
-            updateSpeed = true;
-            updateRotation = true;
+            //Left side hit
+            if (gameObject.transform.position.x > other.gameObject.transform.position.x)
+            {
+                Debug.Log("Dust Bunny(" + gameObject.name + "): Hit left side");
+                canMoveRight = true;
+                updateSpeed = true;
+                updateRotation = true;
+            }
+            //Right side hit
+            if (gameObject.transform.position.x < other.gameObject.transform.position.x)
+            {
+                Debug.Log("Dust Bunny(" + gameObject.name + "): Hit right side");
+                canMoveRight = false;
+                updateSpeed = true;
+                updateRotation = true;
+            }
         }
     }
 }
