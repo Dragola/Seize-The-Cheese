@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -654,7 +654,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &60755654
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3456,7 +3456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &359300030
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14745,7 +14745,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20563,8 +20563,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mousy
       objectReference: {fileID: 0}
-<<<<<<< HEAD
-<<<<<<< HEAD
     - target: {fileID: 3120019324915354698, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_Height
       value: 1.2
@@ -20573,10 +20571,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.54
       objectReference: {fileID: 0}
-    - target: {fileID: 3120019324915354699, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 6d73463b37ca41648b744f6ebc5c70f4, type: 2}
     - target: {fileID: 3120019324915354700, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: Maxhealth
       value: 10
@@ -20585,29 +20579,17 @@ PrefabInstance:
       propertyPath: Currenthealth
       value: 10
       objectReference: {fileID: 0}
-=======
->>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
-=======
->>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_LocalPosition.x
-<<<<<<< HEAD
-<<<<<<< HEAD
       value: -13.65
-=======
-      value: -13.521
->>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
-=======
-      value: -13.521
->>>>>>> parent of 10a9cb5 (Implemented rudimentary jump and hit animations)
       objectReference: {fileID: 0}
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.431
+      value: 0.74
       objectReference: {fileID: 0}
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_LocalPosition.z
