@@ -106,11 +106,11 @@ public class PlayerMechanics : MonoBehaviour
             
             if (!onStrongCheese)
             {
-                animator.SetBool("ishit", false);
+                animator.SetBool("ishit", true);
 
                 Currenthealth -= 5; // lowers current health by half
 
-                animator.SetBool("ishit", false);
+                
                 if (Currenthealth <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
                 {
                     Debug.Log("Dead");
@@ -121,13 +121,17 @@ public class PlayerMechanics : MonoBehaviour
                     //dead = true;
 
                 }
+                Invoke("EndHit", 1);
             }
             
         }
 
-        else if (other.tag == "HealthCheese" && Currenthealth < 10) // when the player interacts with a 'Health Cheese' power up
+        else if (other.tag == "HealthCheese") // when the player interacts with a 'Health Cheese' power up
         {
-            Currenthealth += 5;
+            if (Currenthealth < 10) 
+            {
+                Currenthealth += 5;
+            }
             Destroy(other.gameObject);
         }
 
@@ -137,6 +141,11 @@ public class PlayerMechanics : MonoBehaviour
             Destroy(other.gameObject);
 
         }
+    }
+
+    void EndHit()
+    {
+        animator.SetBool("ishit", false);
     }
 
     void ResumeGame()

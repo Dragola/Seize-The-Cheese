@@ -139,14 +139,13 @@ public class CheeseBlock : MonoBehaviour
             if (isSecondCheese == true)
             {
                 //Debug.Log("Second cheese pickUp right side");
+
                 transform.localPosition = new Vector3(0, 1.4f, 0.45f);
                 cheeseDirection = 0;
             }
             else
             {
-                //Debug.Log("cheese pickUp right side");
-                transform.localPosition = new Vector3(0, 0.4f, 0.45f);
-                cheeseDirection = 0;
+                Invoke("PickupCheeseRight", 1);
             }
         }
         //place block on left side
@@ -162,12 +161,24 @@ public class CheeseBlock : MonoBehaviour
             }
             else
             {
-                //Debug.Log("cheese pickUp left side");
-                transform.localPosition = new Vector3(0, 0.4f, 0.45f);
-                cheeseDirection = 1;
+                Invoke("PickupCheeseLeft", 1);
             }
         }
         return;
+    }
+
+    //delay pickup to match animation
+    void PickupCheeseRight()
+    {
+        //Debug.Log("cheese pickUp right side");
+        transform.localPosition = new Vector3(0, 0.4f, 0.45f);
+        cheeseDirection = 0;
+    }
+    void PickupCheeseLeft()
+    {
+        //Debug.Log("cheese pickUp left side");
+        transform.localPosition = new Vector3(0, 0.4f, 0.45f);
+        cheeseDirection = 1;
     }
     public void Dropped()
     {

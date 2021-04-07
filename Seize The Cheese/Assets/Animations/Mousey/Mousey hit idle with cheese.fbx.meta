@@ -38,7 +38,7 @@ ModelImporter:
       name: Hit With cheese idle
       takeName: Take 001
       internalID: 0
-      firstFrame: 0
+      firstFrame: 36
       lastFrame: 180
       wrapMode: 0
       orientationOffsetY: 0
