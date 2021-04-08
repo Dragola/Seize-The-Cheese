@@ -57,7 +57,7 @@ public class Audio_Footsteps : MonoBehaviour
 
     private AudioClip GetRandomJumpClip()
     {
-        return JumpClips[UnityEngine.Random.Range(0, Footstepclips.Length)];
+        return JumpClips[UnityEngine.Random.Range(0, JumpClips.Length)];
 
     }
     
@@ -72,7 +72,7 @@ public class Audio_Footsteps : MonoBehaviour
 
     private AudioClip GetRandomLandClip()
     {
-        return LandClips[UnityEngine.Random.Range(0, Footstepclips.Length)];
+        return LandClips[UnityEngine.Random.Range(0, LandClips.Length)];
 
     }
     
