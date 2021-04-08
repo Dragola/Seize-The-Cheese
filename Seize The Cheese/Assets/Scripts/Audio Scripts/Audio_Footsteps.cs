@@ -12,7 +12,16 @@ public class Audio_Footsteps : MonoBehaviour
     private AudioClip[] Backpackclips;
 
     [SerializeField]
+    private AudioClip[] JumpClips;
+
+    [SerializeField]
+    private AudioClip[] LandClips;
+
+    [SerializeField]
     private AudioClip[] PickupStepclips;
+
+    [SerializeField]
+    private AudioClip[] CheesePickupclip;
 
     private AudioSource audioSource;
 
@@ -36,6 +45,48 @@ public class Audio_Footsteps : MonoBehaviour
         return Backpackclips[UnityEngine.Random.Range(0, Backpackclips.Length)];
 
     }
+    
+    private void Jump()
+        //This is the Jump event for Mousey's jumping animation
+    {
+        AudioClip clip = GetRandomJumpClip();
+        audioSource.pitch = Random.Range(0.5f, 1.5f);
+        audioSource.PlayOneShot(clip);
+
+    }
+
+    private AudioClip GetRandomJumpClip()
+    {
+        return JumpClips[UnityEngine.Random.Range(0, Footstepclips.Length)];
+
+    }
+    
+    private void Land()
+        //This is the Jump event for Mousey's jumping animation
+    {
+        AudioClip clip = GetRandomLandClip();
+        audioSource.pitch = Random.Range(0.5f, 1.5f);
+        audioSource.PlayOneShot(clip);
+
+    }
+
+    private AudioClip GetRandomLandClip()
+    {
+        return LandClips[UnityEngine.Random.Range(0, Footstepclips.Length)];
+
+    }
+    
+    //private void CheesePickup()
+    //{
+    //    AudioClip clip = GetRandomCheesePickClip();
+    //    audioSource.PlayOneShot(clip);
+    //}
+
+    //private AudioClip GetRandomCheesePickClip()
+    //{
+    //    return CheesePickupclip[UnityEngine.Random.Range(0, Footstepclips.Length)];
+        
+    //}
 
     private void PickupStep()
     //This is the PickupStep event for Mousey's walk animation while holding cheese
