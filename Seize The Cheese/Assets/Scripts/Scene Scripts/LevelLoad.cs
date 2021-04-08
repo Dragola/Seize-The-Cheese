@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class LevelLoad : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class LevelLoad : MonoBehaviour
     public AsyncOperation asyncLoad = null;
     LevelStorage levelStorage = null;
 
+    public VideoPlayer videoPlayer;
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,6 +27,9 @@ public class LevelLoad : MonoBehaviour
         LoadNextLevel(levelStorage.GetSceneName());
 
         Debug.Log("After LoadNextLevel was called");
+
+        videoPlayer.loopPointReached += EndVideo;
+
     }
 
     void LoadNextLevel(string sceneName)
@@ -56,6 +61,14 @@ public class LevelLoad : MonoBehaviour
             Debug.Log("Can't load next level");
             progressText.text = "Unable to load next level...";
         }
+    }
+
+    void EndVideo(VideoPlayer vp)
+    {
+        //allow scene to be activated
+        DontDestroyOnLoad(levelStorage.gameObject);
+        asyncLoad.allowSceneActivation = true;
+        Debug.Log("Scene loaded");
     }
     void Update()
     {

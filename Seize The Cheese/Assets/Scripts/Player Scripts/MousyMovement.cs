@@ -75,6 +75,8 @@ public class MousyMovement : MonoBehaviour
             Debug.Log("Fit Floor via raycast middle");
             didJump = false;
             inAir = false;
+            animator.SetBool("isgrounded", true);
+            animator.SetBool("isjumping", false);
         }
         //left bottom
         else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x - 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.down, out hit, playerCapsuleCollider.bounds.extents.y))
@@ -87,6 +89,8 @@ public class MousyMovement : MonoBehaviour
             Debug.Log("Fit Floor via raycast left");
             didJump = false;
             inAir = false;
+            animator.SetBool("isjumping", false);
+            animator.SetBool("isgrounded", true);
         }
         //right bottom
         else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x + 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.down, out hit, playerCapsuleCollider.bounds.extents.y))
@@ -99,12 +103,15 @@ public class MousyMovement : MonoBehaviour
             Debug.Log("Fit Floor via raycast right");
             didJump = false;
             inAir = false;
+            animator.SetBool("isjumping", false);
+            animator.SetBool("isgrounded", true);
         }
         //no ray hitting ground
         else
         {
             Debug.Log("Not touching floor");
             inAir = true;
+            animator.SetBool("isgrounded", false);
         }
 
         //jump detection

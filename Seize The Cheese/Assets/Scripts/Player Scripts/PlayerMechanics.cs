@@ -10,13 +10,13 @@ public class PlayerMechanics : MonoBehaviour
     public float Currenthealth; //current heath variable
 
     //various panels that appear once the player makes contact a specific object or has died
-    public GameObject introPanel;
-    public GameObject DustPanel;
-    public GameObject healthCheesePanel;
-    public GameObject strongCheesePanel;
-    public GameObject deathPanel;
+    //public GameObject introPanel;
+    //public GameObject DustPanel;
+    //public GameObject healthCheesePanel;
+    //public GameObject strongCheesePanel;
+    //public GameObject deathPanel;
     public GameObject holder;
-    public GameObject emptySlot;
+    //public GameObject emptySlot;
 
     public float amount;
 
@@ -106,11 +106,11 @@ public class PlayerMechanics : MonoBehaviour
             
             if (!onStrongCheese)
             {
-                animator.SetBool("ishit", false);
+                animator.SetBool("ishit", true);
 
                 Currenthealth -= 5; // lowers current health by half
 
-                animator.SetBool("ishit", false);
+                
                 if (Currenthealth <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
                 {
                     Debug.Log("Dead");
@@ -121,13 +121,17 @@ public class PlayerMechanics : MonoBehaviour
                     //dead = true;
 
                 }
+                Invoke("EndHit", 1);
             }
             
         }
 
-        else if (other.tag == "HealthCheese" && Currenthealth < 10) // when the player interacts with a 'Health Cheese' power up
+        else if (other.tag == "HealthCheese") // when the player interacts with a 'Health Cheese' power up
         {
-            Currenthealth += 5;
+            if (Currenthealth < 10) 
+            {
+                Currenthealth += 5;
+            }
             Destroy(other.gameObject);
         }
 
@@ -139,12 +143,17 @@ public class PlayerMechanics : MonoBehaviour
         }
     }
 
+    void EndHit()
+    {
+        animator.SetBool("ishit", false);
+    }
+
     void ResumeGame()
     {
-        introPanel.SetActive(false); // sets introPanel innactive
-        strongCheesePanel.SetActive(false); // sets introPanel innactive
-        healthCheesePanel.SetActive(false); // sets introPanel innactive
-        DustPanel.SetActive(false); // sets introPanel innactive
+        //introPanel.SetActive(false); // sets introPanel innactive
+        //strongCheesePanel.SetActive(false); // sets introPanel innactive
+        //healthCheesePanel.SetActive(false); // sets introPanel innactive
+        //DustPanel.SetActive(false); // sets introPanel innactive
 
         if (!dead) // if is not dead continue the game
         {
