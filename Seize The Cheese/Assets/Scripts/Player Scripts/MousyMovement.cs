@@ -307,6 +307,7 @@ public class MousyMovement : MonoBehaviour
                 pauseMenuActive = true;
                 //makes main menu visible
                 pauseMenu.gameObject.SetActive(true);
+                Cursor.visible = true;
 
                 //pauses game
                 pauseMenu.GetComponent<PauseMenu>().PauseGame();
@@ -318,6 +319,7 @@ public class MousyMovement : MonoBehaviour
                 pauseMenuActive = false;
                 //makes main menu invisible
                 pauseMenu.gameObject.SetActive(false);
+                Cursor.visible = false;
 
                 //resumes game
                 pauseMenu.GetComponent<PauseMenu>().ResumeGame();

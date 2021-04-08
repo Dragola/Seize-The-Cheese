@@ -53,7 +53,7 @@ public class LevelLoad : MonoBehaviour
                 progressText.text = "Waiting for scene to load..." + asyncLoad.progress + ".";
                 Debug.Log("Waiting for scene to load..." + asyncLoad.progress + ".");
             }
-            progressText.text = "Level ready! Press enter to continue...";
+            progressText.text = "Level ready! Press enter to Skip...";
             Debug.Log("Level ready! Press enter to continue...");
         }
         else
