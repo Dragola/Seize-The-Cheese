@@ -41,8 +41,8 @@ public class Audio_Footsteps : MonoBehaviour
 
     private AudioClip GetRandomStepClip()
     {
-        return Footstepclips[UnityEngine.Random.Range(0, Footstepclips.Length)];
-        return Backpackclips[UnityEngine.Random.Range(0, Backpackclips.Length)];
+        return Footstepclips[UnityEngine.Random.Range(0, (Footstepclips.Length) - 1)];
+        return Backpackclips[UnityEngine.Random.Range(0, (Backpackclips.Length) - 1)];
 
     }
     
@@ -57,7 +57,7 @@ public class Audio_Footsteps : MonoBehaviour
 
     private AudioClip GetRandomJumpClip()
     {
-        return JumpClips[UnityEngine.Random.Range(0, JumpClips.Length)];
+        return JumpClips[UnityEngine.Random.Range(0, (JumpClips.Length) - 1)];
 
     }
     
@@ -72,7 +72,7 @@ public class Audio_Footsteps : MonoBehaviour
 
     private AudioClip GetRandomLandClip()
     {
-        return LandClips[UnityEngine.Random.Range(0, LandClips.Length)];
+        return LandClips[UnityEngine.Random.Range(0, (LandClips.Length) - 1)];
 
     }
     
@@ -98,6 +98,6 @@ public class Audio_Footsteps : MonoBehaviour
 
     private AudioClip GetRandomPickStepClip()
     {
-        return PickupStepclips[UnityEngine.Random.Range(0, PickupStepclips.Length)];
+        return PickupStepclips[UnityEngine.Random.Range(0, (PickupStepclips.Length) - 1)];
     }
 }
