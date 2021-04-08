@@ -2009,7 +2009,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &225732477
 GameObject:
@@ -14176,7 +14176,7 @@ Transform:
   m_LocalScale: {x: 100, y: 50, z: 30}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1494474683
 AudioSource:
@@ -21310,6 +21310,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: be9ea04a66cb4e04fafac6ba2784aa2e, type: 3}
   LandClips:
   - {fileID: 8300000, guid: 48ce80e74b8512240ae4483ac49498cd, type: 3}
+  - {fileID: 8300000, guid: 6daa1d519e7549f4f8f12329ef20c029, type: 3}
   PickupStepclips:
   - {fileID: 8300000, guid: 54378ed8b43f04e438617b6c092774c2, type: 3}
   - {fileID: 8300000, guid: 91655689577b17e448dfd2bb1981bd32, type: 3}
@@ -21320,9 +21321,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 49ae575eb03e4b145a8e49163892169e, type: 3}
   - {fileID: 8300000, guid: 4e5dd5bf0cb886b4295a31dc6b56fc0d, type: 3}
   CheesePickupclip:
-  - {fileID: 8300000, guid: 73c923689d428504d99189ae31c27f02, type: 3}
-  - {fileID: 8300000, guid: 73c923689d428504d99189ae31c27f02, type: 3}
-  - {fileID: 8300000, guid: 73c923689d428504d99189ae31c27f02, type: 3}
+  - {fileID: 8300000, guid: 8ba9bc4145454734fb4fc6d5fffc606d, type: 3}
+  - {fileID: 8300000, guid: 8ba9bc4145454734fb4fc6d5fffc606d, type: 3}
+  - {fileID: 8300000, guid: 8ba9bc4145454734fb4fc6d5fffc606d, type: 3}
 --- !u!82 &3120019326048290290
 AudioSource:
   m_ObjectHideFlags: 0
