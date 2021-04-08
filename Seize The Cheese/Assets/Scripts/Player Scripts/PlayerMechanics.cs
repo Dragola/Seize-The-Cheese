@@ -10,13 +10,13 @@ public class PlayerMechanics : MonoBehaviour
     public float Currenthealth; //current heath variable
 
     //various panels that appear once the player makes contact a specific object or has died
-    public GameObject introPanel;
-    public GameObject DustPanel;
-    public GameObject healthCheesePanel;
-    public GameObject strongCheesePanel;
-    public GameObject deathPanel;
+    //public GameObject introPanel;
+    //public GameObject DustPanel;
+    //public GameObject healthCheesePanel;
+    //public GameObject strongCheesePanel;
+    //public GameObject deathPanel;
     public GameObject holder;
-    public GameObject emptySlot;
+    //public GameObject emptySlot;
 
     public float amount;
 
@@ -150,10 +150,10 @@ public class PlayerMechanics : MonoBehaviour
 
     void ResumeGame()
     {
-        introPanel.SetActive(false); // sets introPanel innactive
-        strongCheesePanel.SetActive(false); // sets introPanel innactive
-        healthCheesePanel.SetActive(false); // sets introPanel innactive
-        DustPanel.SetActive(false); // sets introPanel innactive
+        //introPanel.SetActive(false); // sets introPanel innactive
+        //strongCheesePanel.SetActive(false); // sets introPanel innactive
+        //healthCheesePanel.SetActive(false); // sets introPanel innactive
+        //DustPanel.SetActive(false); // sets introPanel innactive
 
         if (!dead) // if is not dead continue the game
         {
