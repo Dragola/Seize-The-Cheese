@@ -42,7 +42,7 @@ public class Audio_Footsteps : MonoBehaviour
     private AudioClip GetRandomStepClip()
     {
         return Footstepclips[UnityEngine.Random.Range(0, (Footstepclips.Length) - 1)];
-        return Backpackclips[UnityEngine.Random.Range(0, (Backpackclips.Length) - 1)];
+        //return Backpackclips[UnityEngine.Random.Range(0, (Backpackclips.Length) - 1)];
 
     }
     
@@ -76,11 +76,11 @@ public class Audio_Footsteps : MonoBehaviour
 
     }
     
-    //private void CheesePickup()
-    //{
+    private void CheesePickup()
+    {
     //    AudioClip clip = GetRandomCheesePickClip();
     //    audioSource.PlayOneShot(clip);
-    //}
+    }
 
     //private AudioClip GetRandomCheesePickClip()
     //{
