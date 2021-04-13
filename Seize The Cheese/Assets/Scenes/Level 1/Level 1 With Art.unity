@@ -2009,7 +2009,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &225732477
 GameObject:
@@ -11520,6 +11520,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1224697077}
     m_Modifications:
+    - target: {fileID: 4712343767932039793, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -14176,7 +14180,7 @@ Transform:
   m_LocalScale: {x: 100, y: 50, z: 30}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1494474683
 AudioSource:
@@ -21180,6 +21184,10 @@ PrefabInstance:
     - target: {fileID: 3120019324915354698, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_Height
       value: 1.1439307
+      objectReference: {fileID: 0}
+    - target: {fileID: 3120019324915354698, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3120019324915354698, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_Center.x

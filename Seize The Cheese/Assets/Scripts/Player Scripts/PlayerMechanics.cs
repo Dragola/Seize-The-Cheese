@@ -8,6 +8,7 @@ public class PlayerMechanics : MonoBehaviour
 {
     public float Maxhealth; // health variable
     public float Currenthealth; //current heath variable
+    public MousyMovement playerMovement = null;
 
     //various panels that appear once the player makes contact a specific object or has died
     //public GameObject introPanel;
@@ -47,6 +48,10 @@ public class PlayerMechanics : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        
+    }
+    private void OnCollisionStay(Collision collision)
+    {
         //get contacts for collision
         Vector2 direction = collision.GetContact(0).normal;
 
@@ -67,7 +72,7 @@ public class PlayerMechanics : MonoBehaviour
                 collisionDirection = 1;
             }
         }
-        else if (collision.gameObject.name.CompareTo("Cheese") == 0 && secondCheeseBlock == null)
+        else if (collision.gameObject.name.CompareTo("Cheese") == 0 && pickedUpCheese == true && secondCheeseBlock == null)
         {
             //set the cheese block one touch one
             secondCheeseBlock = collision.gameObject;
@@ -167,6 +172,8 @@ public class PlayerMechanics : MonoBehaviour
     {
         Cursor.visible = false;
 
+        playerMovement = GetComponent<MousyMovement>();
+
         animator = GetComponent<Animator>();
     }
 
@@ -183,18 +190,21 @@ public class PlayerMechanics : MonoBehaviour
             //pickup cheese
             if (cheeseBlock != null && pickedUpCheese == false && Input.GetKeyDown(KeyCode.E))
             {
+                //attach gameobject to player
+                cheeseBlock.transform.parent = gameObject.transform;
+
                 //triggers animation
                 animator.SetBool("isholdingcheese", true);
 
-                Debug.Log("Picked up first cheese");
+                Debug.Log("PlayerMechanics: Picked up first cheese");
+
                 //indicate cheese was picked up
                 pickedUpCheese = true;
 
                 //prevent rigidbody from moving block while being carried
                 cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
-                //attach gameobject to player
-                cheeseBlock.transform.parent = this.gameObject.transform;
+                Debug.Log("CheeseBlock: After setting parent transform");
 
                 //tell block it's been picked up
                 cheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, false);
@@ -264,6 +274,7 @@ public class PlayerMechanics : MonoBehaviour
     }
     public void DropCheese()
     {
+        Debug.Log("PlayerMechanics: DropCheese() called");
         pickedUpCheese = false;
 
         //indicate to cheese that it has been dropped
@@ -329,7 +340,7 @@ public class PlayerMechanics : MonoBehaviour
             secondCheeseBlock.GetComponent<CheeseBlock>().UpdateCheeseDirection(isFacingRight);
         }
     }
-    public void PreventPlayerMovement(byte direction)
+    public void PreventPlayerMovement(sbyte direction)
     {
         if (direction == 0)
         {
@@ -344,11 +355,11 @@ public class PlayerMechanics : MonoBehaviour
     {
         if (direction == 0)
         {
-            GetComponent<MousyMovement>().UnPreventPlayerMovement(0);
+            GetComponent<MousyMovement>().UnPreventPlayerMovement();
         }
         else if (direction == 1)
         {
-            GetComponent<MousyMovement>().UnPreventPlayerMovement(1);
+            GetComponent<MousyMovement>().UnPreventPlayerMovement();
         }
     }
 }

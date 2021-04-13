@@ -35,6 +35,7 @@ public class MousyMovement : MonoBehaviour
     public bool preventLeftMovement = false;
     public bool preventJump = false;
     private CapsuleCollider playerCapsuleCollider = null;
+    public sbyte cheeseCollision = -1;
 
     //Animation
     Animator animator;
@@ -159,83 +160,32 @@ public class MousyMovement : MonoBehaviour
                 jumpVelocity = -200;
             }
         }
-            //    //right side
-            //    if (Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.forward), out hit, 0.2f))
-            //    {
-
-            //        //stop any movement (prevent floating on wall)
-            //        if (movmentVelocity > 0)
-            //        {
-            //            movmentVelocity = 0;
-            //        }
-            //        preventRightMovement = true;
-            //        //jumpVelocity = -400;
-            //        Debug.Log("Right side about to hit, Raycast!");
-            //        Debug.DrawRay(new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z), transform.TransformDirection(Vector3.forward), Color.magenta);
-            //    }
-            //    else
-            //    {
-            //        preventRightMovement = false;
-            //    }
-            //    //left side
-            //    if (Physics.Raycast(new Vector3(transform.position.x - 0.1f, transform.position.y + 0.5f, transform.position.z), transform.TransformDirection(Vector3.back), out hit, 0.2f))
-            //    {
-            //        //stop any movement (prevent floating on wall)
-            //        if (movmentVelocity < 0)
-            //        {
-            //            movmentVelocity = 0;
-            //        }
-            //        //jumpVelocity = -400;
-            //        preventLeftMovement = true;
-            //        Debug.Log("Left side about to hit, Raycast!");
-            //        Debug.DrawRay(new Vector3(transform.position.x - 0.1f, transform.position.y + 0.5f, transform.position.z), transform.TransformDirection(Vector3.back), Color.magenta);
-            //    }
-            //    else
-            //    {
-            //        preventLeftMovement = false;
-            //    }
-            //}
-
-            //if distance from all raycasts indicates player is in the air
-            //&& hitDistanceMiddle > 0.0055f && hitDistanceRight > 0.0055f
-            //if (hitDistanceLeft > 0.006f)
-            //{
-            //    Debug.Log("In air!");
-            //    inAir = true;
-
-            //    //Animation control
-            //    //animator.SetBool("isgrounded", false);
-
-            //    if (jumpVelocity > -300)
-            //    {
-            //        jumpVelocity = -300;
-            //    }
-            //}
-            ////if player touched the ground (at least 1 of the raycast distances is < 0.006)
-            //else if (inAir)
-            //{
-            //    inAir = false;
-            //    jumpVelocity = 0;
-            //    preventRightMovement = false;
-            //    preventLeftMovement = false;
-
-            //    //Animation control
-            //    //animator.SetBool("isgrounded", true);
-
-            //    //Animation control
-            //    animator.SetBool("isjumping", false);
-
-            //    if (didJump)
-            //    {
-            //        didJump = false;
-            //    }
-            //}
-            //move player
-            playerRigidbody.velocity = new Vector3(movmentVelocity * Time.deltaTime, jumpVelocity * Time.deltaTime, 0);
+        //move player
+        playerRigidbody.velocity = new Vector3(movmentVelocity * Time.deltaTime, jumpVelocity * Time.deltaTime, 0);
     }
-
     private void Update()
     {
+        if (cheeseCollision == 0)
+        {
+            preventRightMovement = true;
+            if (movmentVelocity > 100)
+            {
+                movmentVelocity = 100;
+            }
+        }
+        else if (cheeseCollision == 1)
+        {
+            preventLeftMovement = true;
+            if (movmentVelocity > -100)
+            {
+                movmentVelocity = -100;
+            }
+        }
+        else
+        {
+            preventRightMovement = false;
+            preventLeftMovement = false;
+        }
         //move right
         if (Input.GetKey(KeyCode.D) && preventRightMovement == false)
         {
@@ -255,6 +205,10 @@ public class MousyMovement : MonoBehaviour
             {
                 movmentVelocity += 10;
             }
+            else if (movmentVelocity > 100 && cheeseCollision != -1)
+            {
+                movmentVelocity = 10;
+            }
             playerMechanicsScript.UpdateCheeseDirection(true);
         }
         //move left
@@ -272,7 +226,11 @@ public class MousyMovement : MonoBehaviour
                 movmentVelocity = 0;
             }
             //decrease movmentVelocity
-            if (movmentVelocity > -300)
+            if (movmentVelocity > -300 && cheeseCollision == -1)
+            {
+                movmentVelocity -= 10;
+            }
+            else if (movmentVelocity > -100 && cheeseCollision != -1)
             {
                 movmentVelocity -= 10;
             }
@@ -347,32 +305,15 @@ public class MousyMovement : MonoBehaviour
             playerMechanicsScript.endOfLevel = true;
         }
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log("Collision Detected");
-    //    //get contacts for collision
-
-    //    if (collision.collider.name.CompareTo("Mousy") != 0 && inAir && hitCeiling == false)
-    //    {
-    //        Debug.Log("Collision Detected not mousy");
-    //        //hit front of player
-    //        if (gameObject.transform.position.x < collision.gameObject.transform.position.x)
-    //        {
-    //            preventRightMovement = true;
-    //        }
-    //        else if (gameObject.transform.position.x > collision.gameObject.transform.position.x)
-    //        {
-    //            preventLeftMovement = true;
-    //        }
-    //        movmentVelocity = 0;
-    //    }
-    //}
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision Staying");
-
+        Debug.Log("Player: Collision Enter: " + collision.collider.name);
         //make sure object it's the ceiling
-        if (inAir) {
+        if ((inAir || cheeseCollision != -1) && collision.collider.name.CompareTo("Mousy") != 0) 
+        {
+
+            Debug.Log("Player: Collision Staying: " + collision.collider.name);
+
             if (ceilingHitObject != null && ceilingHitObject != collision.gameObject)
             {
                 Debug.Log("Hitting ceiling so ignoring this collision");
@@ -381,11 +322,12 @@ public class MousyMovement : MonoBehaviour
             else
             {
                 Debug.Log("Collision Staying not ceiling");
-                //hit front of player
+                //hit front of player (object to the right)
                 if (gameObject.transform.position.x < collision.gameObject.transform.position.x)
                 {
                     preventRightMovement = true;
                 }
+                //hit front of player (object to the left)
                 else if (gameObject.transform.position.x > collision.gameObject.transform.position.x)
                 {
                     preventLeftMovement = true;
@@ -393,13 +335,12 @@ public class MousyMovement : MonoBehaviour
                 movmentVelocity = 0;
             }
         }
-        
     }
     private void OnCollisionExit(Collision collision)
     {
         Debug.Log("Collision Exited");
-        //get contacts for collision
-       
+        
+        //release and movement prevention
         if (preventRightMovement)
         {
             preventRightMovement = false;
@@ -409,29 +350,18 @@ public class MousyMovement : MonoBehaviour
             preventLeftMovement = false;
         }
     }
-
     //0 = right
     //1 = left
-    public void PreventPlayerMovement(byte direction)
+    public void PreventPlayerMovement(sbyte direction)
     {
-        if(direction == 0)
-        {
-            preventRightMovement = true;
-        }
-        else if (direction == 1)
-        {
-            preventLeftMovement = true;
-        }
+        cheeseCollision = direction;
     }
-    public void UnPreventPlayerMovement(byte direction)
+    public void UnPreventPlayerMovement()
     {
-        if (direction == 0)
-        {
-            preventRightMovement = false;
-        }
-        else if (direction == 1)
-        {
-            preventLeftMovement = false;
-        }
+        cheeseCollision = -1;
+
+        Debug.Log("Player: UnPreventPlayerMovement() called");
+        preventRightMovement = false;
+        preventLeftMovement = false;
     }
 }
