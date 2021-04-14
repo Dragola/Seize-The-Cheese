@@ -195,20 +195,21 @@ public class MousyMovement : MonoBehaviour
             //Turn Mousey right
             transform.eulerAngles = new Vector3(0, 90, 0);
 
+            movmentVelocity = 300;
             //if player was moving the other direction then stop movment
-            if (movmentVelocity < 0)
-            {
-                movmentVelocity = 0;
-            }
-            //increase movmentVelocity
-            if (movmentVelocity < 300)
-            {
-                movmentVelocity += 10;
-            }
-            else if (movmentVelocity > 100 && cheeseCollision != -1)
-            {
-                movmentVelocity = 10;
-            }
+            //if (movmentVelocity < 0)
+            //{
+            //    movmentVelocity = 0;
+            //}
+            ////increase movmentVelocity
+            //if (movmentVelocity < 300)
+            //{
+            //    movmentVelocity += 10;
+            //}
+            //else if (movmentVelocity > 100 && cheeseCollision != -1)
+            //{
+            //    movmentVelocity = 10;
+            //}
             playerMechanicsScript.UpdateCheeseDirection(true);
         }
         //move left
@@ -220,20 +221,22 @@ public class MousyMovement : MonoBehaviour
             //turn Mousey left
             transform.eulerAngles = new Vector3(0, 270, 0);
 
+            movmentVelocity = -300;
+
             //if player was moving the other direction then stop movment
-            if (movmentVelocity > 0)
-            {
-                movmentVelocity = 0;
-            }
-            //decrease movmentVelocity
-            if (movmentVelocity > -300 && cheeseCollision == -1)
-            {
-                movmentVelocity -= 10;
-            }
-            else if (movmentVelocity > -100 && cheeseCollision != -1)
-            {
-                movmentVelocity -= 10;
-            }
+            //if (movmentVelocity > 0)
+            //{
+            //    movmentVelocity = 0;
+            //}
+            ////decrease movmentVelocity
+            //if (movmentVelocity > -300 && cheeseCollision == -1)
+            //{
+            //    movmentVelocity -= 10;
+            //}
+            //else if (movmentVelocity > -100 && cheeseCollision != -1)
+            //{
+            //    movmentVelocity -= 10;
+            //}
             playerMechanicsScript.UpdateCheeseDirection(false);
         }
         //neither movement key was hit

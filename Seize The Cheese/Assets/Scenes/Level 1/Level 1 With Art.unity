@@ -11524,6 +11524,10 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 4712343767932039793, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 8646457380628557150, guid: e20dbc5b03c579e44b18e58a99ed7356, type: 3}
       propertyPath: m_RootOrder
       value: 3

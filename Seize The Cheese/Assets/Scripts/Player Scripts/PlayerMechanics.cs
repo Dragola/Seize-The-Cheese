@@ -176,7 +176,14 @@ public class PlayerMechanics : MonoBehaviour
 
         animator = GetComponent<Animator>();
     }
-
+    private void FixedUpdate()
+    {
+        if(pickedUpCheese && cheeseBlock != null)
+        {
+            Debug.Log("matching velocities for first cheese block");
+            cheeseBlock.transform.GetComponent<Rigidbody>().velocity = new Vector3(playerMovement.movmentVelocity * collisionDirection * Time.deltaTime, playerMovement.jumpVelocity * Time.deltaTime, 0);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -191,7 +198,7 @@ public class PlayerMechanics : MonoBehaviour
             if (cheeseBlock != null && pickedUpCheese == false && Input.GetKeyDown(KeyCode.E))
             {
                 //attach gameobject to player
-                cheeseBlock.transform.parent = gameObject.transform;
+                //cheeseBlock.transform.parent = gameObject.transform;
 
                 //triggers animation
                 animator.SetBool("isholdingcheese", true);
@@ -202,7 +209,9 @@ public class PlayerMechanics : MonoBehaviour
                 pickedUpCheese = true;
 
                 //prevent rigidbody from moving block while being carried
-                cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                //cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
 
                 Debug.Log("CheeseBlock: After setting parent transform");
 
@@ -211,6 +220,8 @@ public class PlayerMechanics : MonoBehaviour
 
                 //reset collision drection
                 collisionDirection = 0;
+
+                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 0.4f, transform.position.z));
             }
             else if (secondCheeseBlock != null && pickedUpCheese == true && pickedUpCheese2 == false && Input.GetKeyDown(KeyCode.E))
             {
