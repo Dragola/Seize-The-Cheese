@@ -176,17 +176,13 @@ public class PlayerMechanics : MonoBehaviour
 
         animator = GetComponent<Animator>();
     }
-    private void FixedUpdate()
-    {
-        if(pickedUpCheese && cheeseBlock != null)
-        {
-            Debug.Log("matching velocities for first cheese block");
-            cheeseBlock.transform.GetComponent<Rigidbody>().velocity = new Vector3(playerMovement.movmentVelocity * collisionDirection * Time.deltaTime, playerMovement.jumpVelocity * Time.deltaTime, 0);
-        }
-    }
     // Update is called once per frame
     void Update()
     {
+        if (pickedUpCheese && cheeseBlock != null)
+        {
+            cheeseBlock.transform.GetComponent<Rigidbody>().velocity = gameObject.transform.GetComponent<Rigidbody>().velocity;
+        }
         if (endOfLevel == false) {
             if (Input.GetKeyDown(KeyCode.Return)) // if enter is pressed the game continues unless the player is dead.
             {
