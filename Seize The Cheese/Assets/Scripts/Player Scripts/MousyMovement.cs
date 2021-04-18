@@ -35,7 +35,7 @@ public class MousyMovement : MonoBehaviour
     public bool preventLeftMovement = false;
     public bool preventJump = false;
     private CapsuleCollider playerCapsuleCollider = null;
-    public sbyte cheeseCollision = -1;
+    public sbyte cheeseCollision = -1;  //used to prevent player movement if cheese block is hitting wall or such
 
     //Animation
     Animator animator;
@@ -146,15 +146,21 @@ public class MousyMovement : MonoBehaviour
             ceilingHitObject = null;
         }
 
-        //prevent floating on walls
+        //gravity
         if (inAir || didJump)
         {
             Debug.Log("InAir = " + inAir + "|| didJump = " + didJump);
-            //
-            if (jumpVelocity > -200)
+            //if hitting wall
+            if (preventLeftMovement || preventRightMovement)
+            {
+                jumpVelocity = -200;
+            }
+            //not hitting wall
+            else if (preventLeftMovement == false && preventRightMovement == false && jumpVelocity > -200)
             {
                 jumpVelocity -= 10;
             }
+            //ensure jumpVelocity is -200 incase else if above goes past
             else
             {
                 jumpVelocity = -200;
@@ -189,54 +195,57 @@ public class MousyMovement : MonoBehaviour
         //move right
         if (Input.GetKey(KeyCode.D) && preventRightMovement == false)
         {
+            //update cheese block direction
+            playerMechanicsScript.UpdateCheeseBlockPosition(true);
+
             //set walking animation true
             animator.SetBool("iswalking", true);
 
             //Turn Mousey right
             transform.eulerAngles = new Vector3(0, 90, 0);
 
-            movmentVelocity = 300;
             //if player was moving the other direction then stop movment
-            //if (movmentVelocity < 0)
-            //{
-            //    movmentVelocity = 0;
-            //}
-            ////increase movmentVelocity
-            //if (movmentVelocity < 300)
-            //{
-            //    movmentVelocity += 10;
-            //}
-            //else if (movmentVelocity > 100 && cheeseCollision != -1)
-            //{
-            //    movmentVelocity = 10;
-            //}
+            if (movmentVelocity < 0)
+            {
+                movmentVelocity = 0;
+            }
+            //increase movmentVelocity
+            if (movmentVelocity < 300)
+            {
+                movmentVelocity += 10;
+            }
+            else if (movmentVelocity > 100 && cheeseCollision != -1)
+            {
+                movmentVelocity = 10;
+            }
             playerMechanicsScript.UpdateCheeseDirection(true);
         }
         //move left
         else if (Input.GetKey(KeyCode.A) && preventLeftMovement == false)
         {
+            //update cheese block direction
+            playerMechanicsScript.UpdateCheeseBlockPosition(false);
+
             //set walking animation true
             animator.SetBool("iswalking", true);
 
             //turn Mousey left
             transform.eulerAngles = new Vector3(0, 270, 0);
 
-            movmentVelocity = -300;
-
             //if player was moving the other direction then stop movment
-            //if (movmentVelocity > 0)
-            //{
-            //    movmentVelocity = 0;
-            //}
-            ////decrease movmentVelocity
-            //if (movmentVelocity > -300 && cheeseCollision == -1)
-            //{
-            //    movmentVelocity -= 10;
-            //}
-            //else if (movmentVelocity > -100 && cheeseCollision != -1)
-            //{
-            //    movmentVelocity -= 10;
-            //}
+            if (movmentVelocity > 0)
+            {
+                movmentVelocity = 0;
+            }
+            //decrease movmentVelocity
+            if (movmentVelocity > -300 && cheeseCollision == -1)
+            {
+                movmentVelocity -= 10;
+            }
+            else if (movmentVelocity > -100 && cheeseCollision != -1)
+            {
+                movmentVelocity -= 10;
+            }
             playerMechanicsScript.UpdateCheeseDirection(false);
         }
         //neither movement key was hit
@@ -308,15 +317,15 @@ public class MousyMovement : MonoBehaviour
             playerMechanicsScript.endOfLevel = true;
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("Player: Collision Enter: " + collision.collider.name);
+        Debug.Log("Player: Collision staying: " + collision.collider.name);
         //make sure object it's the ceiling
-        if ((inAir || cheeseCollision != -1) && collision.collider.name.CompareTo("Mousy") != 0) 
+        if (inAir && collision.collider.name.CompareTo("Mousy") != 0 && collision.collider.name.CompareTo("Cheese") != 0)
         {
-
             Debug.Log("Player: Collision Staying: " + collision.collider.name);
 
+            //if hit ceiling
             if (ceilingHitObject != null && ceilingHitObject != collision.gameObject)
             {
                 Debug.Log("Hitting ceiling so ignoring this collision");

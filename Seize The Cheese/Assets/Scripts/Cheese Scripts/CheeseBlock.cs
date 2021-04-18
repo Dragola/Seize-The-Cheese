@@ -10,8 +10,6 @@ public class CheeseBlock : MonoBehaviour
     public GameObject collidedObject = null;
     public bool rayHit = false;
     public RaycastHit hit;
-    private Rigidbody cheeseRigidbody = null;
-
     public PlayerMechanics player = null;
 
 
@@ -20,7 +18,6 @@ public class CheeseBlock : MonoBehaviour
     {
         //reference player's script
         player = GameObject.Find("Mousy").GetComponent<PlayerMechanics>();
-        cheeseRigidbody = GetComponent<Rigidbody>();
 
         animator = player.GetComponent<Animator>();
     }
@@ -88,11 +85,11 @@ public class CheeseBlock : MonoBehaviour
         GetComponent<Rigidbody>().useGravity = true;
         return;
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (pickedUp)
         {
-            Debug.Log("CheeseBlock: OnCollisionStay");
+            Debug.Log("CheeseBlock: OnCollisionStay= " + collision.collider.name);
             //if it collides with something other then the player then determine where it was hit
             if (collision.gameObject.name.CompareTo("Mousy") != 0)
             {
@@ -104,10 +101,8 @@ public class CheeseBlock : MonoBehaviour
                 //if top or bottom of the cheese is hit then drop if player is holding
                 if ((direction.y == 1 || direction.y == -1) && pickedUp)
                 {
+                    Debug.Log("CheeseBlock: OnCollisionStay dropping because " + collision.collider.name + "is below or above block");
                     player.DropCheese();
-
-                    //remove rigidbody from cheese block
-                    gameObject.AddComponent<Rigidbody>();
 
                     //stops animation
                     animator.SetBool("isholdingcheese", false);

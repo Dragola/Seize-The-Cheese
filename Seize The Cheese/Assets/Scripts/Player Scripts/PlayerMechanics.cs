@@ -193,19 +193,18 @@ public class PlayerMechanics : MonoBehaviour
             //pickup cheese
             if (cheeseBlock != null && pickedUpCheese == false && Input.GetKeyDown(KeyCode.E))
             {
-                //attach gameobject to player
-                //cheeseBlock.transform.parent = gameObject.transform;
+                //indicate cheese was picked up
+                pickedUpCheese = true;
+
+                //move cheese block
+                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 0.4f, transform.position.z));
 
                 //triggers animation
                 animator.SetBool("isholdingcheese", true);
 
                 Debug.Log("PlayerMechanics: Picked up first cheese");
 
-                //indicate cheese was picked up
-                pickedUpCheese = true;
-
                 //prevent rigidbody from moving block while being carried
-                //cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 cheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
 
@@ -215,15 +214,16 @@ public class PlayerMechanics : MonoBehaviour
                 cheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, false);
 
                 //reset collision drection
-                collisionDirection = 0;
-
-                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 0.4f, transform.position.z));
+                collisionDirection = 0;     
             }
             else if (secondCheeseBlock != null && pickedUpCheese == true && pickedUpCheese2 == false && Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("Picked up second cheese");
 
                 pickedUpCheese2 = true;
+
+                //move second cheese block
+                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 3, transform.position.z));
 
                 Debug.Log("Second Cheese pickup");
 
@@ -291,9 +291,6 @@ public class PlayerMechanics : MonoBehaviour
         Rigidbody cheeseRigid = cheeseBlock.GetComponent<Rigidbody>();
         cheeseRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
-        //remove parent for cheese
-        cheeseBlock.transform.parent = null;
-
         //null reference
         cheeseBlock = null;
 
@@ -308,9 +305,6 @@ public class PlayerMechanics : MonoBehaviour
             //set constraints for rigidbody
             cheeseRigid = secondCheeseBlock.GetComponent<Rigidbody>();
             cheeseRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-
-            //remove parent for cheese
-            secondCheeseBlock.transform.parent = null;
 
             //null reference
             secondCheeseBlock = null;
@@ -329,10 +323,6 @@ public class PlayerMechanics : MonoBehaviour
         {
             secondCheeseBlock = cheese;
         }
-    }
-    public GameObject GetSecondCheeseBlock()
-    {
-        return secondCheeseBlock;
     }
     public void UpdateCheeseDirection(bool isFacingRight)
     {
@@ -367,6 +357,35 @@ public class PlayerMechanics : MonoBehaviour
         else if (direction == 1)
         {
             GetComponent<MousyMovement>().UnPreventPlayerMovement();
+        }
+    }
+    public void UpdateCheeseBlockPosition(bool isRight)
+    {
+        if (isRight)
+        {
+            if (cheeseBlock != null && pickedUpCheese)
+            {
+                //move cheese block
+                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 0.4f, transform.position.z));
+            }
+            if (secondCheeseBlock != null && pickedUpCheese2)
+            {
+                //move second cheese block
+                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 3, transform.position.z));
+            }
+        }
+        else
+        {
+            if (cheeseBlock != null && pickedUpCheese)
+            {
+                //move cheese block
+                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x - 0.5f, transform.position.y + 0.4f, transform.position.z));
+            }
+            if (secondCheeseBlock != null && pickedUpCheese2)
+            {
+                //move second cheese block
+                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x - 0.5f, transform.position.y + 3, transform.position.z));
+            }
         }
     }
 }
