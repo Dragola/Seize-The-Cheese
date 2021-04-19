@@ -197,7 +197,7 @@ public class PlayerMechanics : MonoBehaviour
                 pickedUpCheese = true;
 
                 //move cheese block
-                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 0.4f, transform.position.z));
+                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f * playerMovement.GetPlayerDirection(), transform.position.y + 0.4f, transform.position.z));
 
                 //triggers animation
                 animator.SetBool("isholdingcheese", true);
@@ -223,7 +223,7 @@ public class PlayerMechanics : MonoBehaviour
                 pickedUpCheese2 = true;
 
                 //move second cheese block
-                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 3, transform.position.z));
+                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f * playerMovement.GetPlayerDirection(), transform.position.y + 3, transform.position.z));
 
                 Debug.Log("Second Cheese pickup");
 
@@ -359,33 +359,17 @@ public class PlayerMechanics : MonoBehaviour
             GetComponent<MousyMovement>().UnPreventPlayerMovement();
         }
     }
-    public void UpdateCheeseBlockPosition(bool isRight)
+    public void UpdateCheeseBlockPosition()
     {
-        if (isRight)
+        if (cheeseBlock != null && pickedUpCheese)
         {
-            if (cheeseBlock != null && pickedUpCheese)
-            {
-                //move cheese block
-                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 0.4f, transform.position.z));
-            }
-            if (secondCheeseBlock != null && pickedUpCheese2)
-            {
-                //move second cheese block
-                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f, transform.position.y + 3, transform.position.z));
-            }
+            //move cheese block
+            cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f * playerMovement.GetPlayerDirection(), transform.position.y + 0.4f, transform.position.z));
         }
-        else
+        if (secondCheeseBlock != null && pickedUpCheese2)
         {
-            if (cheeseBlock != null && pickedUpCheese)
-            {
-                //move cheese block
-                cheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x - 0.5f, transform.position.y + 0.4f, transform.position.z));
-            }
-            if (secondCheeseBlock != null && pickedUpCheese2)
-            {
-                //move second cheese block
-                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x - 0.5f, transform.position.y + 3, transform.position.z));
-            }
+            //move second cheese block
+            secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f * playerMovement.GetPlayerDirection(), transform.position.y + 3, transform.position.z));
         }
     }
 }

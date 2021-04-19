@@ -21,10 +21,6 @@ public class CheeseBlock : MonoBehaviour
 
         animator = player.GetComponent<Animator>();
     }
-    //private void FixedUpdate()
-    //{
-       
-    //}
     public void PickedUp(byte direction, bool isSecondCheese)
     {
         //remove rigidbody from cheese block

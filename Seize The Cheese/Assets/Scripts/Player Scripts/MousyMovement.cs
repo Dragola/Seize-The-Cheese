@@ -7,9 +7,9 @@ public class MousyMovement : MonoBehaviour
     //player
     public float movmentVelocity = 0f;
     public float jumpVelocity = 0;
-    public float gravity = 1.0F;
     public bool didJump = false;
     public bool inAir = false;
+    private sbyte direction = 1;   //1 = right, -1 = left
 
     //cheeseblock indicators
     public bool cheeseHittingWall = false;
@@ -195,8 +195,10 @@ public class MousyMovement : MonoBehaviour
         //move right
         if (Input.GetKey(KeyCode.D) && preventRightMovement == false)
         {
+            direction = 1;
+
             //update cheese block direction
-            playerMechanicsScript.UpdateCheeseBlockPosition(true);
+            playerMechanicsScript.UpdateCheeseBlockPosition();
 
             //set walking animation true
             animator.SetBool("iswalking", true);
@@ -223,8 +225,10 @@ public class MousyMovement : MonoBehaviour
         //move left
         else if (Input.GetKey(KeyCode.A) && preventLeftMovement == false)
         {
+            direction = -1;
+
             //update cheese block direction
-            playerMechanicsScript.UpdateCheeseBlockPosition(false);
+            playerMechanicsScript.UpdateCheeseBlockPosition();
 
             //set walking animation true
             animator.SetBool("iswalking", true);
@@ -375,5 +379,9 @@ public class MousyMovement : MonoBehaviour
         Debug.Log("Player: UnPreventPlayerMovement() called");
         preventRightMovement = false;
         preventLeftMovement = false;
+    }
+    public sbyte GetPlayerDirection()
+    {
+        return direction;
     }
 }
