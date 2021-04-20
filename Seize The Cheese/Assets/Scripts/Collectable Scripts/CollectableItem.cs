@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class CollectableItem : MonoBehaviour
 {
-    public GameObject CollectablePanel;
+    private GameObject collectableUI = null;
+    private PauseMenu pauseMenu = null;
     private bool popupon = false;
+
+    private void Awake()
+    {
+        collectableUI = GameObject.Find("Collectable UI");
+        collectableUI.SetActive(false);
+    }
     private void OnTriggerEnter(Collider other)
     {
         //only run if the collider is the player (prevent enemy or other from triggering)
@@ -15,21 +22,24 @@ public class CollectableItem : MonoBehaviour
             other.GetComponent<CollectableCounter>().addCollectable();
 
             //Collectable popup
-            //CollectablePanel.gameObject.SetActive(true);
-            //popupon = true;
-            
+            collectableUI.SetActive(true);
+            popupon = true;
 
-            //destroy collectable object
-            Destroy(this.gameObject);
-
+            //pause game
+            Time.timeScale = 0;
         }
     }
     private void Update()
-    {
+    { 
         if (Input.GetKeyDown(KeyCode.Return) && popupon == true)
         {
+            //resume game
+            Time.timeScale = 1;
             Debug.Log("ENTER key pressed!");
-            CollectablePanel.gameObject.SetActive(false);
+            collectableUI.SetActive(false);
+
+            //destroy collectable object
+            Destroy(this.gameObject);
         }
     }
 }
