@@ -83,6 +83,9 @@ public class CheeseBlock : MonoBehaviour
     }
     private void OnCollisionStay(Collision collision)
     {
+        //get contacts for collision
+        Vector2 direction = collision.GetContact(0).normal;
+
         if (pickedUp)
         {
             Debug.Log("CheeseBlock: OnCollisionStay= " + collision.collider.name);
@@ -90,9 +93,6 @@ public class CheeseBlock : MonoBehaviour
             if (collision.gameObject.name.CompareTo("Mousy") != 0)
             {
                 collidedObject = collision.gameObject;
-
-                //get contacts for collision
-                Vector2 direction = collision.GetContact(0).normal;
 
                 //if top or bottom of the cheese is hit then drop if player is holding
                 if ((direction.y == 1 || direction.y == -1) && pickedUp)
