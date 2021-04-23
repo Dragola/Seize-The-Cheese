@@ -179,11 +179,16 @@ public class PlayerMechanics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pickedUpCheese && cheeseBlock != null)
-        {
-            cheeseBlock.transform.GetComponent<Rigidbody>().velocity = gameObject.transform.GetComponent<Rigidbody>().velocity;
-        }
         if (endOfLevel == false) {
+            if (pickedUpCheese && cheeseBlock != null)
+            {
+                cheeseBlock.transform.GetComponent<Rigidbody>().velocity = gameObject.transform.GetComponent<Rigidbody>().velocity;
+            }
+            if(pickedUpCheese2 && secondCheeseBlock != null)
+            {
+                secondCheeseBlock.transform.GetComponent<Rigidbody>().velocity = gameObject.transform.GetComponent<Rigidbody>().velocity;
+            }
+
             if (Input.GetKeyDown(KeyCode.Return)) // if enter is pressed the game continues unless the player is dead.
             {
                 //Debug.Log("Return key was pressed.");
@@ -223,15 +228,13 @@ public class PlayerMechanics : MonoBehaviour
                 pickedUpCheese2 = true;
 
                 //move second cheese block
-                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f * playerMovement.GetPlayerDirection(), transform.position.y + 3, transform.position.z));
+                secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f * playerMovement.GetPlayerDirection(), transform.position.y + 1.4f, transform.position.z));
 
                 Debug.Log("Second Cheese pickup");
 
                 //prevent rigidbody from moving block while being carried
-                secondCheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
-                //attach gameobject to player
-                secondCheeseBlock.transform.parent = this.gameObject.transform;
+                secondCheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                secondCheeseBlock.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
 
                 //tell block it's been picked up
                 secondCheeseBlock.GetComponent<CheeseBlock>().PickedUp(collisionDirection, true);
@@ -303,8 +306,8 @@ public class PlayerMechanics : MonoBehaviour
             secondCheeseBlock.GetComponent<CheeseBlock>().Dropped();
 
             //set constraints for rigidbody
-            cheeseRigid = secondCheeseBlock.GetComponent<Rigidbody>();
-            cheeseRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            Rigidbody cheeseRigid2 = secondCheeseBlock.GetComponent<Rigidbody>();
+            cheeseRigid2.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
             //null reference
             secondCheeseBlock = null;
@@ -369,7 +372,7 @@ public class PlayerMechanics : MonoBehaviour
         if (secondCheeseBlock != null && pickedUpCheese2)
         {
             //move second cheese block
-            secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f * playerMovement.GetPlayerDirection(), transform.position.y + 3, transform.position.z));
+            secondCheeseBlock.transform.GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + 0.5f * playerMovement.GetPlayerDirection(), transform.position.y + 1.4f, transform.position.z));
         }
     }
 }
