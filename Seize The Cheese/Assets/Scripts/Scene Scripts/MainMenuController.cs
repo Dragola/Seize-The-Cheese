@@ -7,9 +7,15 @@ public class MainMenuController : MonoBehaviour
 {
     LevelStorage levelStorage = null;
 
+    //defining menus
+    public GameObject BaseMenu;
+    public GameObject SettingsMenu;
+    public GameObject LoadgameMenu;
+
     private void Start()
     {
         levelStorage = GameObject.Find("LevelStorage").GetComponent<LevelStorage>();
+
     }
     public void MoveToMainGame()
     {
@@ -21,11 +27,13 @@ public class MainMenuController : MonoBehaviour
     }
     public void MoveToLoadGame()
     {
-
+        BaseMenu.gameObject.SetActive(false);
+        LoadgameMenu.gameObject.SetActive(true);
     }
     public void MoveToSettings()
     {
-
+        BaseMenu.gameObject.SetActive(false);
+        SettingsMenu.gameObject.SetActive(true);
     }
     public void MoveToAbout()
     {
@@ -34,5 +42,12 @@ public class MainMenuController : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void MovetoHome()
+    {
+        BaseMenu.gameObject.SetActive(true);
+        SettingsMenu.gameObject.SetActive(false);
+        LoadgameMenu.gameObject.SetActive(false);
     }
 }
