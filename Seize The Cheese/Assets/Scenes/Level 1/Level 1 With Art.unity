@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18448,7 +18448,6 @@ GameObject:
   - component: {fileID: 1706282034}
   - component: {fileID: 1706282033}
   - component: {fileID: 1706282032}
-  - component: {fileID: 1706282035}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -18465,15 +18464,15 @@ RectTransform:
   m_GameObject: {fileID: 1706282030}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 504342991}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -276, y: 205}
-  m_SizeDelta: {x: 160, y: 160}
+  m_AnchoredPosition: {x: -284.5, y: 202.1}
+  m_SizeDelta: {x: 519, y: 227}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1706282032
 MonoBehaviour:
@@ -18503,8 +18502,8 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 20246903fc830f1458aef016e3ea1c8e, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 20246903fc830f1458aef016e3ea1c8e, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 930b0bc44feb2e84d87ba88397f84d41, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 930b0bc44feb2e84d87ba88397f84d41, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -18550,7 +18549,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fa447e6ad77994945b37c6cbb47949fd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b94454388918e2449c0360c9004e1a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -18568,19 +18567,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706282030}
   m_CullTransparentMesh: 0
---- !u!114 &1706282035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706282030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e794b9669ca8885448409aacff287878, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alphathreshhold: 0.1
 --- !u!1001 &1713784882
 PrefabInstance:
   m_ObjectHideFlags: 0
