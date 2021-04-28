@@ -6,6 +6,7 @@ public class CheeseBlock : MonoBehaviour
 {
     public bool pickedUp = false;
     public bool isSecondCheese = false;
+    public GameObject touchingcheeseBlock = null;
     public byte cheeseDirection = 0;
     public GameObject collidedObject = null;
     public bool rayHit = false;
@@ -23,6 +24,12 @@ public class CheeseBlock : MonoBehaviour
     }
     public void PickedUp(byte direction, bool isSecondCheese)
     {
+        //move cheese block above this one
+        if(touchingcheeseBlock != null)
+        {
+            touchingcheeseBlock.GetComponent<CheeseBlock>().MoveCheeseAbove();
+        }
+
         //remove rigidbody from cheese block
         GetComponent<Rigidbody>().useGravity = false;
 
@@ -86,9 +93,15 @@ public class CheeseBlock : MonoBehaviour
         //get contacts for collision
         Vector2 direction = collision.GetContact(0).normal;
 
-        if (pickedUp)
+        //if top is hit but it's just a cheese block
+        if (direction.y == -1 && collision.gameObject.name.CompareTo("Cheese") == 0)
         {
-            Debug.Log("CheeseBlock: OnCollisionStay= " + collision.collider.name);
+            touchingcheeseBlock = collision.gameObject;
+            
+        }
+        //if cheese block has been picked up
+        if (pickedUp && touchingcheeseBlock == null)
+        {
             //if it collides with something other then the player then determine where it was hit
             if (collision.gameObject.name.CompareTo("Mousy") != 0)
             {
@@ -97,7 +110,6 @@ public class CheeseBlock : MonoBehaviour
                 //if top or bottom of the cheese is hit then drop if player is holding
                 if ((direction.y == 1 || direction.y == -1) && pickedUp)
                 {
-                    Debug.Log("CheeseBlock: OnCollisionStay dropping because " + collision.collider.name + "is below or above block");
                     player.DropCheese();
 
                     //stops animation
@@ -140,6 +152,10 @@ public class CheeseBlock : MonoBehaviour
             player.UnPreventPlayerMovement(0);
             player.UnPreventPlayerMovement(1);
         }
+        if(touchingcheeseBlock != null)
+        {
+            touchingcheeseBlock = null;
+        }
     }
     public void UpdateCheeseDirection(bool isFacingRight)
     {
@@ -173,5 +189,9 @@ public class CheeseBlock : MonoBehaviour
                 cheeseDirection = 1;
             }
         }
+    }
+    public void MoveCheeseAbove()
+    {
+        GetComponent<Rigidbody>().MovePosition(new Vector3(0, 1.5f, 0));
     }
 }
