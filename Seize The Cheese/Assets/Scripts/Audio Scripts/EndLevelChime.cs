@@ -16,7 +16,7 @@ public class EndLevelChime : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag ("Player"))
+        if (other.CompareTag("Player") && MouseyEntered == false)
         {
             Debug.Log("has collided");
             audioSource.PlayOneShot(Chime);
