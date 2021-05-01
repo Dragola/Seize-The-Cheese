@@ -23353,11 +23353,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.47
+      value: -2.78
       objectReference: {fileID: 0}
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.97
+      value: 5.403
       objectReference: {fileID: 0}
     - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23453,7 +23453,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 79f68c2d14a09d34ab68f26b4d0c0a40, type: 3}
   - {fileID: 8300000, guid: 375a81f59b0891b47b4b5b9274ff9c75, type: 3}
   JumpClips:
-  - {fileID: 8300000, guid: be9ea04a66cb4e04fafac6ba2784aa2e, type: 3}
+  - {fileID: 8300000, guid: 2f427b1e2a7e88349ac53ffdfcee005e, type: 3}
   LandClips:
   - {fileID: 8300000, guid: 48ce80e74b8512240ae4483ac49498cd, type: 3}
   PickupStepclips:
@@ -23465,10 +23465,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1a27ee1d68d83fd42bf21d1d48b08d2d, type: 3}
   - {fileID: 8300000, guid: 49ae575eb03e4b145a8e49163892169e, type: 3}
   - {fileID: 8300000, guid: 4e5dd5bf0cb886b4295a31dc6b56fc0d, type: 3}
-  CheesePickupclip:
-  - {fileID: 8300000, guid: 73c923689d428504d99189ae31c27f02, type: 3}
-  - {fileID: 8300000, guid: 73c923689d428504d99189ae31c27f02, type: 3}
-  - {fileID: 8300000, guid: 73c923689d428504d99189ae31c27f02, type: 3}
+  BunnyPoof: {fileID: 8300000, guid: 3816c100f269b594e86bc35bc011dcb7, type: 3}
+  BunnyDeathNotif:
+  - {fileID: 8300000, guid: 6202031370fe66c43b8883c500e6b4d0, type: 3}
+  - {fileID: 8300000, guid: 65172477fe433d147828ea6eb277ec8f, type: 3}
+  - {fileID: 8300000, guid: 1a21d67da96bc064885d638c948e91c1, type: 3}
+  - {fileID: 8300000, guid: 5838d1b458b12c741b7b114aa1e483f3, type: 3}
+  - {fileID: 8300000, guid: d0d92f8f182172144a9ff543ae4c0ba2, type: 3}
 --- !u!82 &3120019326048290290
 AudioSource:
   m_ObjectHideFlags: 0
