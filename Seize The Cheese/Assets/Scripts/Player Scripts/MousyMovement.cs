@@ -10,6 +10,7 @@ public class MousyMovement : MonoBehaviour
     public bool didJump = false;
     public bool inAir = false;
     private sbyte direction = 1;   //1 = right, -1 = left
+    public bool enableMovement = true;
 
     //cheeseblock indicators
     public bool cheeseHittingWall = false;
@@ -23,6 +24,7 @@ public class MousyMovement : MonoBehaviour
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
     private Canvas pauseMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
     private Canvas dialog = null;
+    private VideoPlayerLevel videoPlayerLevel= null;
 
     //raycast
     private RaycastHit hit;
@@ -53,6 +55,9 @@ public class MousyMovement : MonoBehaviour
 
         //locate dialog
         dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
+
+        //locate video player script
+        videoPlayerLevel = GameObject.Find("Video Player").GetComponent<VideoPlayerLevel>();
 
         //locate Animator
         animator = GetComponent<Animator>();
@@ -193,7 +198,7 @@ public class MousyMovement : MonoBehaviour
             preventLeftMovement = false;
         }
         //move right
-        if (Input.GetKey(KeyCode.D) && preventRightMovement == false)
+        if (Input.GetKey(KeyCode.D) && preventRightMovement == false && enableMovement)
         {
             direction = 1;
 
@@ -223,7 +228,7 @@ public class MousyMovement : MonoBehaviour
             playerMechanicsScript.UpdateCheeseDirection(true);
         }
         //move left
-        else if (Input.GetKey(KeyCode.A) && preventLeftMovement == false)
+        else if (Input.GetKey(KeyCode.A) && preventLeftMovement == false && enableMovement)
         {
             direction = -1;
 
@@ -261,7 +266,7 @@ public class MousyMovement : MonoBehaviour
             movmentVelocity = 0f;
         }
         //jump
-        if (Input.GetKeyDown(KeyCode.Space) && didJump == false && preventJump == false && inAir == false)
+        if (Input.GetKeyDown(KeyCode.Space) && didJump == false && preventJump == false && inAir == false && enableMovement)
         {
             //Animation control
             animator.SetBool("isjumping", true);
@@ -383,5 +388,15 @@ public class MousyMovement : MonoBehaviour
     public sbyte GetPlayerDirection()
     {
         return direction;
+    }
+    public void CallVideoPlayer()
+    {
+        Debug.Log("Player: CallVideoPlayer() called");
+        enableMovement = false;
+        videoPlayerLevel.StartVideo();
+    }
+    public void ResumePlayerFromVideo()
+    {
+        enableMovement = true;
     }
 }
