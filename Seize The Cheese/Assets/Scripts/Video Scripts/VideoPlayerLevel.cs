@@ -8,16 +8,15 @@ public class VideoPlayerLevel : MonoBehaviour
     private VideoPlayer videoPlayer = null;
     private Canvas videoCanvas = null;
     private MousyMovement player = null;
-    private bool videoStarted = false;
-    private Animator animation = null;
-    private float timer = 5;
+    public bool videoStarted = false;
+    public float timer = 5;
+
     // Start is called before the first frame update
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
         player = GameObject.Find("Mousy").GetComponent<MousyMovement>();
         videoCanvas = GameObject.Find("Video UI").GetComponent<Canvas>();
-        animation = GameObject.Find("Video Fade In").GetComponent<Animator>();
     }
 
     void Start()
@@ -28,35 +27,26 @@ public class VideoPlayerLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (videoStarted && animation.GetCurrentAnimatorStateInfo(0).IsName("fadein"))
+        //subtract from timer
+        if (videoStarted && timer > 0)
         {
-            Debug.Log("Video Player: Fading in animation...");
+            Debug.Log("if (videoStarted && timer > 0)");
+            timer -= Time.deltaTime;
         }
-        else if (videoStarted)
+        //if video is done then resume game
+        if (videoStarted && timer <= 0 && videoPlayer.isPlaying == false)
         {
-            Debug.Log("Video Player: Fading in animation done?");
-        
-            videoPlayer.Play();
-            
-            //wait 5 seconds before checking if video is playing
-            if (videoStarted && timer > 0)
-            {
-                timer -= Time.deltaTime;
-            }
-            //if video is done then resume game
-            else if (videoStarted && videoPlayer.isPlaying == false)
-            {
-                Debug.Log("Video is done playing");
-                videoCanvas.gameObject.SetActive(false);
-                player.ResumePlayerFromVideo();
-                videoStarted = false;
-                timer = 5;
-            }
+            Debug.Log("Video is done playing");
+            videoCanvas.gameObject.SetActive(false);
+            player.ResumePlayerFromVideo();
+            videoStarted = false;
+            timer = 5;
         }
     }
     public void StartVideo()
     {
         videoCanvas.gameObject.SetActive(true);
         videoStarted = true;
+        videoPlayer.Play();
     }
 }
