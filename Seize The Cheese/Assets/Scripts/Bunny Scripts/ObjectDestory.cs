@@ -41,7 +41,7 @@ public class ObjectDestory : MonoBehaviour
 
     void BunnyDeath()
     {
-        Destroy(gameObject);
+        Destroy(gameObject, 0.5f);
     }
 
     private AudioClip GetRandomNotifClip()

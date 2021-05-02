@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class PauseMenu : MonoBehaviour
 {
+
     private PlayerMovement playerControllerScript = null;
     // Start is called before the first frame update
     void Start()
