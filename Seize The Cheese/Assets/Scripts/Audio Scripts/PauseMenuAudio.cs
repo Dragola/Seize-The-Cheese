@@ -19,8 +19,6 @@ public class PauseMenuAudio : MonoBehaviour
 
     void Awake()
     {
-        resumebutton = GameObject.Find("Resume").GetComponent<Button>();
-        restartbutton = GameObject.Find("Restart").GetComponent<Button>();
         audioSource = GetComponent<AudioSource>();
     }
     

@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class EndLevelChime : MonoBehaviour
 {
     public AudioClip Chime;
     private AudioSource audioSource;
     private bool MouseyEntered;
+
+    public AudioMixerSnapshot LevelEnd;
 
     void Awake()
     {
@@ -21,6 +24,8 @@ public class EndLevelChime : MonoBehaviour
             Debug.Log("has collided");
             audioSource.PlayOneShot(Chime);
             MouseyEntered = true;
+
+            LevelEnd.TransitionTo(.01f);
         }
     }
 }

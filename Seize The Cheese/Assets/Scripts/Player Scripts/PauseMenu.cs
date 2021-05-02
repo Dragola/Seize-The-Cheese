@@ -6,7 +6,8 @@ using UnityEngine.Audio;
 
 public class PauseMenu : MonoBehaviour
 {
-
+    public AudioMixerSnapshot unpaused;
+    public AudioMixerSnapshot paused;
     private PlayerMovement playerControllerScript = null;
     // Start is called before the first frame update
     void Start()
@@ -31,16 +32,19 @@ public class PauseMenu : MonoBehaviour
     {
         //re-load current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        unpaused.TransitionTo(.01f);
         ResumeGame();
     }
     public void PauseGame()
     {
         //pause game
         Time.timeScale = 0;
+        paused.TransitionTo(.01f);
     }
     public void ResumeGame()
     {
         //resume game
         Time.timeScale = 1;
+        unpaused.TransitionTo(.01f);
     }
 }
