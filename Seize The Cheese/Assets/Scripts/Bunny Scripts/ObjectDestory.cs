@@ -3,49 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectDestory : MonoBehaviour
-{   
-    [SerializeField]
-    public AudioClip[] BunnyNotif;
-
-    public AudioClip BunnyPoof;
-    private AudioSource audioSource;
-    private bool BunnyPoofed;
-    private float PoofTimer = 5.0f;
-
-    void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
-
+{
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Mousy")
         {
-            AudioClip clip = GetRandomNotifClip();
-            audioSource.PlayOneShot(BunnyPoof);
-            Invoke("BunnyDeath", PoofTimer);
+            Destroy(gameObject, 1f);
         }
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Mousy")
         {
-            audioSource.PlayOneShot(BunnyPoof);
-            Invoke("BunnyDeath", PoofTimer);
+           Destroy(gameObject, 1f);
         }
     }
 
-
-    void BunnyDeath()
+    // Start is called before the first frame update
+    void Start()
     {
-        Destroy(gameObject);
+
     }
 
-    private AudioClip GetRandomNotifClip()
+    // Update is called once per frame
+    void Update()
     {
-        return BunnyNotif[UnityEngine.Random.Range(0, (BunnyNotif.Length) - 1)];
+
     }
 }
