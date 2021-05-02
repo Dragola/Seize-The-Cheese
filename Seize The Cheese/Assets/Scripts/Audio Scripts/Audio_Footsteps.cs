@@ -25,11 +25,14 @@ public class Audio_Footsteps : MonoBehaviour
     [SerializeField]
     private AudioClip[] BunnyDeathNotif;
 
+    
     private AudioSource audioSource;
+    private AudioSource BunnyAudioSource;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponents<AudioSource>()[0];
+        BunnyAudioSource = GetComponents<AudioSource>()[1];
     }
 
     private void Step()
@@ -94,10 +97,10 @@ public class Audio_Footsteps : MonoBehaviour
     private void BunnyDeath()
     //This is the Bunny Death sound, attached to Mousey until the Dust Bunnies' animations are sorted
     {
-        AudioClip clip = GetRandomBunnyDeathNotif();
-        audioSource.PlayOneShot(clip);
-        AudioClip clip2 = BunnyPoof;
-        audioSource.PlayOneShot(clip2);
+        AudioClip clip3 = GetRandomBunnyDeathNotif();
+        BunnyAudioSource.PlayOneShot(clip3);
+        AudioClip clip4 = BunnyPoof;
+        BunnyAudioSource.PlayOneShot(clip4);
     }
 
     private AudioClip GetRandomBunnyDeathNotif()
