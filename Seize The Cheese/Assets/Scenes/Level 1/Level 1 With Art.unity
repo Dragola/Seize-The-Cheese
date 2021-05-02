@@ -6864,11 +6864,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paused: {fileID: 3246783808998310897, guid: eaaf99e28312977489ef92297e5ac4d2, type: 2}
   unpaused: {fileID: 24500006, guid: eaaf99e28312977489ef92297e5ac4d2, type: 2}
-  resumebuttonsound: {fileID: 0}
+  resumebuttonsound: {fileID: 8300000, guid: eacacb2d116bbf140aaa1aba536d3553, type: 3}
   quitbuttonsound: {fileID: 0}
-  restartbuttonsound: {fileID: 0}
-  resumebutton: {fileID: 0}
-  restartbutton: {fileID: 0}
+  restartbuttonsound: {fileID: 8300000, guid: 1baba4ce47e923049bc07254c8447f5d, type: 3}
+  resumebutton: {fileID: 122131456}
+  restartbutton: {fileID: 280380000}
 --- !u!1 &679723917
 GameObject:
   m_ObjectHideFlags: 0
