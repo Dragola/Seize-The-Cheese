@@ -42,6 +42,7 @@ public class PlayerMechanics : MonoBehaviour
     public byte collisionDirection = 0;     //0 = neither, 1 = right, 2 = left
     public bool endOfLevel = false;
 
+    public bool hitDustBunnyVideo = false;
 
     //animations
     Animator animator;
@@ -107,7 +108,6 @@ public class PlayerMechanics : MonoBehaviour
         if (other.tag == "Dust") // when player touches a 'Dust Bunnie'
         {
             Destroy(other.gameObject); // destorys the dust bunnie
-
             
             if (!onStrongCheese)
             {
@@ -115,7 +115,13 @@ public class PlayerMechanics : MonoBehaviour
 
                 Currenthealth -= 5; // lowers current health by half
 
-                
+                //play dust bunny video
+                if (hitDustBunnyVideo == false)
+                {
+                    playerMovement.CallVideoPlayer();
+                    hitDustBunnyVideo = true;
+                }
+
                 if (Currenthealth <= 0) // if health is equal to 0, player is dead thus cursor is visible and a death panel appears
                 {
                     Debug.Log("Dead");

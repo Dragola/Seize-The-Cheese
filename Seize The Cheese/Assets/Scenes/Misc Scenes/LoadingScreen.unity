@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressText: {fileID: 885841649}
-  videoPlayer: {fileID: 1395272396}
+  videoPlayer: {fileID: 0}
 --- !u!1 &1317914308
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +438,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395272395}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 0acd9871fbf7d474da708cd7b8074250, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: e334bf4c86644664a85813b4acc7204d, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -453,12 +453,14 @@ VideoPlayer:
   m_AudioOutputMode: 2
   m_TargetAudioSources:
   - {fileID: 0}
+  - {fileID: 0}
   m_DirectAudioVolumes:
   - 1
+  - 1
   m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
+  m_EnabledAudioTracks: 0101
+  m_DirectAudioMutes: 0000
+  m_ControlledAudioTrackCount: 2
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 0

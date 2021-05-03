@@ -10,6 +10,7 @@ public class MousyMovement : MonoBehaviour
     public bool didJump = false;
     public bool inAir = false;
     private sbyte direction = 1;   //1 = right, -1 = left
+    public bool enableMovement = true;
 
     //cheeseblock indicators
     public bool cheeseHittingWall = false;
@@ -23,6 +24,7 @@ public class MousyMovement : MonoBehaviour
     public bool pauseMenuActive = false; //used to prevent other controls + for closing/opening main menu
     private Canvas pauseMenu = null;     //used to reference the main menu's canvas to access 'MainMenu' script and make menu visible/invisible
     private Canvas dialog = null;
+    private VideoPlayerLevel videoPlayerLevel= null;
 
     //raycast
     private RaycastHit hit;
@@ -54,6 +56,9 @@ public class MousyMovement : MonoBehaviour
         //locate dialog
         dialog = GameObject.Find("Dialog").GetComponent<Canvas>();
 
+        //locate video player script
+        videoPlayerLevel = GameObject.Find("Video Player").GetComponent<VideoPlayerLevel>();
+
         //locate Animator
         animator = GetComponent<Animator>();
     }
@@ -73,7 +78,7 @@ public class MousyMovement : MonoBehaviour
             {
                 jumpVelocity = 0;
             }
-            Debug.Log("Fit Floor via raycast middle");
+            //Debug.Log("Fit Floor via raycast middle");
             didJump = false;
             inAir = false;
             animator.SetBool("isgrounded", true);
@@ -87,7 +92,7 @@ public class MousyMovement : MonoBehaviour
             {
                 jumpVelocity = 0;
             }
-            Debug.Log("Fit Floor via raycast left");
+            //Debug.Log("Fit Floor via raycast left");
             didJump = false;
             inAir = false;
             animator.SetBool("isjumping", false);
@@ -101,7 +106,7 @@ public class MousyMovement : MonoBehaviour
             {
                 jumpVelocity = 0;
             }
-            Debug.Log("Fit Floor via raycast right");
+            //Debug.Log("Fit Floor via raycast right");
             didJump = false;
             inAir = false;
             animator.SetBool("isjumping", false);
@@ -110,7 +115,7 @@ public class MousyMovement : MonoBehaviour
         //no ray hitting ground
         else
         {
-            Debug.Log("Not touching floor");
+            //Debug.Log("Not touching floor");
             inAir = true;
             animator.SetBool("isgrounded", false);
         }
@@ -123,21 +128,21 @@ public class MousyMovement : MonoBehaviour
         //middle bottom
         if (Physics.Raycast(playerCapsuleCollider.bounds.center, Vector3.up, out hit, playerCapsuleCollider.bounds.extents.y + 0.05f))
         {
-            Debug.Log("Fit ceiling via raycast miidle");
+            //Debug.Log("Fit ceiling via raycast miidle");
             jumpVelocity = 0;
             ceilingHitObject = hit.collider.gameObject;
         }
         //left bottom
         else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x +- 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.up, out hit, playerCapsuleCollider.bounds.extents.y))
         {
-            Debug.Log("Fit ceiling via raycast left");
+            //Debug.Log("Fit ceiling via raycast left");
             jumpVelocity = 0;
             ceilingHitObject = hit.collider.gameObject;
         }
         //right bottom
         else if (Physics.Raycast(new Vector3(playerCapsuleCollider.bounds.center.x + 0.18f, playerCapsuleCollider.bounds.center.y, playerCapsuleCollider.bounds.center.z), Vector3.up, out hit, playerCapsuleCollider.bounds.extents.y))
         {
-            Debug.Log("Fit ceiling via raycast right");
+            //Debug.Log("Fit ceiling via raycast right");
             jumpVelocity = 0;
             ceilingHitObject = hit.collider.gameObject;
         }
@@ -149,7 +154,7 @@ public class MousyMovement : MonoBehaviour
         //gravity
         if (inAir || didJump)
         {
-            Debug.Log("InAir = " + inAir + "|| didJump = " + didJump);
+            //Debug.Log("InAir = " + inAir + "|| didJump = " + didJump);
             //if hitting wall
             if (preventLeftMovement || preventRightMovement)
             {
@@ -193,7 +198,7 @@ public class MousyMovement : MonoBehaviour
             preventLeftMovement = false;
         }
         //move right
-        if (Input.GetKey(KeyCode.D) && preventRightMovement == false)
+        if (Input.GetKey(KeyCode.D) && preventRightMovement == false && enableMovement)
         {
             direction = 1;
 
@@ -223,7 +228,7 @@ public class MousyMovement : MonoBehaviour
             playerMechanicsScript.UpdateCheeseDirection(true);
         }
         //move left
-        else if (Input.GetKey(KeyCode.A) && preventLeftMovement == false)
+        else if (Input.GetKey(KeyCode.A) && preventLeftMovement == false && enableMovement)
         {
             direction = -1;
 
@@ -261,12 +266,12 @@ public class MousyMovement : MonoBehaviour
             movmentVelocity = 0f;
         }
         //jump
-        if (Input.GetKeyDown(KeyCode.Space) && didJump == false && preventJump == false && inAir == false)
+        if (Input.GetKeyDown(KeyCode.Space) && didJump == false && preventJump == false && inAir == false && enableMovement)
         {
             //Animation control
             animator.SetBool("isjumping", true);
 
-            Debug.Log("Jump!");
+            //Debug.Log("Jump!");
             didJump = true;
             inAir = true;
             jumpVelocity = 310;
@@ -323,21 +328,21 @@ public class MousyMovement : MonoBehaviour
     }
     private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("Player: Collision staying: " + collision.collider.name);
+        //Debug.Log("Player: Collision staying: " + collision.collider.name);
         //make sure object it's the ceiling
         if (inAir && collision.collider.name.CompareTo("Mousy") != 0 && collision.collider.name.CompareTo("Cheese") != 0)
         {
-            Debug.Log("Player: Collision Staying: " + collision.collider.name);
+            //Debug.Log("Player: Collision Staying: " + collision.collider.name);
 
             //if hit ceiling
             if (ceilingHitObject != null && ceilingHitObject != collision.gameObject)
             {
-                Debug.Log("Hitting ceiling so ignoring this collision");
+                //Debug.Log("Hitting ceiling so ignoring this collision");
                 movmentVelocity = 0;
             }
             else
             {
-                Debug.Log("Collision Staying not ceiling");
+                //Debug.Log("Collision Staying not ceiling");
                 //hit front of player (object to the right)
                 if (gameObject.transform.position.x < collision.gameObject.transform.position.x)
                 {
@@ -354,7 +359,7 @@ public class MousyMovement : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        Debug.Log("Collision Exited");
+        //Debug.Log("Collision Exited");
         
         //release and movement prevention
         if (preventRightMovement)
@@ -376,12 +381,22 @@ public class MousyMovement : MonoBehaviour
     {
         cheeseCollision = -1;
 
-        Debug.Log("Player: UnPreventPlayerMovement() called");
+        //Debug.Log("Player: UnPreventPlayerMovement() called");
         preventRightMovement = false;
         preventLeftMovement = false;
     }
     public sbyte GetPlayerDirection()
     {
         return direction;
+    }
+    public void CallVideoPlayer()
+    {
+        Debug.Log("Player: CallVideoPlayer() called");
+        enableMovement = false;
+        videoPlayerLevel.StartVideo();
+    }
+    public void ResumePlayerFromVideo()
+    {
+        enableMovement = true;
     }
 }

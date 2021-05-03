@@ -20,14 +20,19 @@ public class Audio_Footsteps : MonoBehaviour
     [SerializeField]
     private AudioClip[] PickupStepclips;
 
-    [SerializeField]
-    private AudioClip[] CheesePickupclip;
+    public AudioClip BunnyPoof;
 
+    [SerializeField]
+    private AudioClip[] BunnyDeathNotif;
+
+    
     private AudioSource audioSource;
+    private AudioSource BunnyAudioSource;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponents<AudioSource>()[0];
+        BunnyAudioSource = GetComponents<AudioSource>()[1];
     }
 
     private void Step()
@@ -76,18 +81,6 @@ public class Audio_Footsteps : MonoBehaviour
 
     }
     
-    private void CheesePickup()
-    {
-    //    AudioClip clip = GetRandomCheesePickClip();
-    //    audioSource.PlayOneShot(clip);
-    }
-
-    //private AudioClip GetRandomCheesePickClip()
-    //{
-    //    return CheesePickupclip[UnityEngine.Random.Range(0, Footstepclips.Length)];
-        
-    //}
-
     private void PickupStep()
     //This is the PickupStep event for Mousey's walk animation while holding cheese
     {
@@ -99,5 +92,19 @@ public class Audio_Footsteps : MonoBehaviour
     private AudioClip GetRandomPickStepClip()
     {
         return PickupStepclips[UnityEngine.Random.Range(0, (PickupStepclips.Length) - 1)];
+    }
+
+    private void BunnyDeath()
+    //This is the Bunny Death sound, attached to Mousey until the Dust Bunnies' animations are sorted
+    {
+        AudioClip clip3 = GetRandomBunnyDeathNotif();
+        BunnyAudioSource.PlayOneShot(clip3);
+        AudioClip clip4 = BunnyPoof;
+        BunnyAudioSource.PlayOneShot(clip4);
+    }
+
+    private AudioClip GetRandomBunnyDeathNotif()
+    {
+        return BunnyDeathNotif[UnityEngine.Random.Range(0, (BunnyDeathNotif.Length) - 1)];
     }
 }

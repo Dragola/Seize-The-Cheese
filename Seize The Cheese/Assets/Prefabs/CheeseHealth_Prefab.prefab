@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7569240689048082182}
   - component: {fileID: 2625712269890546405}
   - component: {fileID: 7696379901794807302}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: CheeseHealth_Prefab
   m_TagString: HealthCheese
   m_Icon: {fileID: 0}
