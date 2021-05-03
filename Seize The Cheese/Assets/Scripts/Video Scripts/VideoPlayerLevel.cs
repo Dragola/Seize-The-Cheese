@@ -12,6 +12,7 @@ public class VideoPlayerLevel : MonoBehaviour
     public float timer = 5;
 
     // Start is called before the first frame update
+    //this code exists again
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
