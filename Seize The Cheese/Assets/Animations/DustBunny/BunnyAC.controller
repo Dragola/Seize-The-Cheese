@@ -11,8 +11,13 @@ AnimatorState:
   m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
+<<<<<<< HEAD
   - {fileID: -8665153942786106154}
   - {fileID: 4448368630603041951}
+=======
+  - {fileID: 6584724257390170476}
+  - {fileID: 5412562246712837075}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -143,6 +148,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
+<<<<<<< HEAD
   - {fileID: 1426819623414826962}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
@@ -195,6 +201,10 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
+=======
+  - {fileID: 491058726216459391}
+  - {fileID: 3547860415862699144}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -205,6 +215,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 1827226128182048838, guid: 3f1eabec038725b41895b3c292f52f87, type: 3}
+<<<<<<< HEAD
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -233,11 +244,35 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -7706345439762876839, guid: b46a950782d4a314498740f8ef362069, type: 3}
+=======
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-5265524200058335729
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8152523693962570256}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9698795
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1107 &-944002615562775141
 AnimatorStateMachine:
   serializedVersion: 5
@@ -418,13 +453,18 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+<<<<<<< HEAD
 --- !u!1101 &1426819623414826962
+=======
+--- !u!1101 &491058726216459391
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
+<<<<<<< HEAD
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isTurning
@@ -481,43 +521,69 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5438286817726160435}
+=======
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8907752517990231972}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
+<<<<<<< HEAD
   m_ExitTime: 0
   m_HasExitTime: 0
+=======
+  m_ExitTime: 0.96445495
+  m_HasExitTime: 1
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+<<<<<<< HEAD
 --- !u!1101 &3250296002442116191
+=======
+--- !u!1101 &3547860415862699144
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
+<<<<<<< HEAD
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isTurning
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8907752517990231972}
+=======
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8152523693962570256}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
+<<<<<<< HEAD
   m_ExitTime: 0.6999999
   m_HasExitTime: 0
+=======
+  m_ExitTime: 0.96445495
+  m_HasExitTime: 1
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+<<<<<<< HEAD
 --- !u!1102 &4391855074483181297
 AnimatorState:
   serializedVersion: 5
@@ -546,26 +612,40 @@ AnimatorState:
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 --- !u!1101 &4448368630603041951
+=======
+--- !u!1101 &5412562246712837075
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
+<<<<<<< HEAD
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: isTurning
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7240596505356437905}
+=======
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8152523693962570256}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
+<<<<<<< HEAD
   m_ExitTime: 0
   m_HasExitTime: 0
+=======
+  m_ExitTime: 0.964455
+  m_HasExitTime: 1
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -581,8 +661,13 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
+<<<<<<< HEAD
   - {fileID: -7556802420165458412}
   - {fileID: -928702555696543768}
+=======
+  - {fileID: 7197477465453552936}
+  - {fileID: -5265524200058335729}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -592,19 +677,28 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
+<<<<<<< HEAD
   m_Motion: {fileID: -3100369314251171874, guid: 0c13cb7760482314aaab9eb077d680ef, type: 3}
+=======
+  m_Motion: {fileID: 1827226128182048838, guid: 0c13cb7760482314aaab9eb077d680ef, type: 3}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!1101 &6277757397073493914
+=======
+--- !u!1101 &6584724257390170476
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
+<<<<<<< HEAD
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isTurning
@@ -636,25 +730,40 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4391855074483181297}
+=======
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -7240596505356437905}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
+<<<<<<< HEAD
   m_ExitTime: 0.625
   m_HasExitTime: 0
+=======
+  m_ExitTime: 0.964455
+  m_HasExitTime: 1
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+<<<<<<< HEAD
 --- !u!1101 &7134138877972496757
+=======
+--- !u!1101 &7197477465453552936
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
+<<<<<<< HEAD
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: isIdle
@@ -686,14 +795,24 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5438286817726160435}
+=======
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8907752517990231972}
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
+<<<<<<< HEAD
   m_ExitTime: 0
   m_HasExitTime: 0
+=======
+  m_ExitTime: 0.9698795
+  m_HasExitTime: 1
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1

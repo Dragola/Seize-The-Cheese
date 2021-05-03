@@ -8,8 +8,9 @@ public class lerper : MonoBehaviour
     public Vector3 endPoint;
     public Vector3 currentPoint;
 
-    public float speed = 1f;
+    public float speed = -1f;
     public bool canMove = true;
+<<<<<<< HEAD
     //public bool canMoveRight = true;
     //public bool updateSpeed = false;
     //public bool updateRotation = false;
@@ -28,31 +29,38 @@ public class lerper : MonoBehaviour
         rb_ = GetComponent<Rigidbody>();
         collider_ = GetComponent<CapsuleCollider>();
         if (canMove)
-        {
-            animator_.SetBool("isWalking", true);
-            if (speed > 0)
-            {
-                facing_dir_ = 1;
-            }
-            else if (speed < 0)
-            {
-                facing_dir_ = -1;
-            }
-            speed = Mathf.Abs(speed);
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, facing_dir_ * Mathf.Abs(transform.localScale.z));
-        }
-        else
-        {
-            animator_.SetBool("isIdle", true);
-        }
-    }
-
+=======
+    public bool canMoveRight = true;
+    public bool updateSpeed = false;
+    public bool updateRotation = false;
+    
     void Update()
     {
-        float prev_facing_dir = facing_dir_; // save previous facing dir before updating
+        //get current position of the bunny
+        currentPoint = transform.position;
 
+        //if the bunny has hit or gone past the startPoint.x
+        if(transform.position.x >= startPoint.x)
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
+        {
+            //Debug.Log("Hit startPoint" + name);
+            canMoveRight = false;
+            updateSpeed = true;
+            updateRotation = true;
+        }
+        //if the bunny has hit or gone past the endPoint.x
+        else if (transform.position.x <= endPoint.x)
+        {
+            //Debug.Log("Hit endPoint" + name);
+            canMoveRight = true;
+            updateSpeed = true;
+            updateRotation = true;
+        }
+
+        //only call movement function if bunny can move
         if (canMove)
         {
+<<<<<<< HEAD
             if (can_update_speed_)
             {
                 rb_.velocity = new Vector3(facing_dir_ * speed, rb_.velocity.y, 0);
@@ -79,18 +87,41 @@ public class lerper : MonoBehaviour
                     can_update_speed_ = false;
                     has_hit_obstable_ = false;
                 }
-            }
-
-            if ((animator_.GetCurrentAnimatorStateInfo(0).IsName("DBTurnAnimation") || 
-                animator_.GetCurrentAnimatorStateInfo(0).IsName("DBTurnAnimation_Reverse")) &&
-                animator_.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f &&
-                animator_.GetBool("isTurning"))
+=======
+            Movement();
+        }
+        
+    }
+    private void Movement()
+    {
+        //change speed for left direction
+        if (updateSpeed == true && canMoveRight == false)
+        {
+            updateSpeed = false;
+        }
+        //change speed for right direction
+        else if (canMoveRight == true && updateSpeed == true)
+        {
+            updateSpeed = false;
+        }
+        //rotate bunny
+        if (updateRotation)
+        {
+            //rotate to face the right direction
+            if (canMoveRight)
             {
-                animator_.SetBool("isTurning", false);
-                can_update_speed_ = true; 
-                //transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, -1 * transform.localScale.z);
+                transform.eulerAngles = new Vector3(0, 90, 0);
+                updateRotation = false;
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
+            }
+            //rotate to face the left direction
+            else if (canMoveRight == false)
+            {
+                transform.eulerAngles = new Vector3(0, 270, 0);
+                updateRotation = false;
             }
         }
+<<<<<<< HEAD
 
         if (animator_.GetCurrentAnimatorStateInfo(0).IsName("DBDeathAnimation") )
         {
@@ -135,55 +166,16 @@ public class lerper : MonoBehaviour
         //    Movement();
         //}
 
+=======
+        //move dust bunny
+        transform.Translate(0, 0, speed * Time.deltaTime);
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
     }
-
-
-    //private void Movement()
-    //{
-    //    //change speed for left direction
-    //    if (updateSpeed == true && canMoveRight == false)
-    //    {
-    //        updateSpeed = false;
-    //    }
-    //    //change speed for right direction
-    //    else if (canMoveRight == true && updateSpeed == true)
-    //    {
-    //        updateSpeed = false;
-    //    }
-    //    //rotate bunny
-    //    if (updateRotation)
-    //    {
-    //        animator_.SetBool("isTurning", true);
-    //        if (animator_.GetCurrentAnimatorStateInfo(0).IsName("DBTurnAnimation") &&
-    //            animator_.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-    //        {
-    //            transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y, transform.localScale.z);
-    //            //rotate to face the right direction
-    //            if (canMoveRight)
-    //            {
-    //                //transform.eulerAngles = new Vector3(0, 90, 0);
-    //                updateRotation = false;
-    //            }
-    //            //rotate to face the left direction
-    //            else if (canMoveRight == false)
-    //            {
-    //                //transform.eulerAngles = new Vector3(0, 270, 0);
-    //                updateRotation = false;
-    //            }
-    //            animator_.SetBool("isTurning", false);
-    //        }
-    //    }
-    //    if(!updateRotation)
-    //    {
-    //        //move dust bunny
-    //        transform.Translate(0, 0, facing_dir_ * speed * Time.deltaTime);
-    //    }
-
-    //}
     public void SetMovement(bool enabled)
     {
-        canMove = enabled;
+        canMoveRight = enabled;
     }
+<<<<<<< HEAD
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -230,16 +222,30 @@ public class lerper : MonoBehaviour
     //}
 
     private void OnDrawGizmos()
+=======
+    private void OnTriggerEnter(Collider other)
+>>>>>>> parent of 2d7ea6f (finished bunny anim)
     {
-        Gizmos.DrawWireSphere(transform.position, 1f);
+        Debug.Log("Dust Bunny(" + gameObject.name + "): Collision detected");
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(new Vector3(startPoint.x,
-            transform.position.y + 0.5f,
-            transform.position.z),
-            new Vector3(endPoint.x,
-            transform.position.y + 0.5f,
-            transform.position.z));
-
+        if (other.name.CompareTo("Cheese") == 0)
+        {
+            //Left side hit
+            if (gameObject.transform.position.x > other.gameObject.transform.position.x)
+            {
+                Debug.Log("Dust Bunny(" + gameObject.name + "): Hit left side");
+                canMoveRight = true;
+                updateSpeed = true;
+                updateRotation = true;
+            }
+            //Right side hit
+            if (gameObject.transform.position.x < other.gameObject.transform.position.x)
+            {
+                Debug.Log("Dust Bunny(" + gameObject.name + "): Hit right side");
+                canMoveRight = false;
+                updateSpeed = true;
+                updateRotation = true;
+            }
+        }
     }
 }
