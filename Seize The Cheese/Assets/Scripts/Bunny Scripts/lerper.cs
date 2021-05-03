@@ -16,13 +16,17 @@ public class lerper : MonoBehaviour
     [SerializeField]
     private int facing_dir_ = -1; // 1: facing right, -1: facing left
     private bool can_update_speed_ = true;
+    private bool has_hit_obstable_ = false;
+    private bool has_triggered_death_ = false;
     private Animator animator_;
     private Rigidbody rb_;
+    private Collider collider_;
 
     private void Awake()
     {
         animator_ = transform.GetChild(0).GetComponent<Animator>();
         rb_ = GetComponent<Rigidbody>();
+        collider_ = GetComponent<CapsuleCollider>();
         if (canMove)
         {
             animator_.SetBool("isWalking", true);
@@ -57,21 +61,23 @@ public class lerper : MonoBehaviour
             if (facing_dir_ == -1) //facing left
             {
                 animator_.SetBool("is_facing_right", false);
-                if (transform.position.x <= endPoint.x)
+                if (transform.position.x <= endPoint.x || has_hit_obstable_)
                 {
                     facing_dir_ = 1; //facing right
                     animator_.SetBool("isTurning", true);
                     can_update_speed_ = false;
+                    has_hit_obstable_ = false;
                 }
             }
             else
             {
                 animator_.SetBool("is_facing_right", true);
-                if (transform.position.x >= startPoint.x)
+                if (transform.position.x >= startPoint.x || has_hit_obstable_)
                 {
                     facing_dir_ = -1; //facing left
                     animator_.SetBool("isTurning", true);
                     can_update_speed_ = false;
+                    has_hit_obstable_ = false;
                 }
             }
 
@@ -86,9 +92,19 @@ public class lerper : MonoBehaviour
             }
         }
 
+        if (animator_.GetCurrentAnimatorStateInfo(0).IsName("DBDeathAnimation") )
+        {
+            if (has_triggered_death_)
+            {
+                animator_.SetBool("has_triggered_death", true);
+            }
+            if (animator_.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                gameObject.SetActive(false);
+            }
+        }
 
-        
-        
+
 
         ////get current position of the bunny
         //currentPoint = transform.position;
@@ -167,6 +183,26 @@ public class lerper : MonoBehaviour
     public void SetMovement(bool enabled)
     {
         canMove = enabled;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("CubeCheese") || collision.gameObject.CompareTag("HealthCheese"))
+        {
+            has_hit_obstable_ = true;
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (!has_triggered_death_)
+            {
+                animator_.SetBool("isDying", true);
+                canMove = false;
+                has_triggered_death_ = true;
+                rb_.isKinematic = true;
+                collider_.enabled = false;
+            }
+            
+        }
     }
     //private void OnTriggerEnter(Collider other)
     //{
