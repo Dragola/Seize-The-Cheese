@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: a271035ca8d20324ba5b8dc12ac5038c
+guid: ea950986f06ba334b8b7707e67c20e6f
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
-      74: 1827226128182048838
-    second: DBDeathAnimation
+      74: 6782097308459099962
+    second: DBTurnAnimation_Reverse
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: DBDeathAnimation
-      takeName: Take 001
+      name: DBTurnAnimation_Reverse
+      takeName: DBTurnAnimation_Reverse
       internalID: 0
-      firstFrame: 1
-      lastFrame: 100
+      firstFrame: 148
+      lastFrame: 164
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -58,18 +58,11 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.057189535
-        functionName: Poof
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 148
     isReadable: 0
   meshes:
     lODScreenPercentages: []
