@@ -44,13 +44,12 @@ public class PlayerMechanics : MonoBehaviour
 
     public bool hitDustBunnyVideo = false;
 
+
+
     //animations
     Animator animator;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        
-    }
+ 
     private void OnCollisionStay(Collision collision)
     {
         //get contacts for collision
@@ -103,11 +102,11 @@ public class PlayerMechanics : MonoBehaviour
         }
         collisionDirection = 0;
     }
-    void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.tag == "Dust") // when player touches a 'Dust Bunnie'
+        if (collision.gameObject.CompareTag("Dust")) // when player touches a 'Dust Bunny'
         {
-            Destroy(other.gameObject); // destorys the dust bunnie
+            Debug.Log("Bunny Hit!");
             
             if (!onStrongCheese)
             {
@@ -134,22 +133,24 @@ public class PlayerMechanics : MonoBehaviour
                 }
                 Invoke("EndHit", 1);
             }
-            
+
+            Destroy(collision.gameObject); // destorys the dust bunny
+
         }
 
-        else if (other.tag == "HealthCheese") // when the player interacts with a 'Health Cheese' power up
+        else if (collision.gameObject.CompareTag("HealthCheese")) // when the player interacts with a 'Health Cheese' power up
         {
             if (Currenthealth < 10) 
             {
                 Currenthealth += 5;
             }
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
         }
 
-        else if (other.tag == "StrongCheese")  // when the player interacts with 'StrongCheese' 
+        else if (collision.gameObject.CompareTag("StrongCheese"))  // when the player interacts with 'StrongCheese' 
         {
             onStrongCheese = true;
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
 
         }
     }
@@ -181,6 +182,7 @@ public class PlayerMechanics : MonoBehaviour
         playerMovement = GetComponent<MousyMovement>();
 
         animator = GetComponent<Animator>();
+
     }
     // Update is called once per frame
     void Update()
