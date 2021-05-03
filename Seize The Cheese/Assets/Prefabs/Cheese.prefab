@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4712343767932039793}
   - component: {fileID: 8435179146342670593}
   - component: {fileID: 1487774494646556773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cheese
   m_TagString: CubeCheese
   m_Icon: {fileID: 0}
@@ -116,7 +116,6 @@ MonoBehaviour:
   isSecondCheese: 0
   cheeseDirection: 0
   collidedObject: {fileID: 0}
-  tempTransform: {x: 0, y: 0, z: 0}
   rayHit: 0
   player: {fileID: 0}
 --- !u!65 &1487774494646556773
