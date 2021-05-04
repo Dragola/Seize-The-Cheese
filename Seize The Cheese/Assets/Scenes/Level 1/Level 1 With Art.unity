@@ -23736,6 +23736,7 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< Updated upstream
     - target: {fileID: 262486830710667581, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -23743,6 +23744,15 @@ PrefabInstance:
     - target: {fileID: 277175931003655488, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_Layer
       value: 0
+=======
+    - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226319470168533914, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.87
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 287010025119354516, guid: 11cb95f3f4bcd7a4cb4dd78f7f2b1043, type: 3}
       propertyPath: m_Layer
