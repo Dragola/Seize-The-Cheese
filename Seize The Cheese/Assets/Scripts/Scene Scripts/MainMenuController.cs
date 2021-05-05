@@ -20,10 +20,12 @@ public class MainMenuController : MonoBehaviour
     {
         levelStorage = GameObject.Find("LevelStorage").GetComponent<LevelStorage>();
         audioSource = GetComponent<AudioSource>();
+        Cursor.visible = true;
 
     }
     public void MoveToMainGame()
     {
+        Cursor.visible = false;
         //don't destroy
         DontDestroyOnLoad(levelStorage.gameObject);
 
@@ -34,6 +36,7 @@ public class MainMenuController : MonoBehaviour
     {
         BaseMenu.gameObject.SetActive(false);
         LoadgameMenu.gameObject.SetActive(true);
+ 
     }
     public void MoveToSettings()
     {
