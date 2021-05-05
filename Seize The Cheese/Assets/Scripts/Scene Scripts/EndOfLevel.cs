@@ -14,6 +14,7 @@ public class EndOfLevel : MonoBehaviour
     private Canvas videoCanvas = null;
     public bool videoStarted = false;
     private float timer = 5;
+    private bool keyLifted = false;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class EndOfLevel : MonoBehaviour
         levelStorage = GameObject.Find("LevelStorage").GetComponent<LevelStorage>();
         playerMovementScript = GameObject.Find("Mousy").GetComponent<MousyMovement>();
         endOfLevelUI = GameObject.Find("EndOfLevel UI").GetComponent<Canvas>();
+
     }
     private void Start()
     {
@@ -38,6 +40,10 @@ public class EndOfLevel : MonoBehaviour
                 playerHitTrigger = false;
             }
         }
+        if (Input.GetKeyUp(KeyCode.Return))
+        {
+            keyLifted = true;
+        }
         //subtract from timer
         if (videoStarted && timer > 0)
         {
@@ -45,6 +51,11 @@ public class EndOfLevel : MonoBehaviour
         }
         //if video is done then go to main menu
         if (videoStarted && timer <= 0 && videoPlayer.isPlaying == false)
+        {
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        }
+        //skip video
+        else if (videoStarted && keyLifted &&Input.GetKeyDown(KeyCode.Return))
         {
             SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         }
