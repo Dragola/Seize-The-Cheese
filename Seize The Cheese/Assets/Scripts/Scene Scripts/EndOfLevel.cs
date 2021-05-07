@@ -15,6 +15,7 @@ public class EndOfLevel : MonoBehaviour
     public bool videoStarted = false;
     private float timer = 5;
     private bool keyLifted = false;
+    public VideoClip creditsClip;
 
     private void Awake()
     {
@@ -92,7 +93,7 @@ public class EndOfLevel : MonoBehaviour
         GameObject.Find("Mousy").GetComponent<MousyMovement>().FreezePlayer(true);
 
         //load clip
-        videoPlayer.clip = AssetDatabase.LoadAssetAtPath("Assets/Cutscenes/Credits.mp4", typeof(VideoClip)) as VideoClip;
+        videoPlayer.clip = creditsClip;
 
         //play video
         videoPlayer.Play();

@@ -8,26 +8,30 @@ public class PauseMenu : MonoBehaviour
 {
     public AudioMixerSnapshot unpaused;
     public AudioMixerSnapshot paused;
-    private PlayerMovement playerControllerScript = null;
+    private MousyMovement playerMovement = null;
     // Start is called before the first frame update
     void Start()
     {
         //locate and reference player's script
-        playerControllerScript = GameObject.Find("Mousy").GetComponent<PlayerMovement>();
+        playerMovement = GameObject.Find("Mousy").GetComponent<MousyMovement>();
     }
     public void OnClickResume()
     {
         //resumes game
         ResumeGame();
 
-        //indicate to player to hide main menu
-        playerControllerScript.ResumePlayer();
+        //resume player
+        playerMovement.ResumePlayer();
     }
     public void OnClickQuit()
     {
         //quit game
         Application.Quit();
     } 
+    public void OnClickMenu()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
     public void OnClickRestart()
     {
         //re-load current scene
