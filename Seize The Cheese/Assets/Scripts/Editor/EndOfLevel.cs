@@ -92,7 +92,7 @@ public class EndOfLevel : MonoBehaviour
         GameObject.Find("Mousy").GetComponent<MousyMovement>().FreezePlayer(true);
 
         //load clip
-        videoPlayer.clip = (VideoClip)AssetDatabase.LoadAssetAtPath("Assets/Cutscenes/Credits.mp4", typeof(VideoClip));
+        videoPlayer.clip = AssetDatabase.LoadAssetAtPath("Assets/Cutscenes/Credits.mp4", typeof(VideoClip)) as VideoClip;
 
         //play video
         videoPlayer.Play();
