@@ -36,7 +36,9 @@ public class EndOfLevel : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                endOfLevelUI.gameObject.SetActive(false);
                 LoadCreditVideo();
+
                 //SwapToLoadingScene();
                 playerHitTrigger = false;
             }
